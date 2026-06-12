@@ -198,7 +198,7 @@ class CPSProvider(Provider):
             "x-terminalid": "3",
             "x-ismobile": "false",
             "x-timezoneid": str(self.tz),
-            "x-requestid": str(uuidlib.uuid4()),
+            "x-requestid": getattr(self, "_request_id", None) or str(uuidlib.uuid4()),
             "Referer": f"https://{self.site}.cps.golf/onlineresweb/search-teetime",
         }
         if self.api_key:
@@ -268,40 +268,37 @@ class CPSProvider(Provider):
 
     # -- fetch -------------------------------------------------------------
     def _register_transaction(self, tid: str) -> bool:
-        """Register a specific transaction GUID so the subsequent search will
-        accept it. The endpoint returns `true` on success."""
-        base = (f"https://{self.site}.cps.golf/onlineres/onlineapi/api/v1/"
-                f"onlinereservation/RegisterTransactionId")
-        hdrs = self._headers()
-        for kind, params, body in (
-            ("params", {"transactionId": tid}, {}),
-            ("json", None, {"transactionId": tid}),
-            ("json", None, tid),
-        ):
-            try:
-                if kind == "params":
-                    resp = self.session.post(base, params=params, json=body,
-                                             timeout=20, headers=hdrs)
-                else:
-                    resp = self.session.post(base, json=body,
-                                             timeout=20, headers=hdrs)
-            except Exception as e:  # noqa: BLE001
-                log.debug("CPS %s register err: %s", self.site, e)
-                continue
-            if resp.status_code < 400 and (
-                    "true" in resp.text.strip().lower() or resp.status_code == 200):
-                log.info("CPS %s: registered transaction %s", self.site, tid)
-                return True
-            log.debug("CPS %s register (%s): HTTP %s %s", self.site, kind,
-                      resp.status_code, resp.text[:120])
-        log.warning("CPS %s: could not register transaction id", self.site)
-        return False
+        """Register a transaction GUID exactly as the web app does:
+        POST {"transactionId": tid} with content-type application/json to
+        RegisterTransactionId. Server replies `true`. The SAME tid is then
+        used in the TeeTimes search (the app calls these as one combined
+        registerTransactionIdAndSearchTeeTimes operation)."""
+        url = (f"https://{self.site}.cps.golf/onlineres/onlineapi/api/v1/"
+               f"onlinereservation/RegisterTransactionId")
+        hdrs = dict(self._headers())
+        hdrs["content-type"] = "application/json"
+        hdrs["origin"] = f"https://{self.site}.cps.golf"
+        try:
+            resp = self.session.post(url, json={"transactionId": tid},
+                                     timeout=20, headers=hdrs)
+        except Exception as e:  # noqa: BLE001
+            log.warning("CPS %s register error: %s", self.site, e)
+            return False
+        ok = resp.status_code < 400 and "true" in resp.text.strip().lower()
+        if ok:
+            log.info("CPS %s: registered transaction %s", self.site, tid)
+        else:
+            log.warning("CPS %s register: HTTP %s %s", self.site,
+                        resp.status_code, resp.text[:140])
+        return ok
 
     def fetch_day(self, day: date):
         self._apply_clearance()   # browser-clear Cloudflare if available
         self._bootstrap()         # best-effort api key
 
         txn_id = str(uuidlib.uuid4())
+        # the app sends a matching x-requestid for the register+search pair
+        self._request_id = txn_id
         self._register_transaction(txn_id)
 
         params = {
