@@ -17,9 +17,10 @@ import os
 log = logging.getLogger("teetime_scout")
 
 
-def _proxy_for_playwright():
-    """Convert RESI_PROXY (http://user:pass@host:port) into Playwright's
-    {server, username, password} dict, or None."""
+def _proxy_for_playwright(session_id=None):
+    """Convert RESI_PROXY into Playwright's {server, username, password}.
+    With session_id, pin a sticky IP so the browser challenge and the later
+    API calls share one residential exit IP (Cloudflare clearance is IP-bound)."""
     raw = os.environ.get("RESI_PROXY", "").strip()
     if not raw:
         return None
@@ -27,8 +28,11 @@ def _proxy_for_playwright():
     u = urlparse(raw)
     server = f"{u.scheme}://{u.hostname}:{u.port}" if u.port else f"{u.scheme}://{u.hostname}"
     cfg = {"server": server}
-    if u.username:
-        cfg["username"] = u.username
+    user = u.username or ""
+    if session_id and user:
+        user = f"{user};session={session_id}"
+    if user:
+        cfg["username"] = user
     if u.password:
         cfg["password"] = u.password
     return cfg
@@ -43,14 +47,16 @@ except Exception:  # noqa: BLE001
 _CACHE: dict[str, dict | None] = {}
 
 
-def get_clearance(site: str, timeout_ms: int = 60000) -> dict | None:
+def get_clearance(site: str, timeout_ms: int = 60000,
+                  proxy_session_id: str | None = None) -> dict | None:
     """Return {'cookies': {...}, 'token': str|None, 'user_agent': str} for a
     CPS site, or None if Playwright is unavailable or the challenge isn't
     cleared. Result is cached per site."""
-    if site in _CACHE:
-        return _CACHE[site]
+    cache_key = f"{site}:{proxy_session_id}"
+    if cache_key in _CACHE:
+        return _CACHE[cache_key]
     if not HAVE_PLAYWRIGHT:
-        _CACHE[site] = None
+        _CACHE[cache_key] = None
         return None
 
     base = f"https://{site}.cps.golf"
@@ -64,7 +70,7 @@ def get_clearance(site: str, timeout_ms: int = 60000) -> dict | None:
                 "--disable-gpu",
                 "--window-size=1280,900",
             ]}
-            _proxy = _proxy_for_playwright()
+            _proxy = _proxy_for_playwright(proxy_session_id)
             if _proxy:
                 launch_kwargs["proxy"] = _proxy
                 log.info("Playwright: routing %s via residential proxy", site)
@@ -161,5 +167,5 @@ def get_clearance(site: str, timeout_ms: int = 60000) -> dict | None:
     except Exception as e:  # noqa: BLE001
         log.warning("Playwright clearance for %s failed: %s", site, e)
 
-    _CACHE[site] = result
+    _CACHE[cache_key] = result
     return result

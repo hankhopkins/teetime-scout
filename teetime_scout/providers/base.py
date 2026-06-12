@@ -17,18 +17,36 @@ except Exception:  # noqa: BLE001
 log = logging.getLogger("teetime_scout")
 
 
-def get_proxy() -> str | None:
+def get_proxy(session_id: str | None = None) -> str | None:
     """Residential proxy URL from env, e.g.
-    http://user:pass@gw.dataimpulse.com:823 . Empty/unset means no proxy."""
+    http://user:pass@gw.dataimpulse.com:823 . Empty/unset means no proxy.
+
+    If session_id is given, pin a sticky residential IP by appending a
+    DataImpulse-style session tag to the username, so every request in this
+    course's flow (browser challenge + API calls) uses the SAME exit IP.
+    Cloudflare clearance is IP-bound, so this is essential."""
     p = os.environ.get("RESI_PROXY", "").strip()
-    return p or None
+    if not p:
+        return None
+    if session_id:
+        from urllib.parse import urlparse, urlunparse
+        u = urlparse(p)
+        if u.username and u.password:
+            # DataImpulse sticky: username followed by ;session=<id>
+            new_user = f"{u.username};session={session_id}"
+            netloc = f"{new_user}:{u.password}@{u.hostname}"
+            if u.port:
+                netloc += f":{u.port}"
+            p = urlunparse((u.scheme, netloc, u.path, u.params, u.query, u.fragment))
+    return p
 
 
-def make_session(impersonate: bool = False, use_proxy: bool = False):
+def make_session(impersonate: bool = False, use_proxy: bool = False,
+                 session_id: str | None = None):
     """Return a requests-like session. impersonate=True mimics a real Chrome
     TLS fingerprint (via curl_cffi). use_proxy=True routes through RESI_PROXY
     if one is configured."""
-    proxy = get_proxy() if use_proxy else None
+    proxy = get_proxy(session_id) if use_proxy else None
     if impersonate and HAVE_CFFI:
         s = cffi_requests.Session(impersonate="chrome")
     else:
@@ -71,7 +89,12 @@ class Provider:
     def __init__(self, course_cfg: dict, settings: dict):
         self.cfg = course_cfg
         self.settings = settings
-        self.session = make_session(self.impersonate, self.use_proxy)
+        # one sticky proxy session per provider instance keeps Cloudflare
+        # clearance and API calls on the same residential IP
+        import uuid as _uuid
+        self._proxy_session_id = _uuid.uuid4().hex[:12]
+        self.session = make_session(self.impersonate, self.use_proxy,
+                                    self._proxy_session_id)
         self.session.headers.update({"User-Agent": UA, "Accept": "application/json"})
 
     # -- interface ------------------------------------------------------------

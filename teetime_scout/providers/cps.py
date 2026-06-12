@@ -169,7 +169,8 @@ class CPSProvider(Provider):
         if self._cleared:
             return
         self._cleared = True
-        clear = get_clearance(self.site)
+        clear = get_clearance(self.site,
+                              proxy_session_id=getattr(self, "_proxy_session_id", None))
         if not clear:
             return
         for k, v in clear["cookies"].items():
