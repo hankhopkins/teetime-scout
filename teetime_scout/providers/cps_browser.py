@@ -91,19 +91,31 @@ def get_clearance(site: str, timeout_ms: int = 60000) -> dict | None:
                     challenge_cleared = True
                     break
 
-            # Phase 2: wait for the app to mint its anonymous token (up to 30s),
-            # reloading twice to coax slow/odd cases (e.g. challenged=False but
-            # token not yet fired). Runs regardless of challenge state.
+            # Phase 2: wait for the app to mint its anonymous token (up to 30s).
+            # Some sites (e.g. Edinburgh) only mint on interaction, so we nudge
+            # the page: a click, then a deep-link navigation that forces a
+            # tee-time query. Reload as a last resort.
+            def _nudge(step):
+                try:
+                    if step == 0:
+                        page.mouse.click(640, 450)
+                    elif step == 1:
+                        page.goto(f"{base}/onlineresweb/search-teetime"
+                                  f"?TeeOffTimeMin=0&TeeOffTimeMax=23",
+                                  wait_until="domcontentloaded",
+                                  timeout=timeout_ms)
+                    else:
+                        page.reload(wait_until="domcontentloaded",
+                                    timeout=timeout_ms)
+                except Exception:  # noqa: BLE001
+                    pass
+
             for i in range(30):
                 if captured["token"]:
                     break
                 page.wait_for_timeout(1000)
-                if i in (10, 20) and not captured["token"]:
-                    try:
-                        page.reload(wait_until="domcontentloaded",
-                                    timeout=timeout_ms)
-                    except Exception:  # noqa: BLE001
-                        pass
+                if i in (6, 14, 22) and not captured["token"]:
+                    _nudge((i - 6) // 8)
             page.wait_for_timeout(1500)
 
             cookies = {c["name"]: c["value"]
