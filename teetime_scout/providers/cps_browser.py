@@ -30,7 +30,7 @@ def _proxy_for_playwright(session_id=None):
     cfg = {"server": server}
     user = u.username or ""
     if session_id and user:
-        user = f"{user};session={session_id}"
+        user = f"{user}__cr.us;sessid.{session_id}"
     if user:
         cfg["username"] = user
     if u.password:

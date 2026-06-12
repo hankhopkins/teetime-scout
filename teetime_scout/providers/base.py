@@ -32,8 +32,9 @@ def get_proxy(session_id: str | None = None) -> str | None:
         from urllib.parse import urlparse, urlunparse
         u = urlparse(p)
         if u.username and u.password:
-            # DataImpulse sticky: username followed by ;session=<id>
-            new_user = f"{u.username};session={session_id}"
+            # DataImpulse: USERNAME__cr.us;sessid.<id> pins a US IP that stays
+            # constant for ~30 min, so Cloudflare clearance + API calls share it
+            new_user = f"{u.username}__cr.us;sessid.{session_id}"
             netloc = f"{new_user}:{u.password}@{u.hostname}"
             if u.port:
                 netloc += f":{u.port}"
