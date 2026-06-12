@@ -282,6 +282,14 @@ courses:
       booking_class: null
     note: 9-hole par-3 course
 
+  - name: Heritage Links GC
+    provider: teeitup              # verified live: heritage-links-golf-club.book.teeitup.golf
+    booking_window: 14             # site: "up to 14 days in advance"
+    booking_url: https://heritage-links-golf-club.book.teeitup.golf/
+    teeitup:
+      alias: heritage-links-golf-club
+      facility_id: 3891
+
   - name: Loggers Trail GC
     provider: teeitup
     booking_window: 7              # UNVERIFIED
@@ -349,13 +357,7 @@ courses:
     cps: { site: none }
 
   - name: Wild Marsh GC
-    provider: cps                  # placeholder; actually TenFore (golfCourseId 16502, provider TBD)
-    link_only: true
-    booking_url: https://fox.tenfore.golf/wildmarsh
-    cps: { site: none }
-
-  - name: Heritage Links GC
-    provider: cps                  # placeholder; platform not yet identified
-    link_only: true
-    booking_url: https://www.heritagelinks.com/
+    provider: cps                  # TenFore platform (golfCourseId 16502) — its
+    link_only: true                # booking-times API requires a reCAPTCHA token
+    booking_url: https://fox.tenfore.golf/wildmarsh   # per request; permanent link-only
     cps: { site: none }
