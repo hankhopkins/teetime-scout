@@ -1,14 +1,16 @@
 # Tee Time Scout configuration
 # ─────────────────────────────
-# Courses are listed in order of importance; the email digest follows this order.
+# Courses are listed in display order; the site and email follow this order.
 #
 # Each course has:
-#   provider: chronogolf | foreup | teeitup | cps | generic_json
-#   rules:    list of {days: [...], window: "HH:MM-HH:MM"} — a tee time matches
-#             if it falls inside ANY rule. Days not covered by any rule are skipped.
-#   booking_url: link shown in the email so you can book in one tap.
-#
-# days values: mon tue wed thu fri sat sun (or the shortcuts "weekdays"/"weekend")
+#   provider:    chronogolf | foreup | teeitup | cps | generic_json |
+#                prophet_v3 | webtrac | teesnap | clubcaddie
+#   booking_url: link shown on the site/email so you can book in one tap
+#   link_only:   true = don't scrape, just show the booking link
+#                (used for login-walled or not-yet-supported platforms)
+#   rules:       OPTIONAL day/time windows. Omitted = no restrictions
+#                (every day, every time). The site buckets times into
+#                morning / late morning / afternoon / evening client-side.
 
 settings:
   timezone: America/Chicago
@@ -23,21 +25,21 @@ email:
 
 courses:
 
+  # ───────────────────────── original lineup ─────────────────────────
+
   - name: Inver Wood Championship
     provider: generic_json          # TeeWire — endpoint from live capture
-    booking_window: 7               # official: 7 days in advance
+    booking_window: 7
     booking_url: https://teewire.app/inverwood/index.php?controller=FrontV2&action=load&cid=3&view=list
     generic:
       url_template: "https://teewire.app/inverwood/online/application/web/api/golf-api.php?action=tee-times&calendar_id=3&date={date}&starting_tee=1"
       list_path: "data.tee_times"
-      time_field: time              # "06:20:00"
+      time_field: time
       time_format: auto
       spots_field: "availability.available_spots"
-      price_field: "price"          # may not exist in payload; harmless if absent
+      price_field: "price"
       headers:
         Referer: "https://teewire.app/inverwood/index.php?controller=FrontV2&action=load&cid=3&view=list"
-    rules:
-      - { days: [mon, tue, wed, thu, fri, sat, sun], window: "10:00-19:00" }
 
   - name: Braemar Championship
     provider: foreup
@@ -46,10 +48,16 @@ courses:
     foreup:
       course_id: 21445
       schedule_id: 7829
-      booking_class: null           # auto-discovered from the booking page if null
-    rules:
-      - { days: [mon, tue, wed, thu], window: "11:00-19:00" }
-      - { days: [fri, sat, sun],      window: "09:00-18:30" }
+      booking_class: null
+
+  - name: Braemar Academy 9 (Executive)
+    provider: foreup
+    booking_window: 8
+    booking_url: https://foreupsoftware.com/index.php/booking/21445/7857#teetimes
+    foreup:
+      course_id: 21445
+      schedule_id: 7857          # "Academy 9" — captured from the booking page
+      booking_class: null
 
   - name: Keller Golf Course
     provider: teeitup
@@ -58,26 +66,20 @@ courses:
     teeitup:
       alias: ramsey-county-golf
       facility_id: 17055
-    rules:
-      - { days: [mon, tue, wed, thu, fri], window: "12:00-19:00" }
-      - { days: [sat, sun],                window: "09:00-18:00" }
 
   - name: Edinburgh USA
     provider: cps
-    booking_window: 7            # UNVERIFIED (one directory says 4) — probe will show actual reach
+    booking_window: 7
     booking_url: https://edinburghusa.cps.golf/
     cps:
       site: edinburghusa
       api_key: 8ea2914e-cac2-48a7-a3e5-e0f41350bf3a
       website_id: 7b2c1b2a-acee-4ba4-e72a-08dc2c96d123
-      course_ids: "2,1"          # Front/Back course units from the capture
-    rules:
-      - { days: [mon, tue, wed, thu, fri], window: "10:30-19:00" }
-      - { days: [sat, sun],                window: "10:00-17:00" }
+      course_ids: "2,1"
 
   - name: Meadowbrook GC
     provider: cps
-    booking_window: 7            # UNVERIFIED — MPRB card holders get 7; public may be 5
+    booking_window: 7
     booking_url: https://minneapolismeadowbrook.cps.golf/onlineresweb/search-teetime
     cps:
       site: minneapolismeadowbrook
@@ -85,9 +87,6 @@ courses:
       course_ids: "14"
       class_code: PUB
       member_store_id: 7
-    rules:
-      - { days: [mon, tue, wed, thu, fri], window: "10:30-19:00" }
-      - { days: [sat, sun],                window: "10:00-17:00" }
 
   - name: Columbia GC
     provider: cps
@@ -99,24 +98,18 @@ courses:
       course_ids: "4,3"
       class_code: PUB
       member_store_id: 7
-    rules:
-      - { days: [mon, tue, wed, thu, fri], window: "10:30-19:00" }
-      - { days: [sat, sun],                window: "10:00-17:00" }
 
   - name: Baker National GC
     provider: chronogolf
-    booking_window: 7            # public 7; Tour Card 8 (set to 8 if you hold one)
+    booking_window: 7
     booking_url: https://www.chronogolf.com/club/baker-national-golf-club
     chronogolf:
       slug: baker-national-golf-club
-      course_uuid: e9d8899b-a26b-44fa-a6f6-ebaec3db1656   # Championship (verified working)
-    rules:
-      - { days: [mon, tue, wed, thu, fri], window: "12:00-19:00" }
-      - { days: [sat, sun],                window: "10:00-17:00" }
+      course_uuid: e9d8899b-a26b-44fa-a6f6-ebaec3db1656
 
   - name: Highland National GC
-    provider: cps
-    booking_window: 7            # UNVERIFIED — St Paul doesn't publish; assuming 7
+    provider: cps                  # strict Cloudflare tier — usually link-only in practice
+    booking_window: 7
     booking_url: https://highlandnationalmn.cps.golf/
     cps:
       site: highlandnationalmn
@@ -124,22 +117,16 @@ courses:
       course_ids: "3"
       class_code: R
       site_id: 3
-    rules:
-      - { days: [mon, tue, wed, thu, fri], window: "12:00-19:00" }
-      - { days: [sat, sun],                window: "10:00-17:00" }
 
   - name: Chaska Town Course
-    provider: cps                   # embedded in chaskatowncourse.com/bookteetimes
-    booking_window: 10              # official: 10 online (14 by phone w/ Patron Card)
+    provider: cps                  # strict Cloudflare tier — usually link-only in practice
+    booking_window: 10
     booking_url: https://www.chaskatowncourse.com/bookteetimes
     cps:
       site: chaska
       website_id: 9004916a-da08-4ba1-37a6-08daf43f0ffa
       course_ids: "1"
       class_code: R
-    rules:
-      - { days: [mon, tue, wed, thu, fri], window: "11:00-19:00" }
-      - { days: [sat, sun],                window: "09:00-17:00" }
 
   - name: Francis A. Gross GC
     provider: cps
@@ -151,33 +138,26 @@ courses:
       course_ids: "5,7"
       class_code: PUB
       member_store_id: 7
-    rules:
-      - { days: [mon, tue, wed, thu, fri], window: "11:00-19:00" }
-      - { days: [sat, sun],                window: "10:00-17:00" }
 
   - name: Brookview GC (Regulation)
     provider: prophet_v3            # CPS legacy v3 (prophetservices.com)
-    booking_window: 5               # official: public 5 (members 7)
+    booking_window: 5
     booking_url: https://secure.east.prophetservices.com/BrookviewGCv3/Home/nIndex
     prophet_v3:
       base_url: https://secure.east.prophetservices.com/BrookviewGCv3
-      course_id: "1"                # CourseId=1,2 in capture; 1 = Regulation 18 (2 likely Par 3)
-    rules:
-      - { days: [mon, tue, wed, thu, fri], window: "15:00-19:00" }
+      course_id: "1"
 
   - name: Oak Marsh Golf Course
-    provider: teeitup               # same platform as Keller
-    booking_window: 7               # official: 7 days in advance
+    provider: teeitup
+    booking_window: 7
     booking_url: https://oak-marsh-golf-course.book.teeitup.golf/
     teeitup:
       alias: oak-marsh-golf-course
       facility_id: 4585
-    rules:
-      - { days: [mon, tue, wed, thu, fri], window: "11:00-19:00" }
 
   - name: Victory Links
-    provider: cps
-    booking_window: 14           # official: 14-day advance booking policy
+    provider: cps                  # strict Cloudflare tier — usually link-only in practice
+    booking_window: 14
     booking_url: https://victorylinksmn.cps.golf/
     cps:
       site: victorylinksmn
@@ -185,12 +165,10 @@ courses:
       course_ids: "6"
       class_code: R
       site_id: 3
-    rules:
-      - { days: [mon, tue, wed, thu, fri], window: "11:00-19:00" }
 
   - name: Chomonix Golf Course
     provider: webtrac               # Vermont Systems WebTrac (Anoka County)
-    booking_window: 10              # official: public 10 days (Players Club 15, members 21)
+    booking_window: 10
     booking_url: https://web2.myvscloud.com/wbwsc/mnanokactywt.wsc/search.html?display=detail&module=GR&secondarycode=1
     webtrac:
       search_url: https://web2.myvscloud.com/wbwsc/mnanokactywt.wsc/search.html
@@ -200,7 +178,184 @@ courses:
         secondarycode: "1"
       date_param: begindate
       date_format: "%m/%d/%Y"
-    # DEFAULT windows — adjust to taste. Note Chomonix league blackouts:
-    # Mon 4:00-6:30pm, Tue 8-10am, Wed 7-11am & 2pm-close, Thu 1pm-close
-    rules:
-      - { days: [mon, tue, wed, thu, fri], window: "11:00-19:00" }
+
+  # ──────────────────── June 2026 expansion ────────────────────
+  # Platform + IDs verified by live capture in Chrome unless noted.
+
+  - name: Theodore Wirth GC
+    provider: cps                  # Minneapolis family — same flow as Meadowbrook
+    booking_window: 7
+    booking_url: https://minneapolistheodorewirth.cps.golf/onlineresweb/search-teetime
+    cps:
+      site: minneapolistheodorewirth
+      course_ids: "17"             # captured live: classCode=R, memberStoreId=1
+      class_code: R
+      member_store_id: 1
+
+  - name: Hiawatha GC
+    provider: cps
+    booking_window: 7
+    booking_url: https://minneapolishiawatha.cps.golf/onlineresweb/search-teetime
+    cps:
+      site: minneapolishiawatha
+      course_ids: "11"
+      class_code: R
+      member_store_id: 1
+
+  - name: Como Park GC
+    provider: cps                  # St. Paul — may sit behind the strict Cloudflare tier like Highland
+    booking_window: 7
+    booking_url: https://como.cps.golf/onlineresweb/search-teetime
+    cps:
+      site: como
+      course_ids: "8,1"
+      class_code: R
+      member_store_id: 1
+
+  - name: Phalen Park GC
+    provider: cps                  # St. Paul — same caveat as Como
+    booking_window: 7
+    booking_url: https://phalen.cps.golf/onlineresweb/search-teetime
+    cps:
+      site: phalen
+      course_ids: "2,6"
+      class_code: R
+      member_store_id: 1
+
+  - name: Timber Creek GC
+    provider: generic_json          # TeeWire, same platform as Inver Wood
+    booking_window: 7              # UNVERIFIED
+    booking_url: https://teewire.app/timbercreek/
+    generic:
+      url_template: "https://teewire.app/timbercreek/online/application/web/api/golf-api.php?action=tee-times&calendar_id=1&date={date}&starting_tee=1"
+      list_path: "data.tee_times"
+      time_field: time
+      time_format: auto
+      spots_field: "availability.available_spots"
+      price_field: "price"
+      headers:
+        Referer: "https://teewire.app/timbercreek/"
+
+  - name: Deer Run GC
+    provider: foreup
+    booking_window: 7              # UNVERIFIED
+    booking_url: https://foreupsoftware.com/index.php/booking/21800/8918#teetimes
+    foreup:
+      course_id: 21800
+      schedule_id: 8918
+      booking_class: null
+
+  - name: Shamrock GC
+    provider: foreup
+    booking_window: 7              # UNVERIFIED
+    booking_url: https://foreupsoftware.com/index.php/booking/19072/886#teetimes
+    foreup:
+      course_id: 19072
+      schedule_id: 886
+      booking_class: null
+
+  - name: Emerald Greens — Gold
+    provider: foreup
+    booking_window: 7              # UNVERIFIED
+    booking_url: https://foreupsoftware.com/index.php/booking/index/19202#/teetimes
+    foreup:
+      course_id: 19202
+      schedule_id: 1266            # "Gold" — captured from the booking page
+      booking_class: null
+
+  - name: Emerald Greens — Silver
+    provider: foreup
+    booking_window: 7              # UNVERIFIED
+    booking_url: https://foreupsoftware.com/index.php/booking/index/19202#/teetimes
+    foreup:
+      course_id: 19202
+      schedule_id: 1308            # "Silver"
+      booking_class: null
+
+  - name: Cedarholm GC (Par 3)
+    provider: foreup
+    booking_window: 7              # UNVERIFIED
+    booking_url: https://foreupsoftware.com/index.php/booking/22244/10216#teetimes
+    foreup:
+      course_id: 22244
+      schedule_id: 10216
+      booking_class: null
+    note: 9-hole par-3 course
+
+  - name: Loggers Trail GC
+    provider: teeitup
+    booking_window: 7              # UNVERIFIED
+    booking_url: https://loggers-trail-golf-club.book.teeitup.golf/
+    teeitup:
+      alias: loggers-trail-golf-club
+      facility_id: 9831
+
+  - name: Stonebrooke GC
+    provider: chronogolf
+    booking_window: 7              # UNVERIFIED (dynamic pricing; book early)
+    booking_url: https://www.chronogolf.com/club/stonebrooke-golf-club
+    chronogolf:
+      slug: stonebrooke-golf-club
+
+  - name: Bluff Creek GC
+    provider: chronogolf
+    booking_window: 7              # UNVERIFIED
+    booking_url: https://www.chronogolf.com/club/bluff-creek-golf-course-minnesota
+    chronogolf:
+      slug: bluff-creek-golf-course-minnesota
+
+  - name: The Links at Northfork
+    provider: chronogolf
+    booking_window: 7              # UNVERIFIED
+    booking_url: https://www.chronogolf.com/club/the-links-at-northfork
+    chronogolf:
+      slug: the-links-at-northfork
+
+  - name: ShadowBrooke GC
+    provider: chronogolf
+    booking_window: 7              # UNVERIFIED
+    booking_url: https://www.chronogolf.com/club/shadow-brooke-golf-course
+    chronogolf:
+      slug: shadow-brooke-golf-course
+
+  - name: Amery Golf Club (WI)
+    provider: teesnap
+    booking_window: 7              # UNVERIFIED
+    booking_url: https://amerygolfclub.teesnap.net/
+    teesnap:
+      subdomain: amerygolfclub
+      course_id: 1068              # captured live from /customer-api/teetimes-day
+
+  - name: Fox Hollow GC
+    provider: clubcaddie
+    booking_window: 7              # site banner: Members 14 / Public 7 / PCC 3
+    booking_url: https://foxhollowgolfmn.com/book-a-tee-time/
+    clubcaddie:
+      base: https://apimanager-cc37.clubcaddie.com
+      view_id: gdfdabab
+
+  # ──────────── link-only (no anonymous tee sheet available) ────────────
+
+  - name: Pioneer Creek GC
+    provider: cps
+    link_only: true                # site requires verified-email login before search
+    booking_url: https://pioneercreek.cps.golf/
+    cps: { site: pioneercreek }
+
+  - name: Valleywood GC
+    provider: cps                  # placeholder; actually Eagle Club Systems (provider TBD)
+    link_only: true
+    booking_url: "https://player.eagleclubsystems.online/#/tee-slot?dbname=mnvalleywood20250115"
+    cps: { site: none }
+
+  - name: Wild Marsh GC
+    provider: cps                  # placeholder; actually TenFore (golfCourseId 16502, provider TBD)
+    link_only: true
+    booking_url: https://fox.tenfore.golf/wildmarsh
+    cps: { site: none }
+
+  - name: Heritage Links GC
+    provider: cps                  # placeholder; platform not yet identified
+    link_only: true
+    booking_url: https://www.heritagelinks.com/
+    cps: { site: none }

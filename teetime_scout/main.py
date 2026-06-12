@@ -28,6 +28,8 @@ from .providers.generic_json import GenericJSONProvider
 from .providers.teeitup import TeeItUpProvider
 from .providers.prophet_v3 import ProphetV3Provider
 from .providers.webtrac import WebTracProvider
+from .providers.teesnap import TeesnapProvider
+from .providers.clubcaddie import ClubCaddieProvider
 
 PROVIDERS = {
     "chronogolf": ChronogolfProvider,
@@ -37,6 +39,8 @@ PROVIDERS = {
     "generic_json": GenericJSONProvider,
     "prophet_v3": ProphetV3Provider,
     "webtrac": WebTracProvider,
+    "teesnap": TeesnapProvider,
+    "clubcaddie": ClubCaddieProvider,
 }
 
 DAY_ALIASES = {
@@ -62,6 +66,8 @@ def parse_window(window: str) -> tuple[time, time]:
 
 
 def matches_rules(when: datetime, rules: list[dict]) -> bool:
+    if not rules:          # no rules configured = no time restrictions
+        return True
     for rule in rules:
         if when.weekday() not in expand_days(rule["days"]):
             continue
@@ -72,6 +78,8 @@ def matches_rules(when: datetime, rules: list[dict]) -> bool:
 
 
 def days_wanted(rules: list[dict]) -> set[int]:
+    if not rules:          # no rules configured = every day
+        return set(range(7))
     out: set[int] = set()
     for rule in rules:
         out |= expand_days(rule["days"])
@@ -100,8 +108,11 @@ def course_dates(course_cfg: dict, settings: dict, today: date) -> list[date]:
 
 
 def fetch_course(course_cfg: dict, settings: dict, today: date) -> list[FetchResult]:
+    if course_cfg.get("link_only"):
+        return []          # no scraping; the site/email just shows the booking link
     provider = PROVIDERS[course_cfg["provider"]](course_cfg, settings)
-    wanted = days_wanted(course_cfg["rules"])
+    rules = course_cfg.get("rules") or []
+    wanted = days_wanted(rules)
     results = []
     for day in course_dates(course_cfg, settings, today):
         if day.weekday() not in wanted:
@@ -110,7 +121,7 @@ def fetch_course(course_cfg: dict, settings: dict, today: date) -> list[FetchRes
         min_spots = settings.get("min_open_spots", 1)
         res.times = [
             t for t in res.times
-            if matches_rules(t.when, course_cfg["rules"])
+            if matches_rules(t.when, rules)
             and (t.open_spots is None or t.open_spots >= min_spots)
         ]
         res.times.sort(key=lambda t: t.when)
@@ -234,12 +245,27 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", default="config.yaml")
     ap.add_argument("--dry-run", action="store_true", help="print digest, don't email")
+    ap.add_argument("--site", action="store_true",
+                    help="write docs/data.json for the GitHub Pages site (no email)")
+    ap.add_argument("--email", action="store_true",
+                    help="also send the email digest when used with --site")
     args = ap.parse_args()
 
     with open(args.config) as f:
         config = yaml.safe_load(f)
 
     results = run_all(config)
+
+    if args.site:
+        from .site_gen import write_site_data
+        path = write_site_data(config, results)
+        total = sum(len(r.times) for rs in results.values() for r in rs)
+        log.info("wrote %s (%d tee times)", path, total)
+        if args.email:
+            subject, body, _ = build_html(config, results)
+            send_email(subject, body)
+        return
+
     subject, body, total = build_html(config, results)
 
     if args.dry_run:

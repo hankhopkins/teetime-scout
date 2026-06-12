@@ -2,19 +2,27 @@ name: Tee Time Scout
 
 on:
   schedule:
-    # GitHub cron is UTC. During CDT (golf season, mid-Mar → early Nov):
-    #   15:00 UTC = 10:00 AM Central
-    #   03:00 UTC = 10:00 PM Central (previous evening's 10pm)
-    # During CST these land at 9am/9pm Central — adjust to 16:00/04:00 in winter
-    # if you're still hunting tee times in December, you maniac.
-    - cron: "0 15 * * *"
-    - cron: "0 3 * * *"
-  workflow_dispatch: {}   # manual "Run workflow" button for testing
+    # GitHub cron is UTC. Times below = CDT (UTC-5, golf season).
+    # During CST (winter) these land 1 hour later Central — shift if it matters.
+    - cron: "1 5 * * *"     # 12:01 AM Central
+    - cron: "0 11 * * *"    #  6:00 AM Central
+    - cron: "0 15 * * *"    # 10:00 AM Central
+    - cron: "0 19 * * *"    #  2:00 PM Central
+    - cron: "0 23 * * *"    #  6:00 PM Central
+    - cron: "0 3 * * *"     # 10:00 PM Central
+  workflow_dispatch: {}     # manual "Run workflow" button for testing
+
+permissions:
+  contents: write           # the job commits docs/data.json back to the repo
+
+concurrency:
+  group: teetime-scout
+  cancel-in-progress: false
 
 jobs:
   scout:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
 
@@ -28,10 +36,27 @@ jobs:
       - name: Install Playwright browser
         run: python -m playwright install --with-deps chromium
 
-      - name: Fetch tee times and send digest
+      - name: Fetch tee times and build site data
         env:
+          RESI_PROXY: ${{ secrets.RESI_PROXY }}
+          # Email is off by default now that the site is primary.
+          # To re-enable the digest, change the line below to:
+          #   run: python -m teetime_scout.main --site --email
+          # and keep these secrets set:
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           TO_EMAIL: ${{ secrets.TO_EMAIL }}
-          RESI_PROXY: ${{ secrets.RESI_PROXY }}
-        run: python -m teetime_scout.main
+        run: python -m teetime_scout.main --site
+
+      - name: Commit updated tee times
+        run: |
+          git config user.name "teetime-scout[bot]"
+          git config user.email "teetime-scout@users.noreply.github.com"
+          git add docs/data.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update tee times $(date -u +'%Y-%m-%d %H:%MZ')"
+            git pull --rebase origin main
+            git push
+          fi
