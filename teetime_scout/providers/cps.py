@@ -172,10 +172,13 @@ class CPSProvider(Provider):
         if not clear:
             return
         for k, v in clear["cookies"].items():
-            try:
-                self.session.cookies.set(k, v, domain=f"{self.site}.cps.golf")
-            except Exception:  # noqa: BLE001
-                pass
+            # cf_clearance lives on the parent domain .cps.golf; others on the
+            # subdomain. Set on both so every request carries them.
+            for dom in (f"{self.site}.cps.golf", ".cps.golf"):
+                try:
+                    self.session.cookies.set(k, v, domain=dom)
+                except Exception:  # noqa: BLE001
+                    pass
         if clear.get("user_agent"):
             self.session.headers["User-Agent"] = clear["user_agent"]
         if clear.get("token"):

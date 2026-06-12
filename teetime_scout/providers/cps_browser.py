@@ -120,7 +120,7 @@ def get_clearance(site: str, timeout_ms: int = 60000) -> dict | None:
 
             cookies = {c["name"]: c["value"]
                        for c in context.cookies()
-                       if site in c.get("domain", "")}
+                       if "cps.golf" in c.get("domain", "")}
             ua = page.evaluate("() => navigator.userAgent")
             challenged = "just a moment" in (page.title() or "").lower()
             browser.close()
