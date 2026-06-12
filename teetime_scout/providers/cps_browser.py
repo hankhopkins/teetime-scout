@@ -12,8 +12,26 @@ CPS courses fall back to check-manually links.
 from __future__ import annotations
 
 import logging
+import os
 
 log = logging.getLogger("teetime_scout")
+
+
+def _proxy_for_playwright():
+    """Convert RESI_PROXY (http://user:pass@host:port) into Playwright's
+    {server, username, password} dict, or None."""
+    raw = os.environ.get("RESI_PROXY", "").strip()
+    if not raw:
+        return None
+    from urllib.parse import urlparse
+    u = urlparse(raw)
+    server = f"{u.scheme}://{u.hostname}:{u.port}" if u.port else f"{u.scheme}://{u.hostname}"
+    cfg = {"server": server}
+    if u.username:
+        cfg["username"] = u.username
+    if u.password:
+        cfg["password"] = u.password
+    return cfg
 
 try:
     from playwright.sync_api import sync_playwright
@@ -39,13 +57,18 @@ def get_clearance(site: str, timeout_ms: int = 60000) -> dict | None:
     result = None
     try:
         with sync_playwright() as pw:
-            browser = pw.chromium.launch(headless=True, args=[
+            launch_kwargs = {"headless": True, "args": [
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",
                 "--disable-dev-shm-usage",
                 "--disable-gpu",
                 "--window-size=1280,900",
-            ])
+            ]}
+            _proxy = _proxy_for_playwright()
+            if _proxy:
+                launch_kwargs["proxy"] = _proxy
+                log.info("Playwright: routing %s via residential proxy", site)
+            browser = pw.chromium.launch(**launch_kwargs)
             context = browser.new_context(
                 user_agent=("Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                             "AppleWebKit/537.36 (KHTML, like Gecko) "

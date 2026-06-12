@@ -33,4 +33,5 @@ jobs:
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           TO_EMAIL: ${{ secrets.TO_EMAIL }}
+          RESI_PROXY: ${{ secrets.RESI_PROXY }}
         run: python -m teetime_scout.main

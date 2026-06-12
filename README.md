@@ -110,3 +110,23 @@ when one breaks, re-run `probe.py` to diagnose.
 GitHub cron is UTC: `15:00`/`03:00` UTC = 10am/10pm CDT. GitHub also queues
 scheduled jobs, so expect "10-ish" (up to ~15 min drift). In CST months the
 times shift to 9am/9pm; bump the crons an hour if that bothers you in January.
+
+
+## Residential proxy (optional — for the CPS courses + Chomonix)
+
+Several courses (the Ramsey/Anoka/Chaska CPS sites and Chomonix's WebTrac) sit
+behind Cloudflare bot protection that blocks GitHub Actions' datacenter IPs.
+Routing just those courses through a cheap residential proxy fixes it.
+
+Setup:
+1. Sign up at a pay-as-you-go residential provider (DataImpulse, ~$1/GB,
+   non-expiring — usage here is ~1-2 GB/month).
+2. They give you a proxy URL like:
+   `http://USERNAME:PASSWORD@gw.dataimpulse.com:823`
+3. Add it as a GitHub secret named `RESI_PROXY` (Settings → Secrets and
+   variables → Actions). Locally, `export RESI_PROXY="http://..."` before
+   running the probe.
+
+Only CPS + WebTrac providers use the proxy (see `use_proxy = True`); everything
+else stays on the fast direct connection. With no `RESI_PROXY` set, behavior is
+exactly as before.

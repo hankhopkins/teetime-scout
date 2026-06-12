@@ -32,7 +32,8 @@ GUID_RE = re.compile(
 
 class CPSProvider(Provider):
     name = "cps"
-    impersonate = True   # CPS sits behind Cloudflare; mimic a real Chrome
+    impersonate = True
+    use_proxy = True   # CPS sits behind Cloudflare; mimic a real Chrome
 
     def __init__(self, course_cfg, settings):
         super().__init__(course_cfg, settings)

@@ -20,7 +20,8 @@ TIME_RE = re.compile(r"\b(\d{1,2}):(\d{2})\s*([ap]m)\b", re.I)
 
 class WebTracProvider(Provider):
     name = "webtrac"
-    impersonate = True   # myvscloud sits behind bot protection on datacenter IPs
+    impersonate = True
+    use_proxy = True   # myvscloud sits behind bot protection on datacenter IPs
 
     def __init__(self, course_cfg, settings):
         super().__init__(course_cfg, settings)

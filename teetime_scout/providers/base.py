@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import logging
+import os
 from dataclasses import dataclass, field
 from datetime import datetime, date
 
@@ -16,13 +17,25 @@ except Exception:  # noqa: BLE001
 log = logging.getLogger("teetime_scout")
 
 
-def make_session(impersonate: bool = False):
-    """Return a requests-like session. When impersonate=True and curl_cffi is
-    installed, the session mimics a real Chrome TLS fingerprint, which clears
-    many (not all) Cloudflare bot checks."""
+def get_proxy() -> str | None:
+    """Residential proxy URL from env, e.g.
+    http://user:pass@gw.dataimpulse.com:823 . Empty/unset means no proxy."""
+    p = os.environ.get("RESI_PROXY", "").strip()
+    return p or None
+
+
+def make_session(impersonate: bool = False, use_proxy: bool = False):
+    """Return a requests-like session. impersonate=True mimics a real Chrome
+    TLS fingerprint (via curl_cffi). use_proxy=True routes through RESI_PROXY
+    if one is configured."""
+    proxy = get_proxy() if use_proxy else None
     if impersonate and HAVE_CFFI:
-        return cffi_requests.Session(impersonate="chrome")
-    return requests.Session()
+        s = cffi_requests.Session(impersonate="chrome")
+    else:
+        s = requests.Session()
+    if proxy:
+        s.proxies.update({"http": proxy, "https": proxy})
+    return s
 
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
       "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36")
@@ -53,11 +66,12 @@ class Provider:
     name = "base"
 
     impersonate = False   # subclasses set True to route via curl_cffi
+    use_proxy = False     # subclasses set True to route via RESI_PROXY
 
     def __init__(self, course_cfg: dict, settings: dict):
         self.cfg = course_cfg
         self.settings = settings
-        self.session = make_session(self.impersonate)
+        self.session = make_session(self.impersonate, self.use_proxy)
         self.session.headers.update({"User-Agent": UA, "Accept": "application/json"})
 
     # -- interface ------------------------------------------------------------
