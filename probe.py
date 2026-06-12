@@ -56,14 +56,11 @@ def main():
 
         if isinstance(provider, ChronogolfProvider):
             info = provider.discover()
-            if info.get("club_id"):
-                print(f"   discovered club_id={info.get('club_id')} "
-                      f"course_id={info.get('course_id')} "
-                      f"affiliation_type_id={info.get('affiliation_type_id')}")
-                if info.get("courses"):
-                    for cid, cname, holes in info["courses"]:
-                        print(f"     · course {cid}: {cname} ({holes} holes)")
-                print("   → pin these in config.yaml to skip discovery on every run")
+            for uuid, cname, holes in info.get("courses", []):
+                print(f"   · course uuid {uuid}: {cname} ({holes} holes)")
+            if info.get("courses"):
+                print("   → pin the right one in config.yaml as "
+                      "chronogolf: { course_uuid: ... }")
 
         result = provider.fetch_day(day)
         if result.error:

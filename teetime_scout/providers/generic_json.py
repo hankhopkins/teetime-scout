@@ -22,6 +22,17 @@ from zoneinfo import ZoneInfo
 from .base import Provider, TeeTime
 
 
+def _dig(node, path):
+    """Resolve a dot-path like 'availability.available_spots' inside a slot."""
+    if not path:
+        return None
+    for key in path.split("."):
+        if not isinstance(node, dict):
+            return None
+        node = node.get(key)
+    return node
+
+
 class GenericJSONProvider(Provider):
     name = "generic_json"
 
@@ -52,29 +63,61 @@ class GenericJSONProvider(Provider):
         node = data
         for key in [k for k in self.list_path.split(".") if k]:
             node = node.get(key, {}) if isinstance(node, dict) else {}
+        if not isinstance(node, list) and isinstance(node, dict):
+            # no list_path configured (or wrong) — try common containers
+            for key in ("times", "tee_times", "teetimes", "teeTimes", "data",
+                        "results", "items", "slots", "list"):
+                if isinstance(node.get(key), list):
+                    node = node[key]
+                    break
         if not isinstance(node, list):
-            return self._result(day, error=f"list_path '{self.list_path}' did not "
-                                           f"resolve to an array")
+            import json as _json
+            return self._result(day, error=(
+                f"couldn't find the tee-time array in the response — "
+                f"payload starts: {_json.dumps(data)[:250]}"))
 
         times = []
         for slot in node:
             raw = slot.get(self.time_field)
             if raw is None:
                 continue
+            when = None
+            s = str(raw).strip()
+            fmts = ([self.time_format] if self.time_format not in ("iso", "auto")
+                    else [])
             try:
-                if self.time_format == "iso":
-                    when = datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
-                else:
-                    when = datetime.strptime(str(raw), self.time_format)
-                when = (when.replace(tzinfo=self.tz) if when.tzinfo is None
-                        else when.astimezone(self.tz))
+                when = datetime.fromisoformat(s.replace("Z", "+00:00"))
             except ValueError:
+                for fmt in fmts + ["%H:%M", "%H:%M:%S", "%I:%M %p", "%I:%M%p",
+                                   "%Y-%m-%d %H:%M", "%Y-%m-%d %H:%M:%S"]:
+                    try:
+                        parsed = datetime.strptime(s, fmt)
+                        if parsed.year == 1900:   # time-only format
+                            when = datetime.combine(day, parsed.time())
+                        else:
+                            when = parsed
+                        break
+                    except ValueError:
+                        continue
+            if when is None:
                 continue
-            spots = slot.get(self.spots_field) if self.spots_field else None
-            price = slot.get(self.price_field) if self.price_field else None
-            times.append(TeeTime(
-                when=when,
-                open_spots=int(spots) if spots is not None else None,
-                price=float(price) if price is not None else None,
-            ))
+            when = (when.replace(tzinfo=self.tz) if when.tzinfo is None
+                    else when.astimezone(self.tz))
+            if when.date() != day:
+                continue
+            spots = _dig(slot, self.spots_field)
+            price = _dig(slot, self.price_field)
+            try:
+                times.append(TeeTime(
+                    when=when,
+                    open_spots=int(spots) if spots is not None else None,
+                    price=float(price) if price is not None else None,
+                ))
+            except (TypeError, ValueError):
+                times.append(TeeTime(when=when))
+        if node and not times:
+            import json as _json
+            return self._result(day, error=(
+                f"{len(node)} slots returned but none parsed — first slot: "
+                f"{_json.dumps(node[0])[:250]}"))
         return self._result(day, times=times)

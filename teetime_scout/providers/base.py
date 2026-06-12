@@ -7,7 +7,22 @@ from datetime import datetime, date
 
 import requests
 
+try:
+    from curl_cffi import requests as cffi_requests
+    HAVE_CFFI = True
+except Exception:  # noqa: BLE001
+    HAVE_CFFI = False
+
 log = logging.getLogger("teetime_scout")
+
+
+def make_session(impersonate: bool = False):
+    """Return a requests-like session. When impersonate=True and curl_cffi is
+    installed, the session mimics a real Chrome TLS fingerprint, which clears
+    many (not all) Cloudflare bot checks."""
+    if impersonate and HAVE_CFFI:
+        return cffi_requests.Session(impersonate="chrome")
+    return requests.Session()
 
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
       "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36")
@@ -37,10 +52,12 @@ class Provider:
 
     name = "base"
 
+    impersonate = False   # subclasses set True to route via curl_cffi
+
     def __init__(self, course_cfg: dict, settings: dict):
         self.cfg = course_cfg
         self.settings = settings
-        self.session = requests.Session()
+        self.session = make_session(self.impersonate)
         self.session.headers.update({"User-Agent": UA, "Accept": "application/json"})
 
     # -- interface ------------------------------------------------------------

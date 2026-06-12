@@ -26,6 +26,7 @@ from .providers.cps import CPSProvider
 from .providers.foreup import ForeUpProvider
 from .providers.generic_json import GenericJSONProvider
 from .providers.teeitup import TeeItUpProvider
+from .providers.prophet_v3 import ProphetV3Provider
 from .providers.webtrac import WebTracProvider
 
 PROVIDERS = {
@@ -34,6 +35,7 @@ PROVIDERS = {
     "foreup": ForeUpProvider,
     "teeitup": TeeItUpProvider,
     "generic_json": GenericJSONProvider,
+    "prophet_v3": ProphetV3Provider,
     "webtrac": WebTracProvider,
 }
 

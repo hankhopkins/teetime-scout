@@ -31,7 +31,30 @@ class WebTracProvider(Provider):
         self.tz = ZoneInfo(settings["timezone"])
         self.session.headers["Accept"] = "text/html,application/xhtml+xml"
 
+    _warmed = False
+
+    def _warm_up(self):
+        """WebTrac wants a normal browsing session (cookies from the splash
+        page) before it serves search results; bare deep-links can 403."""
+        if self._warmed:
+            return
+        self.session.headers.update({
+            "Accept-Language": "en-US,en;q=0.9",
+            "Sec-Fetch-Mode": "navigate",
+            "Sec-Fetch-Site": "same-origin",
+            "Upgrade-Insecure-Requests": "1",
+        })
+        from urllib.parse import urlsplit
+        root = "{0.scheme}://{0.netloc}".format(urlsplit(self.search_url))
+        for url in (root + "/wbwsc/mnanokactywt.wsc/splash.html", self.search_url):
+            try:
+                self.session.get(url, timeout=30)
+            except Exception:  # noqa: BLE001
+                pass
+        self._warmed = True
+
     def fetch_day(self, day: date):
+        self._warm_up()
         params = dict(self.params)
         params[self.date_param] = day.strftime(self.date_format)
         try:
@@ -39,7 +62,11 @@ class WebTracProvider(Provider):
             resp.raise_for_status()
             html = resp.text
         except Exception as e:  # noqa: BLE001
-            return self._result(day, error=f"WebTrac request failed: {e}")
+            hint = (" (a 403 here is often temporary rate-limiting from "
+                    "repeated probing — it typically clears within the hour, "
+                    "and twice-daily production runs rarely trip it)"
+                    if "403" in str(e) else "")
+            return self._result(day, error=f"WebTrac request failed: {e}{hint}")
 
         if "captcha" in html.lower():
             return self._result(day, error="WebTrac served a CAPTCHA — booking "

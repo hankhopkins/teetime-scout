@@ -24,16 +24,18 @@ email:
 courses:
 
   - name: Inver Wood Championship
-    provider: generic_json          # TeeWire (teewire.app) — new platform for 2026, see README §TeeWire
-    booking_window: 7            # official: 7 days in advance
-    booking_url: https://teewire.app/inverwood/
+    provider: generic_json          # TeeWire — endpoint from live capture
+    booking_window: 7               # official: 7 days in advance
+    booking_url: https://teewire.app/inverwood/index.php?controller=FrontV2&action=load&cid=3&view=list
     generic:
-      url_template: ""              # paste the XHR URL from devtools with {date} where the date goes
-      list_path: ""                 # dot-path to the array of tee times in the JSON
-      time_field: time
-      time_format: "%Y-%m-%dT%H:%M:%S"
-      spots_field: available_spots
-      price_field: price
+      url_template: "https://teewire.app/inverwood/online/application/web/api/golf-api.php?action=tee-times&calendar_id=3&date={date}&starting_tee=1"
+      list_path: "data.tee_times"
+      time_field: time              # "06:20:00"
+      time_format: auto
+      spots_field: "availability.available_spots"
+      price_field: "price"          # may not exist in payload; harmless if absent
+      headers:
+        Referer: "https://teewire.app/inverwood/index.php?controller=FrontV2&action=load&cid=3&view=list"
     rules:
       - { days: [mon, tue, wed, thu, fri, sat, sun], window: "10:00-19:00" }
 
@@ -66,30 +68,37 @@ courses:
     booking_url: https://edinburghusa.cps.golf/
     cps:
       site: edinburghusa
+      api_key: 8ea2914e-cac2-48a7-a3e5-e0f41350bf3a
+      website_id: 7b2c1b2a-acee-4ba4-e72a-08dc2c96d123
+      course_ids: "2,1"          # Front/Back course units from the capture
     rules:
       - { days: [mon, tue, wed, thu, fri], window: "10:30-19:00" }
       - { days: [sat, sun],                window: "10:00-17:00" }
 
   - name: Meadowbrook GC
-    provider: chronogolf
+    provider: cps
     booking_window: 7            # UNVERIFIED — MPRB card holders get 7; public may be 5
-    booking_url: https://www.chronogolf.com/club/meadowbrook-golf-club
-    chronogolf:
-      slug: meadowbrook-golf-club
-      club_id: null                 # auto-discovered; pinned here after first probe
-      course_id: null
+    booking_url: https://minneapolismeadowbrook.cps.golf/onlineresweb/search-teetime
+    cps:
+      site: minneapolismeadowbrook
+      website_id: fe7da0af-a15d-466a-3739-08d92b64e4e2
+      course_ids: "14"
+      class_code: PUB
+      member_store_id: 7
     rules:
       - { days: [mon, tue, wed, thu, fri], window: "10:30-19:00" }
       - { days: [sat, sun],                window: "10:00-17:00" }
 
   - name: Columbia GC
-    provider: chronogolf
-    booking_window: 7            # UNVERIFIED — MPRB card holders get 7; public may be 5
-    booking_url: https://www.chronogolf.com/club/columbia-golf-course
-    chronogolf:
-      slug: columbia-golf-course
-      club_id: null
-      course_id: null
+    provider: cps
+    booking_window: 7
+    booking_url: https://minneapoliscolumbia.cps.golf/onlineresweb/search-teetime
+    cps:
+      site: minneapoliscolumbia
+      website_id: 17dac0fe-afed-4cf4-1f32-08d92b5af5a4
+      course_ids: "4,3"
+      class_code: PUB
+      member_store_id: 7
     rules:
       - { days: [mon, tue, wed, thu, fri], window: "10:30-19:00" }
       - { days: [sat, sun],                window: "10:00-17:00" }
@@ -100,8 +109,7 @@ courses:
     booking_url: https://www.chronogolf.com/club/baker-national-golf-club
     chronogolf:
       slug: baker-national-golf-club
-      club_id: null
-      course_id: null               # Championship course; probe lists all courses at the club
+      course_uuid: e9d8899b-a26b-44fa-a6f6-ebaec3db1656   # Championship (verified working)
     rules:
       - { days: [mon, tue, wed, thu, fri], window: "12:00-19:00" }
       - { days: [sat, sun],                window: "10:00-17:00" }
@@ -112,53 +120,58 @@ courses:
     booking_url: https://highlandnationalmn.cps.golf/
     cps:
       site: highlandnationalmn
+      website_id: 482d82a7-43b7-45f5-62af-08d8eb0c3cdf
+      course_ids: "3"
+      class_code: R
+      site_id: 3
     rules:
       - { days: [mon, tue, wed, thu, fri], window: "12:00-19:00" }
       - { days: [sat, sun],                window: "10:00-17:00" }
 
   - name: Chaska Town Course
-    provider: chronogolf
-    booking_window: 10           # official: 10 online (14 by phone w/ Patron Card)
-    booking_url: https://www.chronogolf.com/club/chaska-town-course
-    chronogolf:
-      slug: chaska-town-course
-      club_id: null
-      course_id: null
+    provider: cps                   # embedded in chaskatowncourse.com/bookteetimes
+    booking_window: 10              # official: 10 online (14 by phone w/ Patron Card)
+    booking_url: https://www.chaskatowncourse.com/bookteetimes
+    cps:
+      site: chaska
+      website_id: 9004916a-da08-4ba1-37a6-08daf43f0ffa
+      course_ids: "1"
+      class_code: R
     rules:
       - { days: [mon, tue, wed, thu, fri], window: "11:00-19:00" }
       - { days: [sat, sun],                window: "09:00-17:00" }
 
   - name: Francis A. Gross GC
-    provider: chronogolf
-    booking_window: 7            # UNVERIFIED — MPRB card holders get 7; public may be 5
-    booking_url: https://www.chronogolf.com/club/francis-a-gross-golf-club
-    chronogolf:
-      slug: francis-a-gross-golf-club
-      club_id: null
-      course_id: null
+    provider: cps
+    booking_window: 7
+    booking_url: https://minneapolisgrossnational.cps.golf/onlineresweb/search-teetime
+    cps:
+      site: minneapolisgrossnational
+      website_id: 1e0f7a08-230e-4f7d-ab46-08d92aa86feb
+      course_ids: "5,7"
+      class_code: PUB
+      member_store_id: 7
     rules:
       - { days: [mon, tue, wed, thu, fri], window: "11:00-19:00" }
       - { days: [sat, sun],                window: "10:00-17:00" }
 
   - name: Brookview GC (Regulation)
-    provider: chronogolf
-    booking_window: 5            # official: public 5 (members 7)
-    booking_url: https://www.chronogolf.com/club/brookview-golf-course
-    chronogolf:
-      slug: brookview-golf-course
-      club_id: null
-      course_id: null               # club has Regulation 18 + Par 3; pin the Regulation course_id after probe
+    provider: prophet_v3            # CPS legacy v3 (prophetservices.com)
+    booking_window: 5               # official: public 5 (members 7)
+    booking_url: https://secure.east.prophetservices.com/BrookviewGCv3/Home/nIndex
+    prophet_v3:
+      base_url: https://secure.east.prophetservices.com/BrookviewGCv3
+      course_id: "1"                # CourseId=1,2 in capture; 1 = Regulation 18 (2 likely Par 3)
     rules:
       - { days: [mon, tue, wed, thu, fri], window: "15:00-19:00" }
 
   - name: Oak Marsh Golf Course
-    provider: chronogolf
-    booking_window: 7            # official: 7 days in advance
-    booking_url: https://www.chronogolf.com/club/oak-marsh-golf-course
-    chronogolf:
-      slug: oak-marsh-golf-course
-      club_id: null
-      course_id: null
+    provider: teeitup               # same platform as Keller
+    booking_window: 7               # official: 7 days in advance
+    booking_url: https://oak-marsh-golf-course.book.teeitup.golf/
+    teeitup:
+      alias: oak-marsh-golf-course
+      facility_id: 4585
     rules:
       - { days: [mon, tue, wed, thu, fri], window: "11:00-19:00" }
 
@@ -168,6 +181,10 @@ courses:
     booking_url: https://victorylinksmn.cps.golf/
     cps:
       site: victorylinksmn
+      website_id: 8d523b1a-4286-4fb5-6798-08d946c25b4a
+      course_ids: "6"
+      class_code: R
+      site_id: 3
     rules:
       - { days: [mon, tue, wed, thu, fri], window: "11:00-19:00" }
 
