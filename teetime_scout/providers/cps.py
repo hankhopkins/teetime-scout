@@ -264,55 +264,39 @@ class CPSProvider(Provider):
 
     # -- fetch -------------------------------------------------------------
     def _register_transaction(self) -> str | None:
-        """CPS issues its own transaction id; a client-generated UUID is
-        rejected as 'Invalid Transaction Id'. The app calls RegisterTransactionId
-        (GET) first and reuses the returned id for the search."""
+        """CPS flow: the client generates a transaction GUID, POSTs it to
+        RegisterTransactionId to register it (endpoint returns `true`), then
+        reuses that same GUID in the TeeTimes search. We replicate that."""
+        tid = str(uuidlib.uuid4())
         base = (f"https://{self.site}.cps.golf/onlineres/onlineapi/api/v1/"
                 f"onlinereservation/RegisterTransactionId")
         hdrs = self._headers()
-
-        def _extract(resp):
-            txt = resp.text.strip()
+        # try the id in the ways the app might send it: query param, then body
+        attempts = [
+            ("params", {"transactionId": tid}, None),
+            ("json", None, {"transactionId": tid}),
+            ("json", None, tid),
+        ]
+        for kind, params, body in attempts:
             try:
-                data = resp.json()
-            except ValueError:
-                # plain string body, possibly quoted
-                return txt.strip('"') or None
-            if isinstance(data, str):
-                return data.strip('"') or None
-            if isinstance(data, dict):
-                for k in ("transactionId", "transactionID", "TransactionId",
-                          "id", "Id", "result", "data", "value"):
-                    v = data.get(k)
-                    if isinstance(v, str) and v:
-                        return v
-                    if isinstance(v, dict):  # one level deeper
-                        for kk in ("transactionId", "id", "value"):
-                            vv = v.get(kk)
-                            if isinstance(vv, str) and vv:
-                                return vv
-            return None
-
-        # the app issues this as a POST; try that first, then GET
-        for method in ("post", "get"):
-            try:
-                if method == "post":
-                    resp = self.session.post(base, json={}, timeout=20, headers=hdrs)
+                if kind == "params":
+                    resp = self.session.post(base, params=params, json={},
+                                             timeout=20, headers=hdrs)
                 else:
-                    resp = self.session.get(base, timeout=20, headers=hdrs)
+                    resp = self.session.post(base, json=body,
+                                             timeout=20, headers=hdrs)
             except Exception as e:  # noqa: BLE001
-                log.debug("CPS %s RegisterTransactionId %s err: %s",
-                          self.site, method, e)
+                log.debug("CPS %s register attempt err: %s", self.site, e)
                 continue
-            if resp.status_code >= 400:
-                log.warning("CPS %s RegisterTransactionId %s: HTTP %s %s",
-                            self.site, method, resp.status_code, resp.text[:160])
-                continue
-            tid = _extract(resp)
-            log.info("CPS %s RegisterTransactionId %s ok -> %s (raw: %s)",
-                     self.site, method, tid, resp.text[:80])
-            if tid:
-                return tid
+            if resp.status_code < 400:
+                txt = resp.text.strip().lower()
+                if "true" in txt or resp.status_code == 200:
+                    log.info("CPS %s: registered transaction %s", self.site, tid)
+                    return tid
+            else:
+                log.debug("CPS %s register (%s): HTTP %s %s", self.site,
+                          kind, resp.status_code, resp.text[:120])
+        log.warning("CPS %s: could not register a transaction id", self.site)
         return None
 
     def fetch_day(self, day: date):
