@@ -269,25 +269,51 @@ class CPSProvider(Provider):
         (GET) first and reuses the returned id for the search."""
         base = (f"https://{self.site}.cps.golf/onlineres/onlineapi/api/v1/"
                 f"onlinereservation/RegisterTransactionId")
-        try:
-            resp = self.session.get(base, timeout=20, headers=self._headers())
-            if resp.status_code >= 400:
-                log.debug("CPS %s RegisterTransactionId: HTTP %s %s",
-                          self.site, resp.status_code, resp.text[:120])
-                return None
-            data = resp.json()
+        hdrs = self._headers()
+
+        def _extract(resp):
+            txt = resp.text.strip()
+            try:
+                data = resp.json()
+            except ValueError:
+                # plain string body, possibly quoted
+                return txt.strip('"') or None
             if isinstance(data, str):
-                return data.strip('"')
+                return data.strip('"') or None
             if isinstance(data, dict):
                 for k in ("transactionId", "transactionID", "TransactionId",
-                          "id", "result", "data"):
+                          "id", "Id", "result", "data", "value"):
                     v = data.get(k)
                     if isinstance(v, str) and v:
                         return v
+                    if isinstance(v, dict):  # one level deeper
+                        for kk in ("transactionId", "id", "value"):
+                            vv = v.get(kk)
+                            if isinstance(vv, str) and vv:
+                                return vv
             return None
-        except Exception as e:  # noqa: BLE001
-            log.debug("CPS %s RegisterTransactionId failed: %s", self.site, e)
-            return None
+
+        # the app issues this as a POST; try that first, then GET
+        for method in ("post", "get"):
+            try:
+                if method == "post":
+                    resp = self.session.post(base, json={}, timeout=20, headers=hdrs)
+                else:
+                    resp = self.session.get(base, timeout=20, headers=hdrs)
+            except Exception as e:  # noqa: BLE001
+                log.debug("CPS %s RegisterTransactionId %s err: %s",
+                          self.site, method, e)
+                continue
+            if resp.status_code >= 400:
+                log.warning("CPS %s RegisterTransactionId %s: HTTP %s %s",
+                            self.site, method, resp.status_code, resp.text[:160])
+                continue
+            tid = _extract(resp)
+            log.info("CPS %s RegisterTransactionId %s ok -> %s (raw: %s)",
+                     self.site, method, tid, resp.text[:80])
+            if tid:
+                return tid
+        return None
 
     def fetch_day(self, day: date):
         self._apply_clearance()   # browser-clear Cloudflare if available
