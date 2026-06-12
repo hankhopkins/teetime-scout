@@ -263,45 +263,42 @@ class CPSProvider(Provider):
         return times
 
     # -- fetch -------------------------------------------------------------
-    def _register_transaction(self) -> str | None:
-        """CPS flow: the client generates a transaction GUID, POSTs it to
-        RegisterTransactionId to register it (endpoint returns `true`), then
-        reuses that same GUID in the TeeTimes search. We replicate that."""
-        tid = str(uuidlib.uuid4())
+    def _register_transaction(self, tid: str) -> bool:
+        """Register a specific transaction GUID so the subsequent search will
+        accept it. The endpoint returns `true` on success."""
         base = (f"https://{self.site}.cps.golf/onlineres/onlineapi/api/v1/"
                 f"onlinereservation/RegisterTransactionId")
         hdrs = self._headers()
-        # try the id in the ways the app might send it: query param, then body
-        attempts = [
-            ("params", {"transactionId": tid}, None),
+        for kind, params, body in (
+            ("params", {"transactionId": tid}, {}),
             ("json", None, {"transactionId": tid}),
             ("json", None, tid),
-        ]
-        for kind, params, body in attempts:
+        ):
             try:
                 if kind == "params":
-                    resp = self.session.post(base, params=params, json={},
+                    resp = self.session.post(base, params=params, json=body,
                                              timeout=20, headers=hdrs)
                 else:
                     resp = self.session.post(base, json=body,
                                              timeout=20, headers=hdrs)
             except Exception as e:  # noqa: BLE001
-                log.debug("CPS %s register attempt err: %s", self.site, e)
+                log.debug("CPS %s register err: %s", self.site, e)
                 continue
-            if resp.status_code < 400:
-                txt = resp.text.strip().lower()
-                if "true" in txt or resp.status_code == 200:
-                    log.info("CPS %s: registered transaction %s", self.site, tid)
-                    return tid
-            else:
-                log.debug("CPS %s register (%s): HTTP %s %s", self.site,
-                          kind, resp.status_code, resp.text[:120])
-        log.warning("CPS %s: could not register a transaction id", self.site)
-        return None
+            if resp.status_code < 400 and (
+                    "true" in resp.text.strip().lower() or resp.status_code == 200):
+                log.info("CPS %s: registered transaction %s", self.site, tid)
+                return True
+            log.debug("CPS %s register (%s): HTTP %s %s", self.site, kind,
+                      resp.status_code, resp.text[:120])
+        log.warning("CPS %s: could not register transaction id", self.site)
+        return False
 
     def fetch_day(self, day: date):
         self._apply_clearance()   # browser-clear Cloudflare if available
         self._bootstrap()         # best-effort api key
+
+        txn_id = str(uuidlib.uuid4())
+        self._register_transaction(txn_id)
 
         params = {
             "searchDate": day.strftime("%a %b %d %Y"),
@@ -309,8 +306,7 @@ class CPSProvider(Provider):
             "numberOfPlayer": "0",
             "courseIds": self.course_ids,
             "searchTimeType": "0",
-            "transactionId": (self._register_transaction()
-                              or str(uuidlib.uuid4())),
+            "transactionId": txn_id,
             "teeOffTimeMin": "0",
             "teeOffTimeMax": "23",
             "isChangeTeeOffTime": "true",
