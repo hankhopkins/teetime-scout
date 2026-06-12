@@ -1,0 +1,33 @@
+name: Tee Time Scout
+
+on:
+  schedule:
+    # GitHub cron is UTC. During CDT (golf season, mid-Mar → early Nov):
+    #   15:00 UTC = 10:00 AM Central
+    #   03:00 UTC = 10:00 PM Central (previous evening's 10pm)
+    # During CST these land at 9am/9pm Central — adjust to 16:00/04:00 in winter
+    # if you're still hunting tee times in December, you maniac.
+    - cron: "0 15 * * *"
+    - cron: "0 3 * * *"
+  workflow_dispatch: {}   # manual "Run workflow" button for testing
+
+jobs:
+  scout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch tee times and send digest
+        env:
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          TO_EMAIL: ${{ secrets.TO_EMAIL }}
+        run: python -m teetime_scout.main

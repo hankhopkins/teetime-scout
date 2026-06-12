@@ -1,0 +1,189 @@
+# Tee Time Scout configuration
+# ─────────────────────────────
+# Courses are listed in order of importance; the email digest follows this order.
+#
+# Each course has:
+#   provider: chronogolf | foreup | teeitup | cps | generic_json
+#   rules:    list of {days: [...], window: "HH:MM-HH:MM"} — a tee time matches
+#             if it falls inside ANY rule. Days not covered by any rule are skipped.
+#   booking_url: link shown in the email so you can book in one tap.
+#
+# days values: mon tue wed thu fri sat sun (or the shortcuts "weekdays"/"weekend")
+
+settings:
+  timezone: America/Chicago
+  days_ahead: 10         # default search horizon for courses without a booking_window
+  min_open_spots: 2      # only show times with at least this many open slots
+  holes: 18
+
+email:
+  subject_prefix: "⛳ Tee Time Scout"
+  # Sender/recipient/app-password come from environment variables / GitHub secrets:
+  #   GMAIL_ADDRESS, GMAIL_APP_PASSWORD, TO_EMAIL
+
+courses:
+
+  - name: Inver Wood Championship
+    provider: generic_json          # TeeWire (teewire.app) — new platform for 2026, see README §TeeWire
+    booking_window: 7            # official: 7 days in advance
+    booking_url: https://teewire.app/inverwood/
+    generic:
+      url_template: ""              # paste the XHR URL from devtools with {date} where the date goes
+      list_path: ""                 # dot-path to the array of tee times in the JSON
+      time_field: time
+      time_format: "%Y-%m-%dT%H:%M:%S"
+      spots_field: available_spots
+      price_field: price
+    rules:
+      - { days: [mon, tue, wed, thu, fri, sat, sun], window: "10:00-19:00" }
+
+  - name: Braemar Championship
+    provider: foreup
+    booking_window: 8            # 7 by phone, 8 online (per City of Edina)
+    booking_url: https://foreupsoftware.com/index.php/booking/21445/7829#teetimes
+    foreup:
+      course_id: 21445
+      schedule_id: 7829
+      booking_class: null           # auto-discovered from the booking page if null
+    rules:
+      - { days: [mon, tue, wed, thu], window: "11:00-19:00" }
+      - { days: [fri, sat, sun],      window: "09:00-18:30" }
+
+  - name: Keller Golf Course
+    provider: teeitup
+    booking_window: { weekdays: 7, weekends: 4 }   # Ramsey County splits these
+    booking_url: https://ramsey-county-golf.book.teeitup.com/?course=17055
+    teeitup:
+      alias: ramsey-county-golf
+      facility_id: 17055
+    rules:
+      - { days: [mon, tue, wed, thu, fri], window: "12:00-19:00" }
+      - { days: [sat, sun],                window: "09:00-18:00" }
+
+  - name: Edinburgh USA
+    provider: cps
+    booking_window: 7            # UNVERIFIED (one directory says 4) — probe will show actual reach
+    booking_url: https://edinburghusa.cps.golf/
+    cps:
+      site: edinburghusa
+    rules:
+      - { days: [mon, tue, wed, thu, fri], window: "10:30-19:00" }
+      - { days: [sat, sun],                window: "10:00-17:00" }
+
+  - name: Meadowbrook GC
+    provider: chronogolf
+    booking_window: 7            # UNVERIFIED — MPRB card holders get 7; public may be 5
+    booking_url: https://www.chronogolf.com/club/meadowbrook-golf-club
+    chronogolf:
+      slug: meadowbrook-golf-club
+      club_id: null                 # auto-discovered; pinned here after first probe
+      course_id: null
+    rules:
+      - { days: [mon, tue, wed, thu, fri], window: "10:30-19:00" }
+      - { days: [sat, sun],                window: "10:00-17:00" }
+
+  - name: Columbia GC
+    provider: chronogolf
+    booking_window: 7            # UNVERIFIED — MPRB card holders get 7; public may be 5
+    booking_url: https://www.chronogolf.com/club/columbia-golf-course
+    chronogolf:
+      slug: columbia-golf-course
+      club_id: null
+      course_id: null
+    rules:
+      - { days: [mon, tue, wed, thu, fri], window: "10:30-19:00" }
+      - { days: [sat, sun],                window: "10:00-17:00" }
+
+  - name: Baker National GC
+    provider: chronogolf
+    booking_window: 7            # public 7; Tour Card 8 (set to 8 if you hold one)
+    booking_url: https://www.chronogolf.com/club/baker-national-golf-club
+    chronogolf:
+      slug: baker-national-golf-club
+      club_id: null
+      course_id: null               # Championship course; probe lists all courses at the club
+    rules:
+      - { days: [mon, tue, wed, thu, fri], window: "12:00-19:00" }
+      - { days: [sat, sun],                window: "10:00-17:00" }
+
+  - name: Highland National GC
+    provider: cps
+    booking_window: 7            # UNVERIFIED — St Paul doesn't publish; assuming 7
+    booking_url: https://highlandnationalmn.cps.golf/
+    cps:
+      site: highlandnationalmn
+    rules:
+      - { days: [mon, tue, wed, thu, fri], window: "12:00-19:00" }
+      - { days: [sat, sun],                window: "10:00-17:00" }
+
+  - name: Chaska Town Course
+    provider: chronogolf
+    booking_window: 10           # official: 10 online (14 by phone w/ Patron Card)
+    booking_url: https://www.chronogolf.com/club/chaska-town-course
+    chronogolf:
+      slug: chaska-town-course
+      club_id: null
+      course_id: null
+    rules:
+      - { days: [mon, tue, wed, thu, fri], window: "11:00-19:00" }
+      - { days: [sat, sun],                window: "09:00-17:00" }
+
+  - name: Francis A. Gross GC
+    provider: chronogolf
+    booking_window: 7            # UNVERIFIED — MPRB card holders get 7; public may be 5
+    booking_url: https://www.chronogolf.com/club/francis-a-gross-golf-club
+    chronogolf:
+      slug: francis-a-gross-golf-club
+      club_id: null
+      course_id: null
+    rules:
+      - { days: [mon, tue, wed, thu, fri], window: "11:00-19:00" }
+      - { days: [sat, sun],                window: "10:00-17:00" }
+
+  - name: Brookview GC (Regulation)
+    provider: chronogolf
+    booking_window: 5            # official: public 5 (members 7)
+    booking_url: https://www.chronogolf.com/club/brookview-golf-course
+    chronogolf:
+      slug: brookview-golf-course
+      club_id: null
+      course_id: null               # club has Regulation 18 + Par 3; pin the Regulation course_id after probe
+    rules:
+      - { days: [mon, tue, wed, thu, fri], window: "15:00-19:00" }
+
+  - name: Oak Marsh Golf Course
+    provider: chronogolf
+    booking_window: 7            # official: 7 days in advance
+    booking_url: https://www.chronogolf.com/club/oak-marsh-golf-course
+    chronogolf:
+      slug: oak-marsh-golf-course
+      club_id: null
+      course_id: null
+    rules:
+      - { days: [mon, tue, wed, thu, fri], window: "11:00-19:00" }
+
+  - name: Victory Links
+    provider: cps
+    booking_window: 14           # official: 14-day advance booking policy
+    booking_url: https://victorylinksmn.cps.golf/
+    cps:
+      site: victorylinksmn
+    rules:
+      - { days: [mon, tue, wed, thu, fri], window: "11:00-19:00" }
+
+  - name: Chomonix Golf Course
+    provider: webtrac               # Vermont Systems WebTrac (Anoka County)
+    booking_window: 10              # official: public 10 days (Players Club 15, members 21)
+    booking_url: https://web2.myvscloud.com/wbwsc/mnanokactywt.wsc/search.html?display=detail&module=GR&secondarycode=1
+    webtrac:
+      search_url: https://web2.myvscloud.com/wbwsc/mnanokactywt.wsc/search.html
+      params:
+        display: detail
+        module: GR
+        secondarycode: "1"
+      date_param: begindate
+      date_format: "%m/%d/%Y"
+    # DEFAULT windows — adjust to taste. Note Chomonix league blackouts:
+    # Mon 4:00-6:30pm, Tue 8-10am, Wed 7-11am & 2pm-close, Thu 1pm-close
+    rules:
+      - { days: [mon, tue, wed, thu, fri], window: "11:00-19:00" }
