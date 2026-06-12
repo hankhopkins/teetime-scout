@@ -169,3 +169,121 @@ def get_clearance(site: str, timeout_ms: int = 60000,
 
     _CACHE[cache_key] = result
     return result
+
+
+def fetch_in_browser(site: str, search_params: dict, headers: dict,
+                     timeout_ms: int = 60000,
+                     proxy_session_id: str | None = None) -> dict | None:
+    """For strict-tier CPS sites that re-challenge every API call: clear the
+    challenge with a real browser, then make the RegisterTransactionId +
+    TeeTimes calls FROM INSIDE that browser (via fetch in page context), so
+    they inherit the live Cloudflare/JS environment. Returns parsed JSON
+    (the TeeTimes response) or None.
+
+    search_params: dict of query params for the TeeTimes call (we add the
+    transactionId ourselves). headers: the x-* / authorization / client-id
+    headers the API expects.
+    """
+    if not HAVE_PLAYWRIGHT:
+        return None
+    base = f"https://{site}.cps.golf"
+    api = f"{base}/onlineres/onlineapi/api/v1/onlinereservation"
+    result = None
+    try:
+        with sync_playwright() as pw:
+            launch_kwargs = {"headless": True, "args": [
+                "--disable-blink-features=AutomationControlled",
+                "--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu",
+                "--window-size=1280,900",
+            ]}
+            _proxy = _proxy_for_playwright(proxy_session_id)
+            if _proxy:
+                launch_kwargs["proxy"] = _proxy
+            browser = pw.chromium.launch(**launch_kwargs)
+            context = browser.new_context(
+                user_agent=("Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                            "AppleWebKit/537.36 (KHTML, like Gecko) "
+                            "Chrome/148.0.0.0 Safari/537.36"),
+                viewport={"width": 1280, "height": 900},
+                locale="en-US", timezone_id="America/Chicago")
+            context.add_init_script(
+                "Object.defineProperty(navigator,'webdriver',{get:()=>undefined});"
+                "window.chrome={runtime:{}};")
+            captured = {"token": None}
+
+            def on_request(req):
+                auth = req.headers.get("authorization", "")
+                if auth.lower().startswith("bearer ") and not captured["token"]:
+                    captured["token"] = auth.split(" ", 1)[1]
+            context.on("request", on_request)
+
+            page = context.new_page()
+            page.goto(f"{base}/onlineresweb/search-teetime",
+                      wait_until="domcontentloaded", timeout=timeout_ms)
+            # wait for challenge to clear and a token to be minted
+            for _ in range(45):
+                page.wait_for_timeout(1000)
+                if captured["token"] and "just a moment" not in (page.title() or "").lower():
+                    break
+            page.wait_for_timeout(1500)
+
+            token = captured["token"]
+            if not token:
+                log.warning("fetch_in_browser %s: no token after clearance", site)
+                browser.close()
+                _ = result
+                return None
+
+            # build the two URLs
+            import json as _json
+            import uuid as _uuid
+            tid = str(_uuid.uuid4())
+            qs = dict(search_params)
+            qs["transactionId"] = tid
+            from urllib.parse import urlencode
+            search_url = f"{api}/TeeTimes?{urlencode(qs)}"
+            reg_url = f"{api}/RegisterTransactionId"
+
+            # headers to attach inside the browser fetch
+            hdr = {k: v for k, v in headers.items()
+                   if k.lower() not in ("host", "content-length", "cookie")}
+            hdr["authorization"] = f"Bearer {token}"
+            hdr["content-type"] = "application/json"
+
+            # run register then search from INSIDE the page context, so the
+            # browser's Cloudflare cookies + JS environment apply automatically
+            js = """
+            async (args) => {
+              const {regUrl, searchUrl, tid, headers} = args;
+              const reg = await fetch(regUrl, {
+                method: 'POST', headers, credentials: 'include',
+                body: JSON.stringify({transactionId: tid})
+              });
+              const regText = await reg.text();
+              const res = await fetch(searchUrl, {
+                method: 'GET', headers, credentials: 'include'
+              });
+              const status = res.status;
+              const text = await res.text();
+              return {regStatus: reg.status, regText, status, text};
+            }
+            """
+            out = page.evaluate(js, {"regUrl": reg_url, "searchUrl": search_url,
+                                     "tid": tid, "headers": hdr})
+            browser.close()
+
+            if out and out.get("status") == 200:
+                try:
+                    result = _json.loads(out["text"])
+                    log.info("fetch_in_browser %s: OK (reg=%s)", site,
+                             out.get("regStatus"))
+                except Exception:  # noqa: BLE001
+                    log.warning("fetch_in_browser %s: non-JSON response", site)
+            else:
+                log.warning("fetch_in_browser %s: search HTTP %s (reg %s) %s",
+                            site, out.get("status") if out else "?",
+                            out.get("regStatus") if out else "?",
+                            (out.get("text","")[:120] if out else ""))
+    except Exception as e:  # noqa: BLE001
+        log.warning("fetch_in_browser %s failed: %s", site, e)
+    return result

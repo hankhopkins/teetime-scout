@@ -24,7 +24,7 @@ from datetime import date, datetime
 from zoneinfo import ZoneInfo
 
 from .base import HAVE_CFFI, Provider, TeeTime, log
-from .cps_browser import get_clearance
+from .cps_browser import get_clearance, fetch_in_browser
 
 GUID_RE = re.compile(
     r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", re.I)
@@ -332,6 +332,17 @@ class CPSProvider(Provider):
             return self._result(day, error=f"CPS request failed: {e}")
 
         if resp.status_code == 403:
+            # strict-tier site: re-challenges every API call. Make the
+            # register+search calls from INSIDE a cleared browser instead.
+            data = fetch_in_browser(
+                self.site, search_params=params, headers=self._headers(),
+                proxy_session_id=getattr(self, "_proxy_session_id", None))
+            if data is not None:
+                slots = self._extract_slots(data)
+                times = self._parse_slots(slots, day)
+                log.info("CPS %s: recovered via in-browser fetch (%d times)",
+                         self.site, len(times))
+                return self._result(day, times=times)
             return self._result(day, error=(
                 f"CPS '{self.site}': blocked by Cloudflare (403). "
                 f"{'Playwright cleared but the API still refused' if self._cleared else 'Playwright unavailable or could not clear the challenge'} "
