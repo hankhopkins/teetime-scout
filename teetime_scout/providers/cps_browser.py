@@ -42,14 +42,31 @@ def get_clearance(site: str, timeout_ms: int = 60000) -> dict | None:
             browser = pw.chromium.launch(headless=True, args=[
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",
+                "--disable-dev-shm-usage",
+                "--disable-gpu",
+                "--window-size=1280,900",
             ])
             context = browser.new_context(
-                user_agent=("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                user_agent=("Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                             "AppleWebKit/537.36 (KHTML, like Gecko) "
                             "Chrome/148.0.0.0 Safari/537.36"),
                 viewport={"width": 1280, "height": 900},
                 locale="en-US",
+                timezone_id="America/Chicago",
+                extra_http_headers={
+                    "Accept-Language": "en-US,en;q=0.9",
+                    "sec-ch-ua": ('"Chromium";v="148", "Google Chrome";v="148", '
+                                  '"Not/A)Brand";v="99"'),
+                    "sec-ch-ua-platform": '"Windows"',
+                    "sec-ch-ua-mobile": "?0",
+                },
             )
+            # hide the most obvious automation tell before any page script runs
+            context.add_init_script(
+                "Object.defineProperty(navigator,'webdriver',{get:()=>undefined});"
+                "window.chrome={runtime:{}};"
+                "Object.defineProperty(navigator,'languages',{get:()=>['en-US','en']});"
+                "Object.defineProperty(navigator,'plugins',{get:()=>[1,2,3,4,5]});")
             captured = {"token": None}
 
             # sniff the Authorization header off the app's own API calls
@@ -74,22 +91,20 @@ def get_clearance(site: str, timeout_ms: int = 60000) -> dict | None:
                     challenge_cleared = True
                     break
 
-            # Phase 2: once past the wall, wait up to 25s for the app to mint
-            # its anonymous token. Nudge with a reload at the halfway mark if
-            # nothing has shown up yet (slower runners sometimes need it).
-            if challenge_cleared:
-                for i in range(25):
-                    if captured["token"]:
-                        break
-                    page.wait_for_timeout(1000)
-                    if i == 12 and not captured["token"]:
-                        try:
-                            page.reload(wait_until="domcontentloaded",
-                                        timeout=timeout_ms)
-                        except Exception:  # noqa: BLE001
-                            pass
-                # small grace for cf_clearance cookie to settle
-                page.wait_for_timeout(1500)
+            # Phase 2: wait for the app to mint its anonymous token (up to 30s),
+            # reloading twice to coax slow/odd cases (e.g. challenged=False but
+            # token not yet fired). Runs regardless of challenge state.
+            for i in range(30):
+                if captured["token"]:
+                    break
+                page.wait_for_timeout(1000)
+                if i in (10, 20) and not captured["token"]:
+                    try:
+                        page.reload(wait_until="domcontentloaded",
+                                    timeout=timeout_ms)
+                    except Exception:  # noqa: BLE001
+                        pass
+            page.wait_for_timeout(1500)
 
             cookies = {c["name"]: c["value"]
                        for c in context.cookies()
