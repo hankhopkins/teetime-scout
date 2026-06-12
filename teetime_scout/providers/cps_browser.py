@@ -25,7 +25,7 @@ except Exception:  # noqa: BLE001
 _CACHE: dict[str, dict | None] = {}
 
 
-def get_clearance(site: str, timeout_ms: int = 45000) -> dict | None:
+def get_clearance(site: str, timeout_ms: int = 60000) -> dict | None:
     """Return {'cookies': {...}, 'token': str|None, 'user_agent': str} for a
     CPS site, or None if Playwright is unavailable or the challenge isn't
     cleared. Result is cached per site."""
@@ -60,25 +60,36 @@ def get_clearance(site: str, timeout_ms: int = 45000) -> dict | None:
             context.on("request", on_request)
 
             page = context.new_page()
-            # 'domcontentloaded' not 'networkidle' — these Angular apps poll
-            # forever and never reach network idle.
             page.goto(f"{base}/onlineresweb/search-teetime",
                       wait_until="domcontentloaded", timeout=timeout_ms)
 
-            # poll up to ~30s for Cloudflare to clear AND a token to appear
-            token_seen = False
-            for _ in range(30):
+            # Phase 1: wait up to 40s for the Cloudflare challenge to clear.
+            challenge_cleared = False
+            for _ in range(40):
                 page.wait_for_timeout(1000)
-                title = (page.title() or "").lower()
-                if captured["token"]:
-                    token_seen = True
-                    # small grace so cf_clearance cookie is also set
-                    page.wait_for_timeout(1500)
+                if "just a moment" not in (page.title() or "").lower():
+                    challenge_cleared = True
                     break
-                if "just a moment" not in title:
-                    # challenge cleared; keep waiting briefly for the token
-                    continue
-            _ = token_seen
+                if captured["token"]:
+                    challenge_cleared = True
+                    break
+
+            # Phase 2: once past the wall, wait up to 25s for the app to mint
+            # its anonymous token. Nudge with a reload at the halfway mark if
+            # nothing has shown up yet (slower runners sometimes need it).
+            if challenge_cleared:
+                for i in range(25):
+                    if captured["token"]:
+                        break
+                    page.wait_for_timeout(1000)
+                    if i == 12 and not captured["token"]:
+                        try:
+                            page.reload(wait_until="domcontentloaded",
+                                        timeout=timeout_ms)
+                        except Exception:  # noqa: BLE001
+                            pass
+                # small grace for cf_clearance cookie to settle
+                page.wait_for_timeout(1500)
 
             cookies = {c["name"]: c["value"]
                        for c in context.cookies()
