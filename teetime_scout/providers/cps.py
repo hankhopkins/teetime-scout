@@ -297,10 +297,24 @@ class CPSProvider(Provider):
         self._apply_clearance()   # browser-clear Cloudflare if available
         self._bootstrap()         # best-effort api key
 
-        txn_id = str(uuidlib.uuid4())
-        # the app sends a matching x-requestid for the register+search pair
-        self._request_id = txn_id
-        self._register_transaction(txn_id)
+        # Register a transaction id and ONLY search with one the server accepted.
+        # The register POST is occasionally flaky; retry with fresh GUIDs rather
+        # than searching with an id the server never registered (-> HTTP 400
+        # "Invalid Transaction Id").
+        txn_id = None
+        for _attempt in range(3):
+            candidate = str(uuidlib.uuid4())
+            self._request_id = candidate   # x-requestid must match the pair
+            if self._register_transaction(candidate):
+                txn_id = candidate
+                break
+        if txn_id is None:
+            # last resort: try the in-browser path, which does register+search
+            # together inside a cleared session
+            if not self._cleared:
+                self._apply_clearance()
+            txn_id = str(uuidlib.uuid4())
+            self._request_id = txn_id
 
         params = {
             "searchDate": day.strftime("%a %b %d %Y"),
@@ -349,10 +363,22 @@ class CPSProvider(Provider):
                 f"— this course shows a check-manually link."))
 
         if resp.status_code == 401:
+            # Anonymous-token mint failed over HTTP for this site. The booking
+            # page itself serves tee times to an anonymous browser, so run the
+            # register+search from inside a cleared browser session instead.
+            data = fetch_in_browser(
+                self.site, search_params=params, headers=self._headers(),
+                proxy_session_id=getattr(self, "_proxy_session_id", None))
+            if data is not None:
+                slots = self._extract_slots(data)
+                times = self._parse_slots(slots, day)
+                log.info("CPS %s: recovered 401 via in-browser fetch (%d times)",
+                         self.site, len(times))
+                return self._result(day, times=times)
             return self._result(day, error=(
-                f"CPS '{self.site}' returned 401 — token flow blocked, likely "
-                f"by Cloudflare. curl_cffi impersonation didn't clear it; this "
-                f"site needs the headless-browser path."))
+                f"CPS '{self.site}' returned 401 — anonymous token mint blocked "
+                f"and the in-browser fallback could not recover. Booking link "
+                f"still works for manual booking."))
         if resp.status_code >= 400:
             return self._result(day, error=(
                 f"CPS HTTP {resp.status_code}: {resp.text[:200]}".replace("\n", " ")))
