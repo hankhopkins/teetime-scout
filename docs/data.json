@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-06-14T02:38:55.893250-05:00",
- "generated_at_display": "Sunday, June 14 · 2:38 AM CDT",
- "total_times": 4961,
+ "generated_at": "2026-06-14T03:54:23.764525-05:00",
+ "generated_at_display": "Sunday, June 14 · 3:54 AM CDT",
+ "total_times": 4957,
  "courses": [
   {
    "name": "Inver Wood Championship",
@@ -41,14 +41,8 @@
      "holes": null
     },
     {
-     "when": "2026-06-17T10:20:00-05:00",
-     "spots": 2,
-     "price": null,
-     "holes": null
-    },
-    {
      "when": "2026-06-17T13:00:00-05:00",
-     "spots": 4,
+     "spots": 2,
      "price": null,
      "holes": null
     },
@@ -66,12 +60,6 @@
     },
     {
      "when": "2026-06-17T18:50:00-05:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-06-17T19:00:00-05:00",
      "spots": 4,
      "price": null,
      "holes": null
@@ -3052,9 +3040,7 @@
    "booking_url": "https://minneapolismeadowbrook.cps.golf/onlineresweb/search-teetime",
    "link_only": false,
    "note": null,
-   "errors": [
-    "CPS request failed: Failed to perform, curl: (28) Connection timed out after 15521 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
-   ],
+   "errors": [],
    "times": []
   },
   {
@@ -3062,9 +3048,7 @@
    "booking_url": "https://minneapoliscolumbia.cps.golf/onlineresweb/search-teetime",
    "link_only": false,
    "note": null,
-   "errors": [
-    "CPS HTTP 400: {\"error\":\"Invalid Transaction Id\"}"
-   ],
+   "errors": [],
    "times": []
   },
   {
@@ -3706,8 +3690,7 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS 'highlandnationalmn': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link.",
-    "CPS request failed: Failed to perform, curl: (28) Operation timed out after 30002 milliseconds with 0 bytes received. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
+    "CPS 'highlandnationalmn' returned 401 — anonymous token mint blocked and the in-browser fallback could not recover. Booking link still works for manual booking."
    ],
    "times": []
   },
@@ -3717,8 +3700,7 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS HTTP 400: {\"error\":\"Invalid Transaction Id\"}",
-    "CPS request failed: Failed to perform, curl: (28) Operation timed out after 30002 milliseconds with 0 bytes received. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
+    "CPS 'chaska' returned 401 — anonymous token mint blocked and the in-browser fallback could not recover. Booking link still works for manual booking."
    ],
    "times": []
   },
@@ -4689,12 +4671,6 @@
      "holes": 18
     },
     {
-     "when": "2026-06-21T09:40:00-05:00",
-     "spots": 4,
-     "price": 51.0,
-     "holes": 18
-    },
-    {
      "when": "2026-06-21T09:50:00-05:00",
      "spots": 4,
      "price": 51.0,
@@ -5020,7 +4996,7 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS request failed: Failed to perform, curl: (28) Operation timed out after 30002 milliseconds with 0 bytes received. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
+    "CPS 'victorylinksmn': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
    ],
    "times": []
   },
@@ -5065,7 +5041,9 @@
    "booking_url": "https://phalen.cps.golf/onlineresweb/search-teetime",
    "link_only": false,
    "note": null,
-   "errors": [],
+   "errors": [
+    "CPS 'phalen': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
+   ],
    "times": []
   },
   {
@@ -21131,12 +21109,6 @@
     {
      "when": "2026-06-21T08:10:00-05:00",
      "spots": 2,
-     "price": 68.0,
-     "holes": 18
-    },
-    {
-     "when": "2026-06-21T12:40:00-05:00",
-     "spots": 4,
      "price": 68.0,
      "holes": 18
     },
