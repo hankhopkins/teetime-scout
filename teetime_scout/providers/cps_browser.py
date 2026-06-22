@@ -172,8 +172,43 @@ def get_clearance(site: str, timeout_ms: int = 60000,
 
 
 def fetch_in_browser(site: str, search_params: dict, headers: dict,
-                     timeout_ms: int = 60000,
-                     proxy_session_id: str | None = None) -> dict | None:
+                     timeout_ms: int = 45000,
+                     proxy_session_id: str | None = None,
+                     deadline_s: float = 150.0) -> dict | None:
+    """Retrying entry point: attempt the in-browser register+search up to twice,
+    using a fresh sticky proxy session on the retry. Cloudflare clearance is
+    IP-bound, so a new exit IP often succeeds where a throttled one failed.
+
+    A wall-clock `deadline_s` caps the TOTAL time spent across attempts so one
+    stuck site can't hold up the whole run (the scheduled job runs 6x/day).
+    """
+    import time as _time
+    import uuid as _uuid
+    started = _time.monotonic()
+    base_sess = proxy_session_id or _uuid.uuid4().hex[:12]
+    attempts = [base_sess, _uuid.uuid4().hex[:12]]  # retry on a brand-new exit IP
+    for i, sess in enumerate(attempts):
+        if _time.monotonic() - started > deadline_s:
+            log.warning("fetch_in_browser %s: deadline hit, giving up", site)
+            break
+        remaining = deadline_s - (_time.monotonic() - started)
+        # don't start an attempt that can't plausibly finish its phases
+        per_attempt_ms = int(min(timeout_ms, max(20000, remaining * 1000 / 2)))
+        out = _fetch_in_browser_once(site, search_params, headers,
+                                     timeout_ms=per_attempt_ms,
+                                     proxy_session_id=sess)
+        if out is not None:
+            if i:
+                log.info("fetch_in_browser %s: recovered on retry %d", site, i)
+            return out
+        log.info("fetch_in_browser %s: attempt %d/%d failed", site,
+                 i + 1, len(attempts))
+    return None
+
+
+def _fetch_in_browser_once(site: str, search_params: dict, headers: dict,
+                           timeout_ms: int = 60000,
+                           proxy_session_id: str | None = None) -> dict | None:
     """For strict-tier CPS sites that re-challenge every API call: clear the
     challenge with a real browser, then make the RegisterTransactionId +
     TeeTimes calls FROM INSIDE that browser (via fetch in page context), so
@@ -209,30 +244,77 @@ def fetch_in_browser(site: str, search_params: dict, headers: dict,
             context.add_init_script(
                 "Object.defineProperty(navigator,'webdriver',{get:()=>undefined});"
                 "window.chrome={runtime:{}};")
-            captured = {"token": None}
+            captured = {"token": None, "teetimes": None}
 
             def on_request(req):
                 auth = req.headers.get("authorization", "")
                 if auth.lower().startswith("bearer ") and not captured["token"]:
                     captured["token"] = auth.split(" ", 1)[1]
-            context.on("request", on_request)
 
-            page = context.new_page()
-            page.goto(f"{base}/onlineresweb/search-teetime",
-                      wait_until="domcontentloaded", timeout=timeout_ms)
-            # wait for challenge to clear and a token to be minted
-            for _ in range(45):
-                page.wait_for_timeout(1000)
-                if captured["token"] and "just a moment" not in (page.title() or "").lower():
+            def on_response(resp):
+                # If the app itself successfully fetches TeeTimes while we're
+                # driving it, grab that response body directly — it's the most
+                # reliable path (no header/token reconstruction needed).
+                try:
+                    if "/TeeTimes" in resp.url and resp.status == 200 \
+                            and captured["teetimes"] is None:
+                        captured["teetimes"] = resp.text()
+                except Exception:  # noqa: BLE001
+                    pass
+            context.on("request", on_request)
+            context.on("response", on_response)
+
+            # Phase 2: the app mints its anonymous bearer only after it issues
+            # a real tee-time query. On several Minneapolis sites that doesn't
+            # happen on load, so nudge the page (click, then a deep-link that
+            # forces a search, then reload) until a token is sniffed — up to 30s.
+            def _nudge(step):
+                try:
+                    if step == 0:
+                        page.mouse.click(640, 450)
+                    elif step == 1:
+                        page.goto(f"{base}/onlineresweb/search-teetime"
+                                  f"?TeeOffTimeMin=0&TeeOffTimeMax=23",
+                                  wait_until="domcontentloaded",
+                                  timeout=timeout_ms)
+                    else:
+                        page.reload(wait_until="domcontentloaded",
+                                    timeout=timeout_ms)
+                except Exception:  # noqa: BLE001
+                    pass
+
+            for i in range(30):
+                if captured["token"] or captured["teetimes"]:
                     break
-            page.wait_for_timeout(1500)
+                page.wait_for_timeout(1000)
+                if i in (5, 13, 21) and not captured["token"]:
+                    _nudge((i - 5) // 8)
+            page.wait_for_timeout(1000)
 
             token = captured["token"]
-            if not token:
-                log.warning("fetch_in_browser %s: no token after clearance", site)
+            challenged = "just a moment" in (page.title() or "").lower()
+
+            # Best case: the app fetched its own TeeTimes while we drove it.
+            if captured["teetimes"]:
+                try:
+                    import json as _json0
+                    result = _json0.loads(captured["teetimes"])
+                    log.info("fetch_in_browser %s: captured app's own TeeTimes "
+                             "response directly", site)
+                    browser.close()
+                    return result
+                except Exception:  # noqa: BLE001
+                    pass
+
+            if not token and challenged:
+                # never got past Cloudflare at all — nothing we can do here
+                log.warning("fetch_in_browser %s: challenge not cleared", site)
                 browser.close()
-                _ = result
                 return None
+            # If we cleared the challenge but never sniffed a bearer, still try
+            # the API calls from inside the page: the cf_clearance cookie travels
+            # automatically and some installs accept the guest call without an
+            # explicit Authorization header.
 
             # build the two URLs
             import json as _json
@@ -246,26 +328,37 @@ def fetch_in_browser(site: str, search_params: dict, headers: dict,
 
             # headers to attach inside the browser fetch
             hdr = {k: v for k, v in headers.items()
-                   if k.lower() not in ("host", "content-length", "cookie")}
-            hdr["authorization"] = f"Bearer {token}"
+                   if k.lower() not in ("host", "content-length", "cookie",
+                                        "authorization")}
+            if token:
+                hdr["authorization"] = f"Bearer {token}"
             hdr["content-type"] = "application/json"
+            # CPS expects the register POST and the TeeTimes GET to carry the
+            # SAME x-requestid, equal to the transactionId. The headers we were
+            # handed came from the failed HTTP attempt and carry a stale id, so
+            # overwrite it to match the tid we generate here.
+            hdr["x-requestid"] = tid
 
             # run register then search from INSIDE the page context, so the
             # browser's Cloudflare cookies + JS environment apply automatically
             js = """
             async (args) => {
               const {regUrl, searchUrl, tid, headers} = args;
-              const reg = await fetch(regUrl, {
-                method: 'POST', headers, credentials: 'include',
-                body: JSON.stringify({transactionId: tid})
-              });
-              const regText = await reg.text();
-              const res = await fetch(searchUrl, {
-                method: 'GET', headers, credentials: 'include'
-              });
-              const status = res.status;
-              const text = await res.text();
-              return {regStatus: reg.status, regText, status, text};
+              try {
+                const reg = await fetch(regUrl, {
+                  method: 'POST', headers, credentials: 'include',
+                  body: JSON.stringify({transactionId: tid})
+                });
+                const regText = await reg.text();
+                const res = await fetch(searchUrl, {
+                  method: 'GET', headers, credentials: 'include'
+                });
+                const text = await res.text();
+                return {regStatus: reg.status, regText: regText.slice(0,200),
+                        status: res.status, text};
+              } catch (e) {
+                return {error: String(e)};
+              }
             }
             """
             out = page.evaluate(js, {"regUrl": reg_url, "searchUrl": search_url,
@@ -275,15 +368,16 @@ def fetch_in_browser(site: str, search_params: dict, headers: dict,
             if out and out.get("status") == 200:
                 try:
                     result = _json.loads(out["text"])
-                    log.info("fetch_in_browser %s: OK (reg=%s)", site,
-                             out.get("regStatus"))
+                    log.info("fetch_in_browser %s: OK (reg=%s, token=%s)", site,
+                             out.get("regStatus"), bool(token))
                 except Exception:  # noqa: BLE001
                     log.warning("fetch_in_browser %s: non-JSON response", site)
             else:
                 log.warning("fetch_in_browser %s: search HTTP %s (reg %s) %s",
                             site, out.get("status") if out else "?",
                             out.get("regStatus") if out else "?",
-                            (out.get("text","")[:120] if out else ""))
+                            (out.get("text", "")[:120] if out
+                             else (out.get("error", "") if out else "")))
     except Exception as e:  # noqa: BLE001
         log.warning("fetch_in_browser %s failed: %s", site, e)
     return result
