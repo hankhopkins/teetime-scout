@@ -153,9 +153,13 @@
     </div>
     <div class="ctl-row" id="dayChips">
       <label>Days</label>
-      <button class="filter-chip" data-day="any">Any day</button>
-      <button class="filter-chip" data-day="weekends">Weekends</button>
-      <button class="filter-chip" data-day="weekdays">Weekdays</button>
+      <button class="filter-chip" data-dow="0">Sun</button>
+      <button class="filter-chip" data-dow="1">Mon</button>
+      <button class="filter-chip" data-dow="2">Tue</button>
+      <button class="filter-chip" data-dow="3">Wed</button>
+      <button class="filter-chip" data-dow="4">Thu</button>
+      <button class="filter-chip" data-dow="5">Fri</button>
+      <button class="filter-chip" data-dow="6">Sat</button>
     </div>
     <div class="ctl-row">
       <label for="spotsSelect">Spots</label>
@@ -184,7 +188,7 @@ const BUCKETS = [
 ];
 
 let DATA = null;
-const FILTERS = { buckets: new Set(), day: 'any', minSpots: 0 };
+const FILTERS = { buckets: new Set(), days: new Set(), minSpots: 0 };
 
 function bucketOf(hour) {
   for (const b of BUCKETS) if (b.test(hour)) return b.key;
@@ -195,11 +199,7 @@ function passesFilters(t) {
   const d = new Date(t.when);
   if (FILTERS.buckets.size && !FILTERS.buckets.has(bucketOf(d.getHours())))
     return false;
-  if (FILTERS.day !== 'any') {
-    const wknd = d.getDay() === 0 || d.getDay() === 6;
-    if (FILTERS.day === 'weekends' && !wknd) return false;
-    if (FILTERS.day === 'weekdays' && wknd) return false;
-  }
+  if (FILTERS.days.size && !FILTERS.days.has(d.getDay())) return false;
   if (FILTERS.minSpots && (t.spots == null || t.spots < FILTERS.minSpots))
     return false;
   return true;
@@ -237,7 +237,7 @@ function chip(t) {
 function renderCourse(c) {
   const filtered = c.times.filter(passesFilters);
   const n = filtered.length;
-  const anyFilter = FILTERS.buckets.size || FILTERS.day !== 'any' || FILTERS.minSpots;
+  const anyFilter = FILTERS.buckets.size || FILTERS.days.size || FILTERS.minSpots;
   let html = '<div class="course"><div class="course-head"><h2>' + esc(c.name) +
     '<span class="count">' + n + ' time' + (n !== 1 ? 's' : '') +
     (anyFilter && c.times.length !== n ? ' of ' + c.times.length : '') +
@@ -293,7 +293,7 @@ function updateHeaderCount() {
     total += c.times.length;
     shown += c.times.filter(passesFilters).length;
   }
-  const anyFilter = FILTERS.buckets.size || FILTERS.day !== 'any' || FILTERS.minSpots;
+  const anyFilter = FILTERS.buckets.size || FILTERS.days.size || FILTERS.minSpots;
   const base = 'Updated ' + DATA.generated_at_display + ' · ';
   document.getElementById('updated').textContent = anyFilter
     ? base + shown + ' of ' + total + ' tee times match'
@@ -321,13 +321,11 @@ function wireFilters() {
       render();
     });
   });
-  const dayBtns = document.querySelectorAll('#dayChips .filter-chip');
-  dayBtns.forEach(btn => {
+  document.querySelectorAll('#dayChips .filter-chip').forEach(btn => {
     btn.addEventListener('click', () => {
-      const v = btn.dataset.day;
-      FILTERS.day = (FILTERS.day === v) ? 'any' : v;   // toggle off -> any
-      dayBtns.forEach(b => b.classList.toggle('on',
-        b.dataset.day === FILTERS.day && FILTERS.day !== 'any'));
+      const dow = parseInt(btn.dataset.dow, 10);
+      if (FILTERS.days.has(dow)) { FILTERS.days.delete(dow); btn.classList.remove('on'); }
+      else { FILTERS.days.add(dow); btn.classList.add('on'); }
       render();
     });
   });
@@ -336,7 +334,7 @@ function wireFilters() {
     render();
   });
   document.getElementById('clearFilters').addEventListener('click', () => {
-    FILTERS.buckets.clear(); FILTERS.day = 'any'; FILTERS.minSpots = 0;
+    FILTERS.buckets.clear(); FILTERS.days.clear(); FILTERS.minSpots = 0;
     document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('on'));
     document.getElementById('spotsSelect').value = '0';
     render();
