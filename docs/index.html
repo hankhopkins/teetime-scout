@@ -34,16 +34,35 @@
   header .sub { color: var(--gold); font-size: 13.5px; margin-top: 6px; }
 
   .controls {
-    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+    display: flex; flex-direction: column; gap: 12px;
     margin: 18px 2px 14px;
   }
-  .controls label { font-size: 14px; color: var(--green); font-weight: 700; }
+  .ctl-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .ctl-row > label { font-size: 14px; color: var(--green); font-weight: 700; min-width: 64px; }
   select {
     font-family: inherit; font-size: 15px;
     padding: 9px 12px; border: 1px solid var(--chip-border);
     border-radius: 8px; background: #fff; color: #2b2b2b;
-    max-width: 100%; flex: 1; min-width: 220px;
+    max-width: 100%; flex: 1; min-width: 200px;
   }
+  .filter-chip {
+    font-family: inherit; font-size: 13.5px; cursor: pointer;
+    padding: 7px 13px; border: 1px solid var(--chip-border);
+    border-radius: 999px; background: #fff; color: #555;
+    user-select: none; transition: all .12s;
+  }
+  .filter-chip:hover { border-color: var(--green); }
+  .filter-chip.on {
+    background: var(--green); color: var(--cream); border-color: var(--green);
+  }
+  .ctl-row .spacer { flex: 1; }
+  .clear-btn {
+    font-family: inherit; font-size: 12.5px; cursor: pointer;
+    background: none; border: none; color: var(--muted);
+    text-decoration: underline; padding: 4px;
+  }
+  .clear-btn:hover { color: var(--green); }
+  #spotsSelect { flex: 0 0 auto; min-width: 0; }
 
   .course {
     background: #fff;
@@ -121,8 +140,34 @@
   </header>
 
   <div class="controls">
-    <label for="courseSelect">Course</label>
-    <select id="courseSelect"><option value="__all__">All courses</option></select>
+    <div class="ctl-row">
+      <label for="courseSelect">Course</label>
+      <select id="courseSelect"><option value="__all__">All courses</option></select>
+    </div>
+    <div class="ctl-row" id="timeChips">
+      <label>Time</label>
+      <button class="filter-chip" data-bucket="morning">Morning</button>
+      <button class="filter-chip" data-bucket="late-morning">Late Morning</button>
+      <button class="filter-chip" data-bucket="afternoon">Afternoon</button>
+      <button class="filter-chip" data-bucket="evening">Evening</button>
+    </div>
+    <div class="ctl-row" id="dayChips">
+      <label>Days</label>
+      <button class="filter-chip" data-day="any">Any day</button>
+      <button class="filter-chip" data-day="weekends">Weekends</button>
+      <button class="filter-chip" data-day="weekdays">Weekdays</button>
+    </div>
+    <div class="ctl-row">
+      <label for="spotsSelect">Spots</label>
+      <select id="spotsSelect">
+        <option value="0">Any</option>
+        <option value="2">2+</option>
+        <option value="3">3+</option>
+        <option value="4">4</option>
+      </select>
+      <span class="spacer"></span>
+      <button class="clear-btn" id="clearFilters">Clear filters</button>
+    </div>
   </div>
 
   <div id="content"><div class="loading">Fetching the tee sheet…</div></div>
@@ -139,6 +184,26 @@ const BUCKETS = [
 ];
 
 let DATA = null;
+const FILTERS = { buckets: new Set(), day: 'any', minSpots: 0 };
+
+function bucketOf(hour) {
+  for (const b of BUCKETS) if (b.test(hour)) return b.key;
+  return null;
+}
+
+function passesFilters(t) {
+  const d = new Date(t.when);
+  if (FILTERS.buckets.size && !FILTERS.buckets.has(bucketOf(d.getHours())))
+    return false;
+  if (FILTERS.day !== 'any') {
+    const wknd = d.getDay() === 0 || d.getDay() === 6;
+    if (FILTERS.day === 'weekends' && !wknd) return false;
+    if (FILTERS.day === 'weekdays' && wknd) return false;
+  }
+  if (FILTERS.minSpots && (t.spots == null || t.spots < FILTERS.minSpots))
+    return false;
+  return true;
+}
 
 function esc(s) {
   return String(s ?? '').replace(/[&<>"']/g, c =>
@@ -170,9 +235,13 @@ function chip(t) {
 }
 
 function renderCourse(c) {
-  const n = c.times.length;
+  const filtered = c.times.filter(passesFilters);
+  const n = filtered.length;
+  const anyFilter = FILTERS.buckets.size || FILTERS.day !== 'any' || FILTERS.minSpots;
   let html = '<div class="course"><div class="course-head"><h2>' + esc(c.name) +
-    '<span class="count">' + n + ' time' + (n !== 1 ? 's' : '') + '</span></h2>';
+    '<span class="count">' + n + ' time' + (n !== 1 ? 's' : '') +
+    (anyFilter && c.times.length !== n ? ' of ' + c.times.length : '') +
+    '</span></h2>';
   if (c.booking_url) {
     html += '<a class="book-btn" target="_blank" rel="noopener" href="' +
       esc(c.booking_url) + '">Book at course ↗</a>';
@@ -191,7 +260,7 @@ function renderCourse(c) {
 
   if (n) {
     const byDay = {};
-    for (const t of c.times) (byDay[dayKey(t.when)] ??= []).push(t);
+    for (const t of filtered) (byDay[dayKey(t.when)] ??= []).push(t);
     for (const day of Object.keys(byDay).sort()) {
       html += '<div class="day"><div class="day-label">' + fmtDay(day) + '</div>';
       for (const b of BUCKETS) {
@@ -204,12 +273,32 @@ function renderCourse(c) {
       }
       html += '</div>';
     }
-  } else if (!c.link_only && !(c.errors && c.errors.length)) {
+  } else if (c.link_only) {
+    /* message already shown above */
+  } else if (c.errors && c.errors.length) {
+    /* warning already shown above */
+  } else if (anyFilter && c.times.length) {
+    html += '<div class="none">No tee times match the current filters.</div>';
+  } else {
     html += '<div class="none">No open tee times found in the booking window.</div>';
   }
 
   html += '</div></div>';
   return html;
+}
+
+function updateHeaderCount() {
+  let shown = 0, total = 0;
+  for (const c of DATA.courses) {
+    total += c.times.length;
+    shown += c.times.filter(passesFilters).length;
+  }
+  const anyFilter = FILTERS.buckets.size || FILTERS.day !== 'any' || FILTERS.minSpots;
+  const base = 'Updated ' + DATA.generated_at_display + ' · ';
+  document.getElementById('updated').textContent = anyFilter
+    ? base + shown + ' of ' + total + ' tee times match'
+    : base + total + ' open tee time' + (total !== 1 ? 's' : '') +
+      ' across ' + DATA.courses.length + ' courses';
 }
 
 function render() {
@@ -220,6 +309,38 @@ function render() {
   document.getElementById('content').innerHTML =
     courses.map(renderCourse).join('') ||
     '<div class="loading">No courses to show.</div>';
+  updateHeaderCount();
+}
+
+function wireFilters() {
+  document.querySelectorAll('#timeChips .filter-chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const k = btn.dataset.bucket;
+      if (FILTERS.buckets.has(k)) { FILTERS.buckets.delete(k); btn.classList.remove('on'); }
+      else { FILTERS.buckets.add(k); btn.classList.add('on'); }
+      render();
+    });
+  });
+  const dayBtns = document.querySelectorAll('#dayChips .filter-chip');
+  dayBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const v = btn.dataset.day;
+      FILTERS.day = (FILTERS.day === v) ? 'any' : v;   // toggle off -> any
+      dayBtns.forEach(b => b.classList.toggle('on',
+        b.dataset.day === FILTERS.day && FILTERS.day !== 'any'));
+      render();
+    });
+  });
+  document.getElementById('spotsSelect').addEventListener('change', e => {
+    FILTERS.minSpots = parseInt(e.target.value, 10) || 0;
+    render();
+  });
+  document.getElementById('clearFilters').addEventListener('click', () => {
+    FILTERS.buckets.clear(); FILTERS.day = 'any'; FILTERS.minSpots = 0;
+    document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('on'));
+    document.getElementById('spotsSelect').value = '0';
+    render();
+  });
 }
 
 async function init() {
@@ -231,10 +352,6 @@ async function init() {
       '<div class="loading">Could not load data.json — has the first scrape run yet?</div>';
     return;
   }
-  document.getElementById('updated').textContent =
-    'Updated ' + DATA.generated_at_display + ' · ' + DATA.total_times +
-    ' open tee time' + (DATA.total_times !== 1 ? 's' : '') + ' across ' +
-    DATA.courses.length + ' courses';
 
   const select = document.getElementById('courseSelect');
   for (const c of DATA.courses) {
@@ -244,6 +361,7 @@ async function init() {
     select.appendChild(o);
   }
   select.addEventListener('change', render);
+  wireFilters();
   render();
 }
 init();
