@@ -102,7 +102,7 @@ def send(subject: str, body_text: str):
 
 
 def main():
-    if "--test" in sys.argv:
+    if "--test" in sys.argv or os.environ.get("ALERT_TEST") == "1":
         send("⛳ Inver Wood alert TEST",
              "Test message — alerts are wired up. "
              "If you got this as a text, the vtext gateway works. "

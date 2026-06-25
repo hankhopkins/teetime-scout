@@ -11,7 +11,12 @@ on:
     # Every 3 minutes, only during Jun 25-27 UTC (covers now through Sat 2pm CT).
     # GitHub cron is best-effort and may delay/skip runs under load.
     - cron: "*/3 * 25,26,27 6 *"
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      test:
+        description: "Send a test alert (email+text) regardless of slots"
+        type: boolean
+        default: true
 
 concurrency:
   group: inverwood-alert
@@ -33,4 +38,5 @@ jobs:
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           TO_EMAIL: ${{ secrets.TO_EMAIL }}
+          ALERT_TEST: ${{ (github.event_name == 'workflow_dispatch' && inputs.test) && '1' || '0' }}
         run: python inverwood_alert.py
