@@ -25,8 +25,9 @@ WINDOW_START = time(16, 0)          # 4:00 PM
 WINDOW_END = time(17, 20)           # 5:20 PM (inclusive)
 STOP_AFTER = datetime(2026, 6, 27, 14, 0, tzinfo=TZ)   # Sat 2:00 PM CT
 
-SMS_TO = ["6514700685@vtext.com",      # Verizon SMS gateway
-          "6122329336@mms.att.net"]    # second recipient (AT&T; SMS gateway dead, MMS may work)
+SMS_TO = ["6514700685@vtext.com"]   # Verizon SMS gateway (works)
+# 612-232-9336 is AT&T — both SMS (txt.att.net) and MMS (mms.att.net) gateways
+# are decommissioned (DNS no longer resolves), so that person gets email only.
 EXTRA_EMAILS = ["newman.nick3@gmail.com"]
 BOOKING_URL = ("https://teewire.app/inverwood/index.php"
                "?controller=FrontV2&action=load&cid=3&view=list")
