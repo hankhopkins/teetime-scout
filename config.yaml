@@ -83,6 +83,7 @@ courses:
     booking_url: https://minneapolismeadowbrook.cps.golf/onlineresweb/search-teetime
     cps:
       site: minneapolismeadowbrook
+      browser_fallback: true
       website_id: fe7da0af-a15d-466a-3739-08d92b64e4e2
       course_ids: "14"
       class_code: PUB
@@ -94,6 +95,7 @@ courses:
     booking_url: https://minneapoliscolumbia.cps.golf/onlineresweb/search-teetime
     cps:
       site: minneapoliscolumbia
+      browser_fallback: true
       website_id: 17dac0fe-afed-4cf4-1f32-08d92b5af5a4
       course_ids: "4,3"
       class_code: PUB
@@ -109,10 +111,12 @@ courses:
 
   - name: Highland National GC
     provider: cps                  # strict Cloudflare tier — usually link-only in practice
+    link_only: true               # strict Cloudflare tier — permanent check-manually link
     booking_window: 7
     booking_url: https://highlandnationalmn.cps.golf/
     cps:
       site: highlandnationalmn
+      browser_fallback: false
       website_id: 482d82a7-43b7-45f5-62af-08d8eb0c3cdf
       course_ids: "3"
       class_code: R
@@ -120,10 +124,12 @@ courses:
 
   - name: Chaska Town Course
     provider: cps                  # strict Cloudflare tier — usually link-only in practice
+    link_only: true               # strict Cloudflare tier — permanent check-manually link
     booking_window: 10
     booking_url: https://www.chaskatowncourse.com/bookteetimes
     cps:
       site: chaska
+      browser_fallback: false
       website_id: 9004916a-da08-4ba1-37a6-08daf43f0ffa
       course_ids: "1"
       class_code: R
@@ -134,6 +140,7 @@ courses:
     booking_url: https://minneapolisgrossnational.cps.golf/onlineresweb/search-teetime
     cps:
       site: minneapolisgrossnational
+      browser_fallback: true
       website_id: 1e0f7a08-230e-4f7d-ab46-08d92aa86feb
       course_ids: "5,7"
       class_code: PUB
@@ -157,10 +164,12 @@ courses:
 
   - name: Victory Links
     provider: cps                  # strict Cloudflare tier — usually link-only in practice
+    link_only: true               # strict Cloudflare tier — permanent check-manually link
     booking_window: 14
     booking_url: https://victorylinksmn.cps.golf/
     cps:
       site: victorylinksmn
+      browser_fallback: false
       website_id: 8d523b1a-4286-4fb5-6798-08d946c25b4a
       course_ids: "6"
       class_code: R
@@ -188,6 +197,7 @@ courses:
     booking_url: https://minneapolistheodorewirth.cps.golf/onlineresweb/search-teetime
     cps:
       site: minneapolistheodorewirth
+      browser_fallback: true
       course_ids: "17"             # captured live: classCode=R, memberStoreId=1
       class_code: R
       member_store_id: 1
@@ -198,6 +208,7 @@ courses:
     booking_url: https://minneapolishiawatha.cps.golf/onlineresweb/search-teetime
     cps:
       site: minneapolishiawatha
+      browser_fallback: true
       course_ids: "11"
       class_code: R
       member_store_id: 1
@@ -208,6 +219,7 @@ courses:
     booking_url: https://como.cps.golf/onlineresweb/search-teetime
     cps:
       site: como
+      browser_fallback: true
       course_ids: "8,1"
       class_code: R
       member_store_id: 1
@@ -218,6 +230,7 @@ courses:
     booking_url: https://phalen.cps.golf/onlineresweb/search-teetime
     cps:
       site: phalen
+      browser_fallback: true
       course_ids: "2,6"
       class_code: R
       member_store_id: 1
