@@ -102,6 +102,13 @@ def send(subject: str, body_text: str):
 
 
 def main():
+    if "--test" in sys.argv:
+        send("⛳ Inver Wood alert TEST",
+             "Test message — alerts are wired up. "
+             "If you got this as a text, the vtext gateway works. "
+             "Real alerts fire for Sat 4:00–5:20 PM openings.")
+        return
+
     now = datetime.now(TZ)
     if now > STOP_AFTER:
         print(f"past stop time ({STOP_AFTER}); exiting without checking.")
