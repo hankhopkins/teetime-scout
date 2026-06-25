@@ -9,12 +9,14 @@ affect the main site/digest. Reuses only the GMAIL_* secrets.
 """
 from __future__ import annotations
 
+import json
 import os
 import smtplib
 import sys
-from datetime import datetime, time
+from datetime import datetime, time, timedelta
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import requests
@@ -24,6 +26,8 @@ TARGET_DATE = "2026-06-27"          # Saturday
 WINDOW_START = time(16, 0)          # 4:00 PM
 WINDOW_END = time(17, 20)           # 5:20 PM (inclusive)
 STOP_AFTER = datetime(2026, 6, 27, 14, 0, tzinfo=TZ)   # Sat 2:00 PM CT
+REALERT_AFTER = timedelta(minutes=30)   # re-alert an open slot at most this often
+STATE_FILE = Path("inverwood_alert_state.json")
 
 SMS_TO = ["6514700685@vtext.com"]   # Verizon SMS gateway (works)
 # 612-232-9336 is AT&T — both SMS (txt.att.net) and MMS (mms.att.net) gateways
@@ -106,6 +110,18 @@ def send(subject: str, body_text: str):
     print(f"alert sent to {recipients}")
 
 
+def load_state() -> dict:
+    """State maps slot-time string -> ISO timestamp of our last alert for it."""
+    try:
+        return json.loads(STATE_FILE.read_text())
+    except Exception:  # noqa: BLE001  (missing/corrupt -> start fresh)
+        return {}
+
+
+def save_state(state: dict):
+    STATE_FILE.write_text(json.dumps(state, indent=1))
+
+
 def main():
     if "--test" in sys.argv or os.environ.get("ALERT_TEST") == "1":
         send("⛳ Inver Wood alert TEST",
@@ -114,8 +130,7 @@ def main():
              "Real alerts fire for Sat 4:00–5:20 PM openings.")
         return
 
-    now = datetime.now(TZ)
-    if now > STOP_AFTER:
+    if datetime.now(TZ) > STOP_AFTER:
         print(f"past stop time ({STOP_AFTER}); exiting without checking.")
         return
 
@@ -123,20 +138,60 @@ def main():
         slots = fetch_open_slots()
     except Exception as e:  # noqa: BLE001
         print(f"fetch failed: {e}", file=sys.stderr)
-        # don't alert on errors; just exit non-fatally so the run goes green
+        # don't alert (or mutate state) on errors; exit green
         return
 
-    if not slots:
-        print(f"{now:%H:%M} — no open slots in 4:00–5:20 PM window.")
-        return
+    now = datetime.now(TZ)
+    current = {t: sp for t, sp in slots}          # time -> spots, qualifying now
+    state = load_state()                          # time -> last-alert ISO
+    new_state: dict = {}
 
-    lines = [f"  • {t}" + (f" ({sp} spots)" if sp is not None else "")
-             for t, sp in slots]
-    body = ("Inver Wood — Sat Jun 27, 4:00–5:20 PM\n\n"
-            + "\n".join(lines)
-            + f"\n\nBook: {BOOKING_URL}")
-    subject = f"⛳ Inver Wood OPEN: {len(slots)} slot(s) 4–5:20 PM Sat"
-    send(subject, body)
+    newly_open = []     # (time, spots) — first time we've seen it qualify
+    re_alert = []       # (time, spots) — open >= 30 min since last alert
+    for t, sp in current.items():
+        last = state.get(t)
+        if last is None:
+            newly_open.append((t, sp))
+            new_state[t] = now.isoformat()
+        else:
+            try:
+                last_dt = datetime.fromisoformat(last)
+            except ValueError:
+                last_dt = now - REALERT_AFTER     # treat bad data as due
+            if now - last_dt >= REALERT_AFTER:
+                re_alert.append((t, sp))
+                new_state[t] = now.isoformat()
+            else:
+                new_state[t] = last               # keep the original alert time
+
+    # Gone: was in state last run, not qualifying now (missing or < 2 spots).
+    gone = [t for t in state.keys() if t not in current]
+
+    def fmt(rows):
+        return "\n".join(f"  • {t} ({sp} spots)" for t, sp in sorted(rows))
+
+    sent_any = False
+    if newly_open or re_alert:
+        opened = newly_open + re_alert
+        body = ("Inver Wood — Sat Jun 27, 4:00–5:20 PM\n\n"
+                + fmt(opened)
+                + f"\n\nBook: {BOOKING_URL}")
+        tag = "OPEN" if newly_open else "still open"
+        subject = f"⛳ Inver Wood {tag}: {len(opened)} slot(s) 4–5:20 PM Sat"
+        send(subject, body)
+        sent_any = True
+
+    if gone:
+        body = ("These Inver Wood slots are no longer open (Sat 4:00–5:20 PM):\n\n"
+                + "\n".join(f"  • {t}" for t in sorted(gone))
+                + f"\n\nBook: {BOOKING_URL}")
+        send(f"⛳ Inver Wood GONE: {len(gone)} slot(s) closed", body)
+        sent_any = True
+
+    save_state(new_state)
+    print(f"{now:%H:%M} — qualifying={list(current)} "
+          f"new={[t for t,_ in newly_open]} re={[t for t,_ in re_alert]} "
+          f"gone={gone} sent={sent_any}")
 
 
 if __name__ == "__main__":
