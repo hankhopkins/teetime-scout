@@ -18,6 +18,7 @@ site insists on one, the error will say so.
 from __future__ import annotations
 
 import json
+import os
 import re
 import uuid as uuidlib
 from datetime import date, datetime
@@ -45,6 +46,10 @@ class CPSProvider(Provider):
         self.class_code = c.get("class_code", "R")
         self.member_store_id = str(c.get("member_store_id", 1))
         self.site_id = str(c.get("site_id", 1))
+        # Opt-in browser fallback. Default True keeps current behavior, but
+        # courses can set browser_fallback: false to stay HTTP-only (fast) and
+        # the three strict munis set it false to skip straight to link-only.
+        self.browser_fallback = c.get("browser_fallback", True)
         self.tz = ZoneInfo(settings["timezone"])
         self._bootstrapped = False
         self._token = None
@@ -92,9 +97,11 @@ class CPSProvider(Provider):
         /identityapi/connect/authorize with client 'onlinereswebshortlived'
         and receives the access token in the redirect URL fragment. We
         replicate that without a browser by reading the Location header."""
-        if self._token_tried:
+        # Retry the mint on later calls if it previously failed. Caching only a
+        # SUCCESSFUL token (not a failed attempt) is what lets a flaky mint
+        # recover within the same run instead of poisoning the whole course.
+        if self._token:
             return self._token
-        self._token_tried = True
         base = f"https://{self.site}.cps.golf"
 
         # discover endpoints (also tells us the server is reachable)
@@ -169,6 +176,8 @@ class CPSProvider(Provider):
         if self._cleared:
             return
         self._cleared = True
+        if not self.browser_fallback:
+            return
         clear = get_clearance(self.site,
                               proxy_session_id=getattr(self, "_proxy_session_id", None))
         if not clear:
@@ -345,7 +354,15 @@ class CPSProvider(Provider):
         except Exception as e:  # noqa: BLE001
             return self._result(day, error=f"CPS request failed: {e}")
 
+        log.info("CPS %s: TeeTimes HTTP %s (token=%s, cleared=%s, proxy=%s)",
+                 self.site, resp.status_code, bool(self._token), self._cleared,
+                 bool(os.environ.get("RESI_PROXY")))
+
         if resp.status_code == 403:
+            if not self.browser_fallback:
+                return self._result(day, error=(
+                    f"CPS '{self.site}': Cloudflare 403 (browser fallback "
+                    f"disabled for this course) — use the booking link."))
             # strict-tier site: re-challenges every API call. Make the
             # register+search calls from INSIDE a cleared browser instead.
             data = fetch_in_browser(
@@ -363,6 +380,10 @@ class CPSProvider(Provider):
                 f"— this course shows a check-manually link."))
 
         if resp.status_code == 401:
+            if not self.browser_fallback:
+                return self._result(day, error=(
+                    f"CPS '{self.site}' returned 401 (browser fallback disabled "
+                    f"for this course) — use the booking link."))
             # Anonymous-token mint failed over HTTP for this site. The booking
             # page itself serves tee times to an anonymous browser, so run the
             # register+search from inside a cleared browser session instead.
