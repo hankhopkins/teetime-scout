@@ -25,7 +25,7 @@ TZ = ZoneInfo("America/Chicago")
 TARGET_DATE = "2026-06-27"          # Saturday
 WINDOW_START = time(16, 0)          # 4:00 PM
 WINDOW_END = time(17, 20)           # 5:20 PM (inclusive)
-STOP_AFTER = datetime(2026, 6, 27, 14, 0, tzinfo=TZ)   # Sat 2:00 PM CT
+STOP_AFTER = datetime(2026, 6, 27, 15, 0, tzinfo=TZ)   # Sat 3:00 PM CT
 REALERT_AFTER = timedelta(minutes=30)   # re-alert an open slot at most this often
 STATE_FILE = Path("inverwood_alert_state.json")
 
