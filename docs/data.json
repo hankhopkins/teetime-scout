@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-06-25T01:48:01.873061-05:00",
- "generated_at_display": "Thursday, June 25 · 1:48 AM CDT",
- "total_times": 5160,
+ "generated_at": "2026-06-25T03:24:37.632066-05:00",
+ "generated_at_display": "Thursday, June 25 · 3:24 AM CDT",
+ "total_times": 5155,
  "courses": [
   {
    "name": "Inver Wood Championship",
@@ -1464,12 +1464,6 @@
     },
     {
      "when": "2026-06-25T17:45:00-05:00",
-     "spots": 4,
-     "price": 19,
-     "holes": 9
-    },
-    {
-     "when": "2026-06-25T18:15:00-05:00",
      "spots": 4,
      "price": 19,
      "holes": 9
@@ -3476,12 +3470,6 @@
      "holes": 18
     },
     {
-     "when": "2026-07-02T16:36:00-05:00",
-     "spots": 4,
-     "price": 30.45,
-     "holes": 18
-    },
-    {
      "when": "2026-07-02T16:45:00-05:00",
      "spots": 4,
      "price": 30.45,
@@ -3563,7 +3551,7 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS 'minneapolismeadowbrook' returned 401 — anonymous token mint blocked and the in-browser fallback could not recover. Booking link still works for manual booking."
+    "CPS 'minneapolismeadowbrook': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
    ],
    "times": []
   },
@@ -4017,12 +4005,6 @@
      "holes": 18
     },
     {
-     "when": "2026-07-02T11:15:00-05:00",
-     "spots": null,
-     "price": 30.0,
-     "holes": 18
-    },
-    {
      "when": "2026-07-02T11:25:00-05:00",
      "spots": null,
      "price": 30.0,
@@ -4204,7 +4186,7 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS 'highlandnationalmn' returned 401 — anonymous token mint blocked and the in-browser fallback could not recover. Booking link still works for manual booking."
+    "CPS 'highlandnationalmn': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
    ],
    "times": []
   },
@@ -4214,7 +4196,7 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS 'chaska' returned 401 — anonymous token mint blocked and the in-browser fallback could not recover. Booking link still works for manual booking."
+    "CPS 'chaska': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
    ],
    "times": []
   },
@@ -5301,12 +5283,6 @@
      "holes": 18
     },
     {
-     "when": "2026-07-02T09:00:00-05:00",
-     "spots": 4,
-     "price": 67.0,
-     "holes": 18
-    },
-    {
      "when": "2026-07-02T09:10:00-05:00",
      "spots": 4,
      "price": 67.0,
@@ -5434,7 +5410,7 @@
    "errors": [],
    "times": [
     {
-     "when": "2026-06-25T01:00:00-05:00",
+     "when": "2026-06-25T03:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -5446,7 +5422,7 @@
      "holes": 18
     },
     {
-     "when": "2026-06-26T01:00:00-05:00",
+     "when": "2026-06-26T03:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -5650,7 +5626,7 @@
      "holes": 18
     },
     {
-     "when": "2026-06-27T01:00:00-05:00",
+     "when": "2026-06-27T03:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -5734,7 +5710,7 @@
      "holes": 18
     },
     {
-     "when": "2026-06-28T01:00:00-05:00",
+     "when": "2026-06-28T03:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -5986,7 +5962,7 @@
      "holes": 18
     },
     {
-     "when": "2026-06-29T01:00:00-05:00",
+     "when": "2026-06-29T03:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -6256,7 +6232,7 @@
      "holes": 18
     },
     {
-     "when": "2026-06-30T01:00:00-05:00",
+     "when": "2026-06-30T03:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -6436,7 +6412,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-01T01:00:00-05:00",
+     "when": "2026-07-01T03:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -6538,7 +6514,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-02T01:00:00-05:00",
+     "when": "2026-07-02T03:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -6736,7 +6712,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-03T01:00:00-05:00",
+     "when": "2026-07-03T03:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -7102,7 +7078,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-04T01:00:00-05:00",
+     "when": "2026-07-04T03:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -7456,7 +7432,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-05T01:00:00-05:00",
+     "when": "2026-07-05T03:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -12036,12 +12012,6 @@
     },
     {
      "when": "2026-07-01T10:22:00-05:00",
-     "spots": 4,
-     "price": 40,
-     "holes": null
-    },
-    {
-     "when": "2026-07-01T10:45:00-05:00",
      "spots": 4,
      "price": 40,
      "holes": null
