@@ -81,7 +81,9 @@ def fetch_open_slots():
             continue
         avail = s.get("availability", {}) or {}
         spots = avail.get("available_spots")
-        if spots is not None and spots <= 0:
+        # Require at least 2 open spots. If the count is unknown, exclude it —
+        # we can't confirm 2 are available, so we don't alert on it.
+        if spots is None or spots < 2:
             continue
         out.append((when.strftime("%-I:%M %p"), spots))
     return out
