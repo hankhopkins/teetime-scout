@@ -25,7 +25,9 @@ WINDOW_START = time(16, 0)          # 4:00 PM
 WINDOW_END = time(17, 20)           # 5:20 PM (inclusive)
 STOP_AFTER = datetime(2026, 6, 27, 14, 0, tzinfo=TZ)   # Sat 2:00 PM CT
 
-SMS_TO = "6514700685@vtext.com"     # Verizon SMS gateway
+SMS_TO = ["6514700685@vtext.com",   # Verizon SMS gateway
+          "6122329336@vtext.com"]   # second recipient (Verizon)
+EXTRA_EMAILS = ["newman.nick3@gmail.com"]
 BOOKING_URL = ("https://teewire.app/inverwood/index.php"
                "?controller=FrontV2&action=load&cid=3&view=list")
 API_URL = ("https://teewire.app/inverwood/online/application/web/api/"
@@ -88,7 +90,7 @@ def send(subject: str, body_text: str):
     sender = os.environ["GMAIL_ADDRESS"]
     password = os.environ["GMAIL_APP_PASSWORD"]
     inbox = os.environ.get("TO_EMAIL", sender)
-    recipients = [inbox, SMS_TO]
+    recipients = [inbox, *EXTRA_EMAILS, *SMS_TO]
 
     # Plain text keeps the SMS gateway happy (it strips HTML anyway).
     msg = MIMEMultipart("alternative")
