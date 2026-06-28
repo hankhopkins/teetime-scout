@@ -1,8 +1,8 @@
 """inverwood_alert.py — one-off weekend watcher.
 
-Checks Inver Wood (TeeWire) for tee times on Sat Jun 27 2026 between 4:00 and
-5:20 PM. If any are open, emails + texts (Verizon vtext gateway). Re-alerts
-every run while slots remain open. Self-disables after Sat Jun 27 2:00 PM CT.
+Checks Inver Wood (TeeWire) for tee times on Mon Jun 29 2026 between 4:40 and
+6:40 PM. If any are open, emails + texts (Verizon vtext gateway). Re-alerts
+every run while slots remain open. Self-disables after Mon Jun 29 6:40 PM CT.
 
 Standalone on purpose: does not import the scraper package, so nothing here can
 affect the main site/digest. Reuses only the GMAIL_* secrets.
@@ -22,10 +22,10 @@ from zoneinfo import ZoneInfo
 import requests
 
 TZ = ZoneInfo("America/Chicago")
-TARGET_DATE = "2026-06-27"          # Saturday
-WINDOW_START = time(16, 0)          # 4:00 PM
-WINDOW_END = time(17, 20)           # 5:20 PM (inclusive)
-STOP_AFTER = datetime(2026, 6, 27, 15, 0, tzinfo=TZ)   # Sat 3:00 PM CT
+TARGET_DATE = "2026-06-29"          # Monday
+WINDOW_START = time(16, 40)         # 4:40 PM
+WINDOW_END = time(18, 40)           # 6:40 PM (inclusive)
+STOP_AFTER = datetime(2026, 6, 29, 18, 40, tzinfo=TZ)  # Mon 6:40 PM CT
 REALERT_AFTER = timedelta(minutes=30)   # re-alert an open slot at most this often
 STATE_FILE = Path("inverwood_alert_state.json")
 
@@ -127,7 +127,7 @@ def main():
         send("⛳ Inver Wood alert TEST",
              "Test message — alerts are wired up. "
              "If you got this as a text, the vtext gateway works. "
-             "Real alerts fire for Sat 4:00–5:20 PM openings.")
+             "Real alerts fire for Mon 4:40–6:40 PM openings.")
         return
 
     if datetime.now(TZ) > STOP_AFTER:
@@ -173,16 +173,16 @@ def main():
     sent_any = False
     if newly_open or re_alert:
         opened = newly_open + re_alert
-        body = ("Inver Wood — Sat Jun 27, 4:00–5:20 PM\n\n"
+        body = ("Inver Wood — Mon Jun 29, 4:40–6:40 PM\n\n"
                 + fmt(opened)
                 + f"\n\nBook: {BOOKING_URL}")
         tag = "OPEN" if newly_open else "still open"
-        subject = f"⛳ Inver Wood {tag}: {len(opened)} slot(s) 4–5:20 PM Sat"
+        subject = f"⛳ Inver Wood {tag}: {len(opened)} slot(s) 4:40–6:40 PM Mon"
         send(subject, body)
         sent_any = True
 
     if gone:
-        body = ("These Inver Wood slots are no longer open (Sat 4:00–5:20 PM):\n\n"
+        body = ("These Inver Wood slots are no longer open (Mon 4:40–6:40 PM):\n\n"
                 + "\n".join(f"  • {t}" for t in sorted(gone))
                 + f"\n\nBook: {BOOKING_URL}")
         send(f"⛳ Inver Wood GONE: {len(gone)} slot(s) closed", body)
