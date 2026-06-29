@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-06-29T02:31:19.221814-05:00",
- "generated_at_display": "Monday, June 29 · 2:31 AM CDT",
- "total_times": 5759,
+ "generated_at": "2026-06-29T04:26:59.543546-05:00",
+ "generated_at_display": "Monday, June 29 · 4:26 AM CDT",
+ "total_times": 5753,
  "courses": [
   {
    "name": "Inver Wood Championship",
@@ -10,12 +10,6 @@
    "note": null,
    "errors": [],
    "times": [
-    {
-     "when": "2026-07-02T18:40:00-05:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
     {
      "when": "2026-07-02T18:50:00-05:00",
      "spots": 4,
@@ -2237,12 +2231,6 @@
      "holes": 9
     },
     {
-     "when": "2026-07-02T10:15:00-05:00",
-     "spots": 4,
-     "price": 19,
-     "holes": 9
-    },
-    {
      "when": "2026-07-02T10:25:00-05:00",
      "spots": 4,
      "price": 19,
@@ -2988,12 +2976,6 @@
     },
     {
      "when": "2026-07-04T08:55:00-05:00",
-     "spots": 4,
-     "price": 19,
-     "holes": 9
-    },
-    {
-     "when": "2026-07-04T09:15:00-05:00",
      "spots": 4,
      "price": 19,
      "holes": 9
@@ -3842,12 +3824,6 @@
      "holes": 18
     },
     {
-     "when": "2026-07-06T07:45:00-05:00",
-     "spots": 4,
-     "price": 52.6,
-     "holes": 18
-    },
-    {
      "when": "2026-07-06T07:54:00-05:00",
      "spots": 4,
      "price": 52.6,
@@ -3890,12 +3866,6 @@
      "holes": 18
     },
     {
-     "when": "2026-07-06T09:06:00-05:00",
-     "spots": 4,
-     "price": 52.6,
-     "holes": 18
-    },
-    {
      "when": "2026-07-06T09:15:00-05:00",
      "spots": 4,
      "price": 52.6,
@@ -3921,12 +3891,6 @@
     },
     {
      "when": "2026-07-06T10:18:00-05:00",
-     "spots": 4,
-     "price": 52.6,
-     "holes": 18
-    },
-    {
-     "when": "2026-07-06T11:03:00-05:00",
      "spots": 4,
      "price": 52.6,
      "holes": 18
@@ -4192,7 +4156,9 @@
    "booking_url": "https://minneapolismeadowbrook.cps.golf/onlineresweb/search-teetime",
    "link_only": false,
    "note": null,
-   "errors": [],
+   "errors": [
+    "CPS 'minneapolismeadowbrook': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
+   ],
    "times": []
   },
   {
@@ -4201,7 +4167,7 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS request failed: Failed to perform, curl: (28) Operation timed out after 30002 milliseconds with 0 bytes received. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
+    "CPS 'minneapoliscolumbia': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
    ],
    "times": []
   },
@@ -5118,8 +5084,7 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS HTTP 400: {\"error\":\"Invalid Transaction Id\"}",
-    "CPS request failed: Failed to perform, curl: (28) Operation timed out after 30003 milliseconds with 0 bytes received. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
+    "CPS 'minneapolisgrossnational': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
    ],
    "times": []
   },
@@ -6873,7 +6838,7 @@
    "errors": [],
    "times": [
     {
-     "when": "2026-06-29T02:00:00-05:00",
+     "when": "2026-06-29T04:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -7101,7 +7066,7 @@
      "holes": 18
     },
     {
-     "when": "2026-06-30T02:00:00-05:00",
+     "when": "2026-06-30T04:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -7257,7 +7222,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-01T02:00:00-05:00",
+     "when": "2026-07-01T04:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -7341,7 +7306,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-02T02:00:00-05:00",
+     "when": "2026-07-02T04:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -7461,7 +7426,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-03T02:00:00-05:00",
+     "when": "2026-07-03T04:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -7719,7 +7684,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-04T02:00:00-05:00",
+     "when": "2026-07-04T04:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -7977,7 +7942,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-05T02:00:00-05:00",
+     "when": "2026-07-05T04:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -8373,7 +8338,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-06T02:00:00-05:00",
+     "when": "2026-07-06T04:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -8733,7 +8698,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-07T02:00:00-05:00",
+     "when": "2026-07-07T04:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -9027,7 +8992,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-08T02:00:00-05:00",
+     "when": "2026-07-08T04:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -9165,7 +9130,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-09T02:00:00-05:00",
+     "when": "2026-07-09T04:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -9387,7 +9352,9 @@
    "booking_url": "https://minneapolistheodorewirth.cps.golf/onlineresweb/search-teetime",
    "link_only": false,
    "note": null,
-   "errors": [],
+   "errors": [
+    "CPS 'minneapolistheodorewirth': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
+   ],
    "times": []
   },
   {
@@ -9395,7 +9362,9 @@
    "booking_url": "https://minneapolishiawatha.cps.golf/onlineresweb/search-teetime",
    "link_only": false,
    "note": null,
-   "errors": [],
+   "errors": [
+    "CPS 'minneapolishiawatha': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
+   ],
    "times": []
   },
   {
