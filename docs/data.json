@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-03T01:31:36.307227-05:00",
- "generated_at_display": "Friday, July 3 · 1:31 AM CDT",
- "total_times": 5755,
+ "generated_at": "2026-07-03T03:09:24.473479-05:00",
+ "generated_at_display": "Friday, July 3 · 3:09 AM CDT",
+ "total_times": 5748,
  "courses": [
   {
    "name": "Inver Wood Championship",
@@ -336,7 +336,7 @@
     },
     {
      "when": "2026-07-06T16:40:00-05:00",
-     "spots": 4,
+     "spots": 2,
      "price": null,
      "holes": null
     },
@@ -3932,12 +3932,6 @@
      "holes": 18
     },
     {
-     "when": "2026-07-10T07:54:00-05:00",
-     "spots": 4,
-     "price": 52.6,
-     "holes": 18
-    },
-    {
      "when": "2026-07-10T08:03:00-05:00",
      "spots": 4,
      "price": 52.6,
@@ -3950,18 +3944,6 @@
      "holes": 18
     },
     {
-     "when": "2026-07-10T08:39:00-05:00",
-     "spots": 4,
-     "price": 52.6,
-     "holes": 18
-    },
-    {
-     "when": "2026-07-10T08:48:00-05:00",
-     "spots": 4,
-     "price": 52.6,
-     "holes": 18
-    },
-    {
      "when": "2026-07-10T08:57:00-05:00",
      "spots": 4,
      "price": 52.6,
@@ -3969,12 +3951,6 @@
     },
     {
      "when": "2026-07-10T09:06:00-05:00",
-     "spots": 4,
-     "price": 52.6,
-     "holes": 18
-    },
-    {
-     "when": "2026-07-10T09:15:00-05:00",
      "spots": 4,
      "price": 52.6,
      "holes": 18
@@ -4011,12 +3987,6 @@
     },
     {
      "when": "2026-07-10T11:57:00-05:00",
-     "spots": 4,
-     "price": 52.6,
-     "holes": 18
-    },
-    {
-     "when": "2026-07-10T12:06:00-05:00",
      "spots": 4,
      "price": 52.6,
      "holes": 18
@@ -4127,12 +4097,6 @@
      "when": "2026-07-10T15:51:00-05:00",
      "spots": 4,
      "price": 52.6,
-     "holes": 18
-    },
-    {
-     "when": "2026-07-10T16:09:00-05:00",
-     "spots": 4,
-     "price": 30.45,
      "holes": 18
     },
     {
@@ -4252,7 +4216,9 @@
    "booking_url": "https://minneapolismeadowbrook.cps.golf/onlineresweb/search-teetime",
    "link_only": false,
    "note": null,
-   "errors": [],
+   "errors": [
+    "CPS 'minneapolismeadowbrook': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
+   ],
    "times": []
   },
   {
@@ -4261,8 +4227,7 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS 'minneapoliscolumbia': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link.",
-    "CPS request failed: Failed to perform, curl: (28) Operation timed out after 30002 milliseconds with 0 bytes received. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
+    "CPS 'minneapoliscolumbia': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
    ],
    "times": []
   },
@@ -4281,12 +4246,6 @@
     },
     {
      "when": "2026-07-03T18:05:00-05:00",
-     "spots": null,
-     "price": 30.0,
-     "holes": 18
-    },
-    {
-     "when": "2026-07-03T18:45:00-05:00",
      "spots": null,
      "price": 30.0,
      "holes": 18
@@ -4367,6 +4326,12 @@
      "when": "2026-07-04T14:55:00-05:00",
      "spots": null,
      "price": 51.0,
+     "holes": 18
+    },
+    {
+     "when": "2026-07-04T15:05:00-05:00",
+     "spots": null,
+     "price": 30.0,
      "holes": 18
     },
     {
@@ -4802,12 +4767,6 @@
      "holes": 18
     },
     {
-     "when": "2026-07-10T08:45:00-05:00",
-     "spots": null,
-     "price": 51.0,
-     "holes": 18
-    },
-    {
      "when": "2026-07-10T12:45:00-05:00",
      "spots": null,
      "price": 51.0,
@@ -4950,7 +4909,9 @@
    "booking_url": "https://minneapolisgrossnational.cps.golf/onlineresweb/search-teetime",
    "link_only": false,
    "note": null,
-   "errors": [],
+   "errors": [
+    "CPS 'minneapolisgrossnational': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
+   ],
    "times": []
   },
   {
@@ -6571,7 +6532,7 @@
    "errors": [],
    "times": [
     {
-     "when": "2026-07-03T01:00:00-05:00",
+     "when": "2026-07-03T03:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -6643,13 +6604,13 @@
      "holes": 18
     },
     {
-     "when": "2026-07-04T01:00:00-05:00",
+     "when": "2026-07-04T03:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
     },
     {
-     "when": "2026-07-05T01:00:00-05:00",
+     "when": "2026-07-05T03:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -6961,7 +6922,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-06T01:00:00-05:00",
+     "when": "2026-07-06T03:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -7225,7 +7186,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-07T01:00:00-05:00",
+     "when": "2026-07-07T03:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -7471,7 +7432,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-08T01:00:00-05:00",
+     "when": "2026-07-08T03:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -7579,7 +7540,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-09T01:00:00-05:00",
+     "when": "2026-07-09T03:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -7747,7 +7708,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-10T01:00:00-05:00",
+     "when": "2026-07-10T03:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -8179,7 +8140,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-11T01:00:00-05:00",
+     "when": "2026-07-11T03:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -8581,7 +8542,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-12T01:00:00-05:00",
+     "when": "2026-07-12T03:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -9061,7 +9022,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-13T01:00:00-05:00",
+     "when": "2026-07-13T03:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -9433,7 +9394,9 @@
    "booking_url": "https://minneapolistheodorewirth.cps.golf/onlineresweb/search-teetime",
    "link_only": false,
    "note": null,
-   "errors": [],
+   "errors": [
+    "CPS 'minneapolistheodorewirth': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
+   ],
    "times": []
   },
   {
@@ -9441,7 +9404,9 @@
    "booking_url": "https://minneapolishiawatha.cps.golf/onlineresweb/search-teetime",
    "link_only": false,
    "note": null,
-   "errors": [],
+   "errors": [
+    "CPS 'minneapolishiawatha': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
+   ],
    "times": []
   },
   {
@@ -9449,9 +9414,7 @@
    "booking_url": "https://como.cps.golf/onlineresweb/search-teetime",
    "link_only": false,
    "note": null,
-   "errors": [
-    "CPS request failed: Failed to perform, curl: (56) CONNECT tunnel failed, response 502. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
-   ],
+   "errors": [],
    "times": []
   },
   {
@@ -11839,6 +11802,12 @@
     {
      "when": "2026-07-04T11:00:00-05:00",
      "spots": 2,
+     "price": 70,
+     "holes": 18
+    },
+    {
+     "when": "2026-07-04T12:10:00-05:00",
+     "spots": 4,
      "price": 70,
      "holes": 18
     },
@@ -26673,12 +26642,6 @@
    "note": null,
    "errors": [],
    "times": [
-    {
-     "when": "2026-07-03T14:10:00-05:00",
-     "spots": null,
-     "price": 36.74,
-     "holes": 18
-    },
     {
      "when": "2026-07-03T14:20:00-05:00",
      "spots": null,
