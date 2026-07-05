@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-05T01:39:55.108385-05:00",
- "generated_at_display": "Sunday, July 5 · 1:39 AM CDT",
- "total_times": 5972,
+ "generated_at": "2026-07-05T03:04:47.817653-05:00",
+ "generated_at_display": "Sunday, July 5 · 3:04 AM CDT",
+ "total_times": 5963,
  "courses": [
   {
    "name": "Inver Wood Championship",
@@ -121,18 +121,6 @@
     {
      "when": "2026-07-08T17:00:00-05:00",
      "spots": 2,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-07-08T18:30:00-05:00",
-     "spots": 3,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-07-08T19:00:00-05:00",
-     "spots": 4,
      "price": null,
      "holes": null
     },
@@ -1508,12 +1496,6 @@
      "holes": null
     },
     {
-     "when": "2026-07-11T16:20:00-05:00",
-     "spots": 4,
-     "price": 65,
-     "holes": null
-    },
-    {
      "when": "2026-07-11T16:30:00-05:00",
      "spots": 4,
      "price": 36,
@@ -1587,12 +1569,6 @@
     },
     {
      "when": "2026-07-11T18:20:00-05:00",
-     "spots": 4,
-     "price": 36,
-     "holes": 9
-    },
-    {
-     "when": "2026-07-11T18:30:00-05:00",
      "spots": 4,
      "price": 36,
      "holes": 9
@@ -1729,12 +1705,6 @@
     {
      "when": "2026-07-05T11:35:00-05:00",
      "spots": 2,
-     "price": 19,
-     "holes": 9
-    },
-    {
-     "when": "2026-07-05T11:45:00-05:00",
-     "spots": 4,
      "price": 19,
      "holes": 9
     },
@@ -4156,9 +4126,7 @@
    "booking_url": "https://minneapolismeadowbrook.cps.golf/onlineresweb/search-teetime",
    "link_only": false,
    "note": null,
-   "errors": [
-    "CPS 'minneapolismeadowbrook': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
-   ],
+   "errors": [],
    "times": []
   },
   {
@@ -4167,7 +4135,7 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS 'minneapoliscolumbia': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
+    "CPS 'minneapoliscolumbia' returned 401 — anonymous token mint blocked and the in-browser fallback could not recover. Booking link still works for manual booking."
    ],
    "times": []
   },
@@ -4390,12 +4358,6 @@
     },
     {
      "when": "2026-07-09T11:25:00-05:00",
-     "spots": null,
-     "price": 30.0,
-     "holes": 18
-    },
-    {
-     "when": "2026-07-09T12:15:00-05:00",
      "spots": null,
      "price": 30.0,
      "holes": 18
@@ -4790,7 +4752,7 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS 'minneapolisgrossnational': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
+    "CPS request failed: Failed to perform, curl: (28) Operation timed out after 30002 milliseconds with 0 bytes received. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
   },
@@ -6328,7 +6290,13 @@
    "errors": [],
    "times": [
     {
-     "when": "2026-07-05T01:00:00-05:00",
+     "when": "2026-07-05T02:00:00-05:00",
+     "spots": null,
+     "price": null,
+     "holes": 18
+    },
+    {
+     "when": "2026-07-05T11:39:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -6436,7 +6404,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-06T01:00:00-05:00",
+     "when": "2026-07-06T02:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -6461,12 +6429,6 @@
     },
     {
      "when": "2026-07-06T09:51:00-05:00",
-     "spots": null,
-     "price": null,
-     "holes": 18
-    },
-    {
-     "when": "2026-07-06T10:36:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -6640,12 +6602,6 @@
      "holes": 18
     },
     {
-     "when": "2026-07-06T15:24:00-05:00",
-     "spots": null,
-     "price": null,
-     "holes": 18
-    },
-    {
      "when": "2026-07-06T18:24:00-05:00",
      "spots": null,
      "price": null,
@@ -6664,7 +6620,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-07T01:00:00-05:00",
+     "when": "2026-07-07T02:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -6880,7 +6836,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-08T01:00:00-05:00",
+     "when": "2026-07-08T02:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -6976,7 +6932,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-09T01:00:00-05:00",
+     "when": "2026-07-09T02:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -7138,7 +7094,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-10T01:00:00-05:00",
+     "when": "2026-07-10T02:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -7552,7 +7508,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-11T01:00:00-05:00",
+     "when": "2026-07-11T02:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -7918,7 +7874,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-12T01:00:00-05:00",
+     "when": "2026-07-12T02:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -8392,7 +8348,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-13T01:00:00-05:00",
+     "when": "2026-07-13T02:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -8752,7 +8708,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-14T01:00:00-05:00",
+     "when": "2026-07-14T02:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -9052,7 +9008,7 @@
      "holes": 18
     },
     {
-     "when": "2026-07-15T01:00:00-05:00",
+     "when": "2026-07-15T02:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -9197,7 +9153,7 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS 'minneapolistheodorewirth': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
+    "CPS 'minneapolistheodorewirth' returned 401 — anonymous token mint blocked and the in-browser fallback could not recover. Booking link still works for manual booking."
    ],
    "times": []
   },
@@ -9206,9 +9162,7 @@
    "booking_url": "https://minneapolishiawatha.cps.golf/onlineresweb/search-teetime",
    "link_only": false,
    "note": null,
-   "errors": [
-    "CPS 'minneapolishiawatha': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
-   ],
+   "errors": [],
    "times": []
   },
   {
@@ -12431,12 +12385,6 @@
      "spots": 2,
      "price": 44,
      "holes": 18
-    },
-    {
-     "when": "2026-07-05T14:37:00-05:00",
-     "spots": 4,
-     "price": 29,
-     "holes": 9
     },
     {
      "when": "2026-07-05T15:45:00-05:00",
@@ -29289,12 +29237,6 @@
     },
     {
      "when": "2026-07-05T12:42:00-05:00",
-     "spots": null,
-     "price": 33.0,
-     "holes": 18
-    },
-    {
-     "when": "2026-07-05T12:51:00-05:00",
      "spots": null,
      "price": 33.0,
      "holes": 18
