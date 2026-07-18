@@ -1,16 +1,16 @@
 name: Inver Wood Alert
 
-# One-off watcher: Inver Wood, Mon Jun 29, 4:40-6:40 PM tee times.
+# One-off watcher: Inver Wood, Sun Jul 19, 2:30-5:00 PM tee times.
 # Emails + texts (Verizon vtext) every ~3 min while slots are open.
-# The script self-disables after Mon Jun 29 6:40 PM CT; this cron window is
-# scoped to Sat-Mon UTC so we don't burn runners the rest of the time.
+# The script self-disables after Sun Jul 19 1:00 PM CT; this cron window is
+# scoped to Sat-Sun UTC so we don't burn runners the rest of the time.
 # DELETE THIS WORKFLOW after the weekend.
 
 on:
   schedule:
-    # Every 3 minutes, only during Jun 27-29 UTC (covers now through Mon 6:40pm CT).
+    # Every 3 minutes, only during Jul 18-19 UTC (covers now through Sun 1pm CT).
     # GitHub cron is best-effort and may delay/skip runs under load.
-    - cron: "*/3 * 27,28,29 6 *"
+    - cron: "*/3 * 18,19 7 *"
   workflow_dispatch:
     inputs:
       test:

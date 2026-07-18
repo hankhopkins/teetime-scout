@@ -1,8 +1,8 @@
 """inverwood_alert.py — one-off weekend watcher.
 
-Checks Inver Wood (TeeWire) for tee times on Mon Jun 29 2026 between 4:40 and
-6:40 PM. If any are open, emails + texts (Verizon vtext gateway). Re-alerts
-every run while slots remain open. Self-disables after Mon Jun 29 6:40 PM CT.
+Checks Inver Wood (TeeWire) for tee times on Sun Jul 19 2026 between 2:30 and
+5:00 PM. If any are open, emails + texts (Verizon vtext gateway). Re-alerts
+every run while slots remain open. Self-disables after Sun Jul 19 1:00 PM CT.
 
 Standalone on purpose: does not import the scraper package, so nothing here can
 affect the main site/digest. Reuses only the GMAIL_* secrets.
@@ -22,17 +22,17 @@ from zoneinfo import ZoneInfo
 import requests
 
 TZ = ZoneInfo("America/Chicago")
-TARGET_DATE = "2026-06-29"          # Monday
-WINDOW_START = time(16, 40)         # 4:40 PM
-WINDOW_END = time(18, 40)           # 6:40 PM (inclusive)
-STOP_AFTER = datetime(2026, 6, 29, 18, 40, tzinfo=TZ)  # Mon 6:40 PM CT
+TARGET_DATE = "2026-07-19"          # Sunday
+WINDOW_START = time(14, 30)         # 2:30 PM
+WINDOW_END = time(17, 0)            # 5:00 PM (inclusive)
+STOP_AFTER = datetime(2026, 7, 19, 13, 0, tzinfo=TZ)   # Sun 1:00 PM CT
 REALERT_AFTER = timedelta(minutes=30)   # re-alert an open slot at most this often
 STATE_FILE = Path("inverwood_alert_state.json")
 
 SMS_TO = ["6514700685@vtext.com"]   # Verizon SMS gateway (works)
 # 612-232-9336 is AT&T — both SMS (txt.att.net) and MMS (mms.att.net) gateways
 # are decommissioned (DNS no longer resolves), so that person gets email only.
-EXTRA_EMAILS = ["newman.nick3@gmail.com"]
+EXTRA_EMAILS = []   # this run: my email + Verizon text only
 BOOKING_URL = ("https://teewire.app/inverwood/index.php"
                "?controller=FrontV2&action=load&cid=3&view=list")
 API_URL = ("https://teewire.app/inverwood/online/application/web/api/"
@@ -127,7 +127,7 @@ def main():
         send("⛳ Inver Wood alert TEST",
              "Test message — alerts are wired up. "
              "If you got this as a text, the vtext gateway works. "
-             "Real alerts fire for Mon 4:40–6:40 PM openings.")
+             "Real alerts fire for Sun 2:30–5:00 PM openings.")
         return
 
     if datetime.now(TZ) > STOP_AFTER:
@@ -173,16 +173,16 @@ def main():
     sent_any = False
     if newly_open or re_alert:
         opened = newly_open + re_alert
-        body = ("Inver Wood — Mon Jun 29, 4:40–6:40 PM\n\n"
+        body = ("Inver Wood — Sun Jul 19, 2:30–5:00 PM\n\n"
                 + fmt(opened)
                 + f"\n\nBook: {BOOKING_URL}")
         tag = "OPEN" if newly_open else "still open"
-        subject = f"⛳ Inver Wood {tag}: {len(opened)} slot(s) 4:40–6:40 PM Mon"
+        subject = f"⛳ Inver Wood {tag}: {len(opened)} slot(s) 2:30–5:00 PM Sun"
         send(subject, body)
         sent_any = True
 
     if gone:
-        body = ("These Inver Wood slots are no longer open (Mon 4:40–6:40 PM):\n\n"
+        body = ("These Inver Wood slots are no longer open (Sun 2:30–5:00 PM):\n\n"
                 + "\n".join(f"  • {t}" for t in sorted(gone))
                 + f"\n\nBook: {BOOKING_URL}")
         send(f"⛳ Inver Wood GONE: {len(gone)} slot(s) closed", body)
