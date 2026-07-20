@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-20T01:17:39.715306-05:00",
- "generated_at_display": "Monday, July 20 · 1:17 AM CDT",
- "total_times": 5248,
+ "generated_at": "2026-07-20T02:59:09.954255-05:00",
+ "generated_at_display": "Monday, July 20 · 2:59 AM CDT",
+ "total_times": 5242,
  "courses": [
   {
    "name": "Inver Wood Championship",
@@ -13,18 +13,6 @@
     {
      "when": "2026-07-20T12:10:00-05:00",
      "spots": 2,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-07-23T13:30:00-05:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-07-23T14:10:00-05:00",
-     "spots": 4,
      "price": null,
      "holes": null
     },
@@ -3626,18 +3614,6 @@
      "holes": 18
     },
     {
-     "when": "2026-07-27T08:03:00-05:00",
-     "spots": 4,
-     "price": 52.6,
-     "holes": 18
-    },
-    {
-     "when": "2026-07-27T08:12:00-05:00",
-     "spots": 4,
-     "price": 52.6,
-     "holes": 18
-    },
-    {
      "when": "2026-07-27T08:21:00-05:00",
      "spots": 4,
      "price": 52.6,
@@ -3836,12 +3812,6 @@
      "holes": 18
     },
     {
-     "when": "2026-07-27T14:30:00-05:00",
-     "spots": 4,
-     "price": 52.6,
-     "holes": 18
-    },
-    {
      "when": "2026-07-27T14:39:00-05:00",
      "spots": 4,
      "price": 52.6,
@@ -3993,7 +3963,7 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS 'minneapoliscolumbia' returned 401 — anonymous token mint blocked and the in-browser fallback could not recover. Booking link still works for manual booking."
+    "CPS 'minneapoliscolumbia': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
    ],
    "times": []
   },
@@ -4479,12 +4449,6 @@
      "holes": 18
     },
     {
-     "when": "2026-07-27T09:35:00-05:00",
-     "spots": null,
-     "price": 30.0,
-     "holes": 18
-    },
-    {
      "when": "2026-07-27T09:45:00-05:00",
      "spots": null,
      "price": 30.0,
@@ -4872,7 +4836,7 @@
     },
     {
      "when": "2026-07-20T08:10:00-05:00",
-     "spots": 4,
+     "spots": 2,
      "price": 67.0,
      "holes": 18
     },
@@ -6344,7 +6308,7 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS 'como': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
+    "CPS 'como' returned 401 — anonymous token mint blocked and the in-browser fallback could not recover. Booking link still works for manual booking."
    ],
    "times": []
   },
@@ -12244,7 +12208,7 @@
     },
     {
      "when": "2026-07-26T06:32:00-05:00",
-     "spots": 4,
+     "spots": 3,
      "price": 46,
      "holes": null
     },
