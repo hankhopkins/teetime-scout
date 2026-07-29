@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-07-29T00:51:03.557309-05:00",
- "generated_at_display": "Wednesday, July 29 · 12:51 AM CDT",
- "total_times": 4936,
+ "generated_at": "2026-07-29T02:43:02.670363-05:00",
+ "generated_at_display": "Wednesday, July 29 · 2:43 AM CDT",
+ "total_times": 4916,
  "courses": [
   {
    "name": "Inver Wood Championship",
@@ -24,7 +24,7 @@
     },
     {
      "when": "2026-08-01T17:50:00-05:00",
-     "spots": 4,
+     "spots": 2,
      "price": null,
      "holes": null
     },
@@ -1184,12 +1184,6 @@
      "holes": 18
     },
     {
-     "when": "2026-07-29T13:00:00-05:00",
-     "spots": 4,
-     "price": 59,
-     "holes": 18
-    },
-    {
      "when": "2026-07-29T13:50:00-05:00",
      "spots": 2,
      "price": 59,
@@ -1200,6 +1194,12 @@
      "spots": 4,
      "price": 32,
      "holes": 9
+    },
+    {
+     "when": "2026-07-30T07:10:00-05:00",
+     "spots": 4,
+     "price": 59,
+     "holes": 18
     },
     {
      "when": "2026-07-30T18:10:00-05:00",
@@ -3794,18 +3794,6 @@
      "holes": 18
     },
     {
-     "when": "2026-08-05T07:00:00-05:00",
-     "spots": 4,
-     "price": 52.6,
-     "holes": 18
-    },
-    {
-     "when": "2026-08-05T07:09:00-05:00",
-     "spots": 4,
-     "price": 52.6,
-     "holes": 18
-    },
-    {
      "when": "2026-08-05T11:12:00-05:00",
      "spots": 4,
      "price": 52.6,
@@ -3926,18 +3914,6 @@
      "holes": 18
     },
     {
-     "when": "2026-08-05T14:30:00-05:00",
-     "spots": 4,
-     "price": 52.6,
-     "holes": 18
-    },
-    {
-     "when": "2026-08-05T14:39:00-05:00",
-     "spots": 4,
-     "price": 52.6,
-     "holes": 18
-    },
-    {
      "when": "2026-08-05T14:48:00-05:00",
      "spots": 4,
      "price": 52.6,
@@ -4049,7 +4025,7 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS 'minneapolismeadowbrook': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
+    "CPS 'minneapolismeadowbrook' returned 401 — anonymous token mint blocked and the in-browser fallback could not recover. Booking link still works for manual booking."
    ],
    "times": []
   },
@@ -5807,18 +5783,6 @@
      "holes": 18
     },
     {
-     "when": "2026-08-05T08:10:00-05:00",
-     "spots": 4,
-     "price": 67.0,
-     "holes": 18
-    },
-    {
-     "when": "2026-08-05T08:20:00-05:00",
-     "spots": 4,
-     "price": 67.0,
-     "holes": 18
-    },
-    {
      "when": "2026-08-05T09:00:00-05:00",
      "spots": 4,
      "price": 67.0,
@@ -5972,7 +5936,7 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "WebTrac request failed: HTTP Error 404: "
+    "WebTrac request failed: HTTP Error 403:  (a 403 here is often temporary rate-limiting from repeated probing — it typically clears within the hour, and twice-daily production runs rarely trip it)"
    ],
    "times": []
   },
@@ -13171,7 +13135,7 @@
     },
     {
      "when": "2026-07-29T12:40:00-05:00",
-     "spots": 4,
+     "spots": 3,
      "price": 43,
      "holes": null
     },
@@ -20796,7 +20760,9 @@
    "booking_url": "https://loggers-trail-golf-club.book.teeitup.golf/",
    "link_only": false,
    "note": null,
-   "errors": [],
+   "errors": [
+    "TeeItUp request failed: HTTPSConnectionPool(host='phx-api-be-east-1b.kenna.io', port=443): Read timed out. (read timeout=25)"
+   ],
    "times": [
     {
      "when": "2026-07-29T06:45:00-05:00",
@@ -20968,90 +20934,6 @@
     },
     {
      "when": "2026-07-29T19:39:00-05:00",
-     "spots": 4,
-     "price": 42.0,
-     "holes": 18
-    },
-    {
-     "when": "2026-07-30T12:40:00-05:00",
-     "spots": 4,
-     "price": 68.0,
-     "holes": 18
-    },
-    {
-     "when": "2026-07-30T13:27:00-05:00",
-     "spots": 4,
-     "price": 68.0,
-     "holes": 18
-    },
-    {
-     "when": "2026-07-30T13:36:00-05:00",
-     "spots": 4,
-     "price": 68.0,
-     "holes": 18
-    },
-    {
-     "when": "2026-07-30T13:45:00-05:00",
-     "spots": 2,
-     "price": 68.0,
-     "holes": 18
-    },
-    {
-     "when": "2026-07-30T15:51:00-05:00",
-     "spots": 2,
-     "price": 68.0,
-     "holes": 18
-    },
-    {
-     "when": "2026-07-30T18:24:00-05:00",
-     "spots": 4,
-     "price": 42.0,
-     "holes": 18
-    },
-    {
-     "when": "2026-07-30T18:33:00-05:00",
-     "spots": 4,
-     "price": 42.0,
-     "holes": 18
-    },
-    {
-     "when": "2026-07-30T18:42:00-05:00",
-     "spots": 4,
-     "price": 42.0,
-     "holes": 18
-    },
-    {
-     "when": "2026-07-30T18:51:00-05:00",
-     "spots": 4,
-     "price": 42.0,
-     "holes": 18
-    },
-    {
-     "when": "2026-07-30T19:00:00-05:00",
-     "spots": 4,
-     "price": 42.0,
-     "holes": 18
-    },
-    {
-     "when": "2026-07-30T19:09:00-05:00",
-     "spots": 4,
-     "price": 42.0,
-     "holes": 18
-    },
-    {
-     "when": "2026-07-30T19:18:00-05:00",
-     "spots": 4,
-     "price": 42.0,
-     "holes": 18
-    },
-    {
-     "when": "2026-07-30T19:27:00-05:00",
-     "spots": 4,
-     "price": 42.0,
-     "holes": 18
-    },
-    {
-     "when": "2026-07-30T19:36:00-05:00",
      "spots": 4,
      "price": 42.0,
      "holes": 18
