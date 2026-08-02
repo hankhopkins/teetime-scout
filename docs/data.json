@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-08-02T00:56:35.839804-05:00",
- "generated_at_display": "Sunday, August 2 · 12:56 AM CDT",
- "total_times": 4691,
+ "generated_at": "2026-08-02T02:32:59.337601-05:00",
+ "generated_at_display": "Sunday, August 2 · 2:32 AM CDT",
+ "total_times": 4702,
  "courses": [
   {
    "name": "Inver Wood Championship",
@@ -2537,12 +2537,6 @@
      "holes": 9
     },
     {
-     "when": "2026-08-06T17:15:00-05:00",
-     "spots": 4,
-     "price": 19,
-     "holes": 9
-    },
-    {
      "when": "2026-08-06T17:25:00-05:00",
      "spots": 4,
      "price": 19,
@@ -3470,6 +3464,12 @@
      "holes": 18
     },
     {
+     "when": "2026-08-05T18:06:00-05:00",
+     "spots": 4,
+     "price": 30.45,
+     "holes": 18
+    },
+    {
      "when": "2026-08-05T18:15:00-05:00",
      "spots": 2,
      "price": 30.45,
@@ -3636,7 +3636,9 @@
    "booking_url": "https://minneapoliscolumbia.cps.golf/onlineresweb/search-teetime",
    "link_only": false,
    "note": null,
-   "errors": [],
+   "errors": [
+    "CPS HTTP 400: {\"error\":\"Invalid Transaction Id\"}"
+   ],
    "times": []
   },
   {
@@ -3660,12 +3662,6 @@
     },
     {
      "when": "2026-08-02T18:15:00-05:00",
-     "spots": null,
-     "price": 30.0,
-     "holes": 18
-    },
-    {
-     "when": "2026-08-02T18:45:00-05:00",
      "spots": null,
      "price": 30.0,
      "holes": 18
@@ -4084,7 +4080,7 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS HTTP 400: {\"error\":\"Invalid Transaction Id\"}"
+    "CPS 'minneapolisgrossnational' returned 401 — anonymous token mint blocked and the in-browser fallback could not recover. Booking link still works for manual booking."
    ],
    "times": []
   },
@@ -4133,6 +4129,90 @@
     },
     {
      "when": "2026-08-02T17:40:00-05:00",
+     "spots": null,
+     "price": null,
+     "holes": 18
+    },
+    {
+     "when": "2026-08-07T14:50:00-05:00",
+     "spots": null,
+     "price": null,
+     "holes": 18
+    },
+    {
+     "when": "2026-08-07T15:10:00-05:00",
+     "spots": null,
+     "price": null,
+     "holes": 18
+    },
+    {
+     "when": "2026-08-07T15:20:00-05:00",
+     "spots": null,
+     "price": null,
+     "holes": 18
+    },
+    {
+     "when": "2026-08-07T16:00:00-05:00",
+     "spots": null,
+     "price": null,
+     "holes": 18
+    },
+    {
+     "when": "2026-08-07T16:10:00-05:00",
+     "spots": null,
+     "price": null,
+     "holes": 18
+    },
+    {
+     "when": "2026-08-07T16:20:00-05:00",
+     "spots": null,
+     "price": null,
+     "holes": 18
+    },
+    {
+     "when": "2026-08-07T16:30:00-05:00",
+     "spots": null,
+     "price": null,
+     "holes": 18
+    },
+    {
+     "when": "2026-08-07T16:40:00-05:00",
+     "spots": null,
+     "price": null,
+     "holes": 18
+    },
+    {
+     "when": "2026-08-07T16:50:00-05:00",
+     "spots": null,
+     "price": null,
+     "holes": 18
+    },
+    {
+     "when": "2026-08-07T17:00:00-05:00",
+     "spots": null,
+     "price": null,
+     "holes": 18
+    },
+    {
+     "when": "2026-08-07T17:10:00-05:00",
+     "spots": null,
+     "price": null,
+     "holes": 18
+    },
+    {
+     "when": "2026-08-07T17:20:00-05:00",
+     "spots": null,
+     "price": null,
+     "holes": 18
+    },
+    {
+     "when": "2026-08-07T17:30:00-05:00",
+     "spots": null,
+     "price": null,
+     "holes": 18
+    },
+    {
+     "when": "2026-08-07T17:40:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -5134,7 +5214,6 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "WebTrac request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "WebTrac request failed: HTTP Error 403:  (a 403 here is often temporary rate-limiting from repeated probing — it typically clears within the hour, and twice-daily production runs rarely trip it)"
    ],
    "times": []
@@ -5170,9 +5249,7 @@
    "booking_url": "https://phalen.cps.golf/onlineresweb/search-teetime",
    "link_only": false,
    "note": null,
-   "errors": [
-    "CPS 'phalen' returned 401 — anonymous token mint blocked and the in-browser fallback could not recover. Booking link still works for manual booking."
-   ],
+   "errors": [],
    "times": []
   },
   {
@@ -5195,6 +5272,12 @@
      "holes": null
     },
     {
+     "when": "2026-08-02T13:45:00-05:00",
+     "spots": 3,
+     "price": null,
+     "holes": null
+    },
+    {
      "when": "2026-08-02T14:21:00-05:00",
      "spots": 2,
      "price": null,
@@ -5208,7 +5291,7 @@
     },
     {
      "when": "2026-08-02T14:57:00-05:00",
-     "spots": 3,
+     "spots": 4,
      "price": null,
      "holes": null
     },
@@ -6914,12 +6997,6 @@
      "holes": 18
     },
     {
-     "when": "2026-08-04T07:10:00-05:00",
-     "spots": 4,
-     "price": 70,
-     "holes": 18
-    },
-    {
      "when": "2026-08-04T07:20:00-05:00",
      "spots": 2,
      "price": 70,
@@ -8018,12 +8095,6 @@
      "when": "2026-08-03T14:37:00-05:00",
      "spots": 2,
      "price": 26,
-     "holes": 9
-    },
-    {
-     "when": "2026-08-03T18:22:00-05:00",
-     "spots": 4,
-     "price": 25,
      "holes": 9
     },
     {
@@ -9518,12 +9589,6 @@
      "when": "2026-08-08T14:52:00-05:00",
      "spots": 4,
      "price": 44,
-     "holes": null
-    },
-    {
-     "when": "2026-08-08T15:00:00-05:00",
-     "spots": 4,
-     "price": 35,
      "holes": null
     },
     {
@@ -13020,7 +13085,7 @@
     },
     {
      "when": "2026-08-07T07:04:00-05:00",
-     "spots": 4,
+     "spots": 2,
      "price": 43,
      "holes": null
     },
