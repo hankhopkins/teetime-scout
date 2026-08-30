@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-08-30T03:55:16.172611-05:00",
- "generated_at_display": "Sunday, August 30 · 3:55 AM CDT",
- "total_times": 5841,
+ "generated_at": "2026-08-30T05:17:48.902383-05:00",
+ "generated_at_display": "Sunday, August 30 · 5:17 AM CDT",
+ "total_times": 5840,
  "courses": [
   {
    "name": "Inver Wood Championship",
@@ -4501,7 +4501,9 @@
    "booking_url": "https://minneapolisgrossnational.cps.golf/onlineresweb/search-teetime",
    "link_only": false,
    "note": null,
-   "errors": [],
+   "errors": [
+    "CPS 'minneapolisgrossnational': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
+   ],
    "times": []
   },
   {
@@ -6032,7 +6034,7 @@
    "errors": [],
    "times": [
     {
-     "when": "2026-08-30T03:00:00-05:00",
+     "when": "2026-08-30T05:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -6116,7 +6118,7 @@
      "holes": 18
     },
     {
-     "when": "2026-08-31T03:00:00-05:00",
+     "when": "2026-08-31T05:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -6308,7 +6310,7 @@
      "holes": 18
     },
     {
-     "when": "2026-09-01T03:00:00-05:00",
+     "when": "2026-09-01T05:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -6464,7 +6466,7 @@
      "holes": 18
     },
     {
-     "when": "2026-09-02T03:00:00-05:00",
+     "when": "2026-09-02T05:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -6554,7 +6556,7 @@
      "holes": 18
     },
     {
-     "when": "2026-09-03T03:00:00-05:00",
+     "when": "2026-09-03T05:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -6824,7 +6826,7 @@
      "holes": 18
     },
     {
-     "when": "2026-09-04T03:00:00-05:00",
+     "when": "2026-09-04T05:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -7154,7 +7156,7 @@
      "holes": 18
     },
     {
-     "when": "2026-09-05T03:00:00-05:00",
+     "when": "2026-09-05T05:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -7454,7 +7456,7 @@
      "holes": 18
     },
     {
-     "when": "2026-09-06T03:00:00-05:00",
+     "when": "2026-09-06T05:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -7832,7 +7834,7 @@
      "holes": 18
     },
     {
-     "when": "2026-09-07T03:00:00-05:00",
+     "when": "2026-09-07T05:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -8162,7 +8164,7 @@
      "holes": 18
     },
     {
-     "when": "2026-09-08T03:00:00-05:00",
+     "when": "2026-09-08T05:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -8354,7 +8356,7 @@
      "holes": 18
     },
     {
-     "when": "2026-09-09T03:00:00-05:00",
+     "when": "2026-09-09T05:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -11257,12 +11259,6 @@
     },
     {
      "when": "2026-09-05T12:10:00-05:00",
-     "spots": 4,
-     "price": 70,
-     "holes": 18
-    },
-    {
-     "when": "2026-09-05T12:50:00-05:00",
      "spots": 4,
      "price": 70,
      "holes": 18
