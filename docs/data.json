@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-09-01T03:18:44.080588-05:00",
- "generated_at_display": "Tuesday, September 1 · 3:18 AM CDT",
- "total_times": 5878,
+ "generated_at": "2026-09-01T04:46:21.728259-05:00",
+ "generated_at_display": "Tuesday, September 1 · 4:46 AM CDT",
+ "total_times": 5874,
  "courses": [
   {
    "name": "Inver Wood Championship",
@@ -10,12 +10,6 @@
    "note": null,
    "errors": [],
    "times": [
-    {
-     "when": "2026-09-04T07:50:00-05:00",
-     "spots": 2,
-     "price": null,
-     "holes": null
-    },
     {
      "when": "2026-09-04T13:30:00-05:00",
      "spots": 3,
@@ -770,6 +764,24 @@
      "holes": 9
     },
     {
+     "when": "2026-09-01T14:40:00-05:00",
+     "spots": 4,
+     "price": 32,
+     "holes": 9
+    },
+    {
+     "when": "2026-09-02T11:20:00-05:00",
+     "spots": 2,
+     "price": 59,
+     "holes": 18
+    },
+    {
+     "when": "2026-09-03T13:10:00-05:00",
+     "spots": 2,
+     "price": 59,
+     "holes": 18
+    },
+    {
      "when": "2026-09-05T16:20:00-05:00",
      "spots": 2,
      "price": 36,
@@ -816,12 +828,6 @@
      "spots": 2,
      "price": 36,
      "holes": 9
-    },
-    {
-     "when": "2026-09-07T15:20:00-05:00",
-     "spots": 2,
-     "price": 65,
-     "holes": null
     },
     {
      "when": "2026-09-07T15:40:00-05:00",
@@ -3404,24 +3410,6 @@
      "holes": 18
     },
     {
-     "when": "2026-09-08T11:03:00-05:00",
-     "spots": 4,
-     "price": 52.6,
-     "holes": 18
-    },
-    {
-     "when": "2026-09-08T11:12:00-05:00",
-     "spots": 4,
-     "price": 52.6,
-     "holes": 18
-    },
-    {
-     "when": "2026-09-08T11:21:00-05:00",
-     "spots": 4,
-     "price": 52.6,
-     "holes": 18
-    },
-    {
      "when": "2026-09-08T11:30:00-05:00",
      "spots": 4,
      "price": 52.6,
@@ -3465,18 +3453,6 @@
     },
     {
      "when": "2026-09-08T13:09:00-05:00",
-     "spots": 4,
-     "price": 52.6,
-     "holes": 18
-    },
-    {
-     "when": "2026-09-08T13:18:00-05:00",
-     "spots": 4,
-     "price": 52.6,
-     "holes": 18
-    },
-    {
-     "when": "2026-09-08T13:27:00-05:00",
      "spots": 4,
      "price": 52.6,
      "holes": 18
@@ -5896,7 +5872,7 @@
    "errors": [],
    "times": [
     {
-     "when": "2026-09-01T03:00:00-05:00",
+     "when": "2026-09-01T04:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -6034,7 +6010,7 @@
      "holes": 18
     },
     {
-     "when": "2026-09-02T03:00:00-05:00",
+     "when": "2026-09-02T04:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -6118,7 +6094,7 @@
      "holes": 18
     },
     {
-     "when": "2026-09-03T03:00:00-05:00",
+     "when": "2026-09-03T04:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -6322,7 +6298,7 @@
      "holes": 18
     },
     {
-     "when": "2026-09-04T03:00:00-05:00",
+     "when": "2026-09-04T04:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -6610,7 +6586,7 @@
      "holes": 18
     },
     {
-     "when": "2026-09-05T03:00:00-05:00",
+     "when": "2026-09-05T04:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -6874,7 +6850,7 @@
      "holes": 18
     },
     {
-     "when": "2026-09-06T03:00:00-05:00",
+     "when": "2026-09-06T04:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -7216,7 +7192,7 @@
      "holes": 18
     },
     {
-     "when": "2026-09-07T03:00:00-05:00",
+     "when": "2026-09-07T04:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -7498,7 +7474,7 @@
      "holes": 18
     },
     {
-     "when": "2026-09-08T03:00:00-05:00",
+     "when": "2026-09-08T04:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -7690,7 +7666,7 @@
      "holes": 18
     },
     {
-     "when": "2026-09-09T03:00:00-05:00",
+     "when": "2026-09-09T04:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -7912,7 +7888,7 @@
      "holes": 18
     },
     {
-     "when": "2026-09-10T03:00:00-05:00",
+     "when": "2026-09-10T04:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -8248,7 +8224,7 @@
      "holes": 18
     },
     {
-     "when": "2026-09-11T03:00:00-05:00",
+     "when": "2026-09-11T04:00:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -8261,8 +8237,7 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS 'minneapolistheodorewirth' returned 401 — anonymous token mint blocked and the in-browser fallback could not recover. Booking link still works for manual booking.",
-    "CPS request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 502. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
+    "CPS 'minneapolistheodorewirth': blocked by Cloudflare (403). Playwright cleared but the API still refused — this course shows a check-manually link."
    ],
    "times": []
   },
