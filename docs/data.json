@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-09-26T03:22:18.369880-05:00",
- "generated_at_display": "Saturday, September 26 · 3:22 AM CDT",
+ "generated_at": "2026-09-26T04:43:05.274068-05:00",
+ "generated_at_display": "Saturday, September 26 · 4:43 AM CDT",
  "total_times": 5188,
  "courses": [
   {
@@ -3345,7 +3345,6 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "CPS request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -3366,7 +3365,6 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "CPS request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -3496,6 +3494,12 @@
      "when": "2026-09-26T17:55:00-05:00",
      "spots": null,
      "price": 30.0,
+     "holes": 18
+    },
+    {
+     "when": "2026-09-27T08:55:00-05:00",
+     "spots": null,
+     "price": 51.0,
      "holes": 18
     },
     {
@@ -5466,8 +5470,6 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "WebTrac request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
-    "WebTrac request failed: Failed to perform, curl: (28) Connection timed out after 30002 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "WebTrac request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -16277,12 +16279,6 @@
     {
      "when": "2026-09-26T08:45:00-05:00",
      "spots": 4,
-     "price": 17,
-     "holes": 9
-    },
-    {
-     "when": "2026-09-26T08:52:00-05:00",
-     "spots": 3,
      "price": 17,
      "holes": 9
     },
