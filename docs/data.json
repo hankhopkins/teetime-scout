@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-09-29T04:27:37.527735-05:00",
- "generated_at_display": "Tuesday, September 29 · 4:27 AM CDT",
- "total_times": 5030,
+ "generated_at": "2026-09-29T06:08:40.425080-05:00",
+ "generated_at_display": "Tuesday, September 29 · 6:08 AM CDT",
+ "total_times": 5024,
  "courses": [
   {
    "name": "Inver Wood Championship",
@@ -19,6 +19,12 @@
     {
      "when": "2026-09-29T13:00:00-05:00",
      "spots": 2,
+     "price": null,
+     "holes": null
+    },
+    {
+     "when": "2026-09-29T13:50:00-05:00",
+     "spots": 4,
      "price": null,
      "holes": null
     },
@@ -53,12 +59,6 @@
      "holes": null
     },
     {
-     "when": "2026-10-02T15:30:00-05:00",
-     "spots": 3,
-     "price": null,
-     "holes": null
-    },
-    {
      "when": "2026-10-02T15:40:00-05:00",
      "spots": 4,
      "price": null,
@@ -66,13 +66,7 @@
     },
     {
      "when": "2026-10-02T16:00:00-05:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-10-02T16:10:00-05:00",
-     "spots": 4,
+     "spots": 2,
      "price": null,
      "holes": null
     },
@@ -3440,12 +3434,6 @@
      "holes": 18
     },
     {
-     "when": "2026-10-06T13:18:00-05:00",
-     "spots": 4,
-     "price": 52.6,
-     "holes": 18
-    },
-    {
      "when": "2026-10-06T13:27:00-05:00",
      "spots": 4,
      "price": 52.6,
@@ -3611,6 +3599,7 @@
    "link_only": false,
    "note": null,
    "errors": [
+    "CPS request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "CPS request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -3624,12 +3613,6 @@
    "times": [
     {
      "when": "2026-09-29T07:55:00-05:00",
-     "spots": null,
-     "price": 30.0,
-     "holes": 18
-    },
-    {
-     "when": "2026-09-29T08:15:00-05:00",
      "spots": null,
      "price": 30.0,
      "holes": 18
@@ -6130,6 +6113,8 @@
    "link_only": false,
    "note": null,
    "errors": [
+    "WebTrac request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
+    "WebTrac request failed: Failed to perform, curl: (28) Connection timed out after 30002 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "WebTrac request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -6771,7 +6756,7 @@
     },
     {
      "when": "2026-10-01T10:09:00-05:00",
-     "spots": 4,
+     "spots": 2,
      "price": null,
      "holes": null
     },
@@ -8465,12 +8450,6 @@
      "holes": 18
     },
     {
-     "when": "2026-09-30T08:30:00-05:00",
-     "spots": 2,
-     "price": 70,
-     "holes": 18
-    },
-    {
      "when": "2026-09-30T11:40:00-05:00",
      "spots": 2,
      "price": 70,
@@ -9096,12 +9075,6 @@
     },
     {
      "when": "2026-10-06T10:00:00-05:00",
-     "spots": 4,
-     "price": 50,
-     "holes": 18
-    },
-    {
-     "when": "2026-10-06T10:10:00-05:00",
      "spots": 4,
      "price": 50,
      "holes": 18
@@ -13553,12 +13526,6 @@
      "holes": null
     },
     {
-     "when": "2026-10-04T07:44:00-05:00",
-     "spots": 4,
-     "price": 46,
-     "holes": null
-    },
-    {
      "when": "2026-10-04T07:52:00-05:00",
      "spots": 4,
      "price": 46,
@@ -14067,7 +14034,7 @@
     },
     {
      "when": "2026-09-29T07:20:00-05:00",
-     "spots": 4,
+     "spots": 3,
      "price": 30,
      "holes": null
     },
@@ -23019,13 +22986,13 @@
     },
     {
      "when": "2026-10-13T07:30:00-05:00",
-     "spots": 4,
+     "spots": 3,
      "price": 42.45,
      "holes": 18
     },
     {
      "when": "2026-10-13T07:39:00-05:00",
-     "spots": 4,
+     "spots": 2,
      "price": 42.45,
      "holes": 18
     },
