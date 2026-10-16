@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-10-16T02:55:29.812177-05:00",
- "generated_at_display": "Friday, October 16 · 2:55 AM CDT",
- "total_times": 4712,
+ "generated_at": "2026-10-16T04:34:24.314755-05:00",
+ "generated_at_display": "Friday, October 16 · 4:34 AM CDT",
+ "total_times": 4709,
  "courses": [
   {
    "name": "Inver Wood Championship",
@@ -1022,8 +1022,8 @@
      "holes": 9
     },
     {
-     "when": "2026-10-18T14:00:00-05:00",
-     "spots": 4,
+     "when": "2026-10-18T14:20:00-05:00",
+     "spots": 2,
      "price": 36,
      "holes": 9
     },
@@ -3806,12 +3806,6 @@
      "holes": 18
     },
     {
-     "when": "2026-10-23T13:45:00-05:00",
-     "spots": 4,
-     "price": 52.6,
-     "holes": 18
-    },
-    {
      "when": "2026-10-23T13:54:00-05:00",
      "spots": 4,
      "price": 52.6,
@@ -5075,12 +5069,6 @@
      "holes": 18
     },
     {
-     "when": "2026-10-23T11:05:00-05:00",
-     "spots": null,
-     "price": 51.0,
-     "holes": 18
-    },
-    {
      "when": "2026-10-23T11:25:00-05:00",
      "spots": null,
      "price": 51.0,
@@ -5643,12 +5631,6 @@
     {
      "when": "2026-10-16T12:50:00-05:00",
      "spots": 4,
-     "price": 46.0,
-     "holes": 18
-    },
-    {
-     "when": "2026-10-16T13:40:00-05:00",
-     "spots": 2,
      "price": 46.0,
      "holes": 18
     },
@@ -6994,6 +6976,8 @@
    "link_only": false,
    "note": null,
    "errors": [
+    "WebTrac request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
+    "WebTrac request failed: Failed to perform, curl: (28) Connection timed out after 30002 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "WebTrac request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
