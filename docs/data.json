@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-10-17T02:34:14.180131-05:00",
- "generated_at_display": "Saturday, October 17 · 2:34 AM CDT",
- "total_times": 4450,
+ "generated_at": "2026-10-17T04:04:32.588863-05:00",
+ "generated_at_display": "Saturday, October 17 · 4:04 AM CDT",
+ "total_times": 4449,
  "courses": [
   {
    "name": "Inver Wood Championship",
@@ -6412,8 +6412,6 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "WebTrac request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
-    "WebTrac request failed: Failed to perform, curl: (28) Connection timed out after 30002 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "WebTrac request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -11802,12 +11800,6 @@
     {
      "when": "2026-10-23T11:15:00-05:00",
      "spots": 2,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-10-23T11:22:00-05:00",
-     "spots": 4,
      "price": 36,
      "holes": null
     },
