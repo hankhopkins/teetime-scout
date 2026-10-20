@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-10-20T03:12:40.907821-05:00",
- "generated_at_display": "Tuesday, October 20 · 3:12 AM CDT",
- "total_times": 4609,
+ "generated_at": "2026-10-20T04:51:13.251574-05:00",
+ "generated_at_display": "Tuesday, October 20 · 4:51 AM CDT",
+ "total_times": 4607,
  "courses": [
   {
    "name": "Inver Wood Championship",
@@ -13,12 +13,6 @@
     {
      "when": "2026-10-23T15:10:00-05:00",
      "spots": 2,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-10-23T15:40:00-05:00",
-     "spots": 4,
      "price": null,
      "holes": null
     },
@@ -882,12 +876,6 @@
      "spots": 2,
      "price": 59,
      "holes": 18
-    },
-    {
-     "when": "2026-10-20T16:00:00-05:00",
-     "spots": 2,
-     "price": 32,
-     "holes": 9
     },
     {
      "when": "2026-10-25T14:20:00-05:00",
@@ -3959,6 +3947,12 @@
      "holes": 18
     },
     {
+     "when": "2026-10-21T07:55:00-05:00",
+     "spots": null,
+     "price": 30.0,
+     "holes": 18
+    },
+    {
      "when": "2026-10-21T08:35:00-05:00",
      "spots": null,
      "price": 30.0,
@@ -6808,7 +6802,7 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "WebTrac request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
+    "WebTrac request failed: Failed to perform, curl: (28) Connection timed out after 30002 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "WebTrac request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -6819,7 +6813,6 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "CPS request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -7787,12 +7780,6 @@
     },
     {
      "when": "2026-10-23T15:51:00-05:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-10-23T16:00:00-05:00",
      "spots": 4,
      "price": null,
      "holes": null
