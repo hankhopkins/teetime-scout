@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-10-31T04:20:48.101182-05:00",
- "generated_at_display": "Saturday, October 31 · 4:20 AM CDT",
+ "generated_at": "2026-10-31T05:48:04.568617-05:00",
+ "generated_at_display": "Saturday, October 31 · 5:48 AM CDT",
  "total_times": 3680,
  "courses": [
   {
@@ -13,6 +13,12 @@
     {
      "when": "2026-10-31T09:30:00-05:00",
      "spots": 2,
+     "price": null,
+     "holes": null
+    },
+    {
+     "when": "2026-10-31T10:20:00-05:00",
+     "spots": 4,
      "price": null,
      "holes": null
     },
@@ -127,12 +133,6 @@
     {
      "when": "2026-11-02T14:40:00-06:00",
      "spots": 3,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-03T12:00:00-06:00",
-     "spots": 2,
      "price": null,
      "holes": null
     },
@@ -2818,12 +2818,6 @@
      "holes": 18
     },
     {
-     "when": "2026-10-31T13:40:00-05:00",
-     "spots": null,
-     "price": null,
-     "holes": 18
-    },
-    {
      "when": "2026-10-31T14:20:00-05:00",
      "spots": null,
      "price": null,
@@ -2837,6 +2831,12 @@
     },
     {
      "when": "2026-10-31T14:40:00-05:00",
+     "spots": null,
+     "price": null,
+     "holes": 18
+    },
+    {
+     "when": "2026-10-31T14:50:00-05:00",
      "spots": null,
      "price": null,
      "holes": 18
@@ -3418,7 +3418,6 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "WebTrac request failed: Failed to perform, curl: (28) Connection timed out after 30000 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "WebTrac request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
