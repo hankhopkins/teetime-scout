@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-11-09T19:59:41.700569-06:00",
- "generated_at_display": "Monday, November 9 · 7:59 PM CST",
+ "generated_at": "2026-11-09T22:39:31.811369-06:00",
+ "generated_at_display": "Monday, November 9 · 10:39 PM CST",
  "total_times": 1782,
  "courses": [
   {
@@ -247,7 +247,7 @@
    "times": [
     {
      "when": "2026-11-10T11:00:00-06:00",
-     "spots": 4,
+     "spots": 2,
      "price": 42.25,
      "holes": 18
     },
@@ -426,6 +426,18 @@
      "holes": 18
     },
     {
+     "when": "2026-11-14T11:20:00-06:00",
+     "spots": 4,
+     "price": 46.84,
+     "holes": 18
+    },
+    {
+     "when": "2026-11-14T11:30:00-06:00",
+     "spots": 4,
+     "price": 46.84,
+     "holes": 18
+    },
+    {
      "when": "2026-11-14T12:10:00-06:00",
      "spots": 4,
      "price": 46.84,
@@ -555,6 +567,8 @@
    "link_only": false,
    "note": null,
    "errors": [
+    "WebTrac request failed: Failed to perform, curl: (28) Connection timed out after 30000 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
+    "WebTrac request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "WebTrac request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -565,6 +579,7 @@
    "link_only": false,
    "note": null,
    "errors": [
+    "CPS request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "CPS request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -585,7 +600,6 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS request failed: Failed to perform, curl: (28) Connection timed out after 30000 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "CPS request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -2205,12 +2219,6 @@
      "holes": null
     },
     {
-     "when": "2026-11-10T08:45:00-06:00",
-     "spots": 4,
-     "price": 36,
-     "holes": null
-    },
-    {
      "when": "2026-11-10T09:00:00-06:00",
      "spots": 2,
      "price": 36,
@@ -3730,7 +3738,7 @@
     },
     {
      "when": "2026-11-15T10:52:00-06:00",
-     "spots": 4,
+     "spots": 2,
      "price": 40,
      "holes": null
     },
@@ -4002,12 +4010,6 @@
      "holes": null
     },
     {
-     "when": "2026-11-10T12:16:00-06:00",
-     "spots": 3,
-     "price": 43,
-     "holes": null
-    },
-    {
      "when": "2026-11-10T12:24:00-06:00",
      "spots": 3,
      "price": 43,
@@ -4051,7 +4053,7 @@
     },
     {
      "when": "2026-11-10T13:28:00-06:00",
-     "spots": 4,
+     "spots": 2,
      "price": 43,
      "holes": null
     },
@@ -4273,7 +4275,7 @@
     },
     {
      "when": "2026-11-11T09:20:00-06:00",
-     "spots": 3,
+     "spots": 2,
      "price": 43,
      "holes": null
     },
@@ -10380,7 +10382,7 @@
     },
     {
      "when": "2026-11-10T09:27:00-06:00",
-     "spots": 3,
+     "spots": 2,
      "price": 54.0,
      "holes": 18
     },
@@ -10566,7 +10568,7 @@
     },
     {
      "when": "2026-11-11T09:18:00-06:00",
-     "spots": 4,
+     "spots": 2,
      "price": 54.0,
      "holes": 18
     },
