@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-11-11T04:19:13.102523-06:00",
- "generated_at_display": "Wednesday, November 11 · 4:19 AM CST",
- "total_times": 1878,
+ "generated_at": "2026-11-11T06:33:51.284636-06:00",
+ "generated_at_display": "Wednesday, November 11 · 6:33 AM CST",
+ "total_times": 1877,
  "courses": [
   {
    "name": "Inver Wood Championship",
@@ -117,6 +117,7 @@
    "link_only": false,
    "note": null,
    "errors": [
+    "CPS request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "CPS request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -769,6 +770,7 @@
    "link_only": false,
    "note": null,
    "errors": [
+    "CPS request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "CPS request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -3681,7 +3683,7 @@
     },
     {
      "when": "2026-11-15T08:30:00-06:00",
-     "spots": 2,
+     "spots": 4,
      "price": 40,
      "holes": null
     },
@@ -4419,7 +4421,7 @@
     },
     {
      "when": "2026-11-17T12:00:00-06:00",
-     "spots": 4,
+     "spots": 2,
      "price": 36,
      "holes": null
     },
@@ -6523,12 +6525,6 @@
     {
      "when": "2026-11-17T10:48:00-06:00",
      "spots": 2,
-     "price": 43,
-     "holes": null
-    },
-    {
-     "when": "2026-11-17T10:56:00-06:00",
-     "spots": 4,
      "price": 43,
      "holes": null
     },
@@ -11159,7 +11155,7 @@
     },
     {
      "when": "2026-11-11T11:24:00-06:00",
-     "spots": 4,
+     "spots": 2,
      "price": 54.0,
      "holes": 18
     },
