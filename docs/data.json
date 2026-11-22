@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-11-22T04:44:15.396597-06:00",
- "generated_at_display": "Sunday, November 22 · 4:44 AM CST",
- "total_times": 957,
+ "generated_at": "2026-11-22T07:06:54.019231-06:00",
+ "generated_at_display": "Sunday, November 22 · 7:06 AM CST",
+ "total_times": 949,
  "courses": [
   {
    "name": "Inver Wood Championship",
@@ -2689,12 +2689,6 @@
      "holes": 18
     },
     {
-     "when": "2026-11-29T10:30:00-06:00",
-     "spots": 4,
-     "price": 46.84,
-     "holes": 18
-    },
-    {
      "when": "2026-11-29T10:40:00-06:00",
      "spots": 4,
      "price": 46.84,
@@ -2758,6 +2752,8 @@
    "link_only": false,
    "note": null,
    "errors": [
+    "WebTrac request failed: Failed to perform, curl: (28) Connection timed out after 30000 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
+    "WebTrac request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "WebTrac request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -2973,48 +2969,6 @@
     },
     {
      "when": "2026-11-22T13:27:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-22T13:36:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-22T13:45:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-22T13:54:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-22T14:03:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-22T14:12:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-22T14:21:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-22T14:30:00-06:00",
      "spots": 4,
      "price": null,
      "holes": null
