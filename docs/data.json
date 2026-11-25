@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-11-25T09:20:36.714270-06:00",
- "generated_at_display": "Wednesday, November 25 · 9:20 AM CST",
- "total_times": 1031,
+ "generated_at": "2026-11-25T14:27:24.948211-06:00",
+ "generated_at_display": "Wednesday, November 25 · 2:27 PM CST",
+ "total_times": 938,
  "courses": [
   {
    "name": "Inver Wood Championship",
@@ -10,192 +10,6 @@
    "note": null,
    "errors": [],
    "times": [
-    {
-     "when": "2026-11-25T09:20:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T09:30:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T09:40:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T09:50:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T10:00:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T10:10:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T10:20:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T10:30:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T10:40:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T10:50:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T11:00:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T11:10:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T11:20:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T11:30:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T11:40:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T11:50:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T12:00:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T12:10:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T12:20:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T12:30:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T12:40:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T12:50:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T13:00:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T13:10:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T13:20:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T13:30:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T13:40:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T13:50:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T14:00:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T14:10:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T14:20:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
     {
      "when": "2026-11-25T14:30:00-06:00",
      "spots": 4,
@@ -2122,7 +1936,6 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS request failed: Failed to perform, curl: (28) Connection timed out after 30000 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "CPS request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -2179,66 +1992,6 @@
    "errors": [],
    "times": [
     {
-     "when": "2026-11-25T10:30:00-06:00",
-     "spots": 2,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
-     "when": "2026-11-25T10:40:00-06:00",
-     "spots": 4,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
-     "when": "2026-11-25T10:50:00-06:00",
-     "spots": 4,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
-     "when": "2026-11-25T11:00:00-06:00",
-     "spots": 4,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
-     "when": "2026-11-25T11:10:00-06:00",
-     "spots": 4,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
-     "when": "2026-11-25T11:20:00-06:00",
-     "spots": 4,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
-     "when": "2026-11-25T11:30:00-06:00",
-     "spots": 4,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
-     "when": "2026-11-25T11:40:00-06:00",
-     "spots": 4,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
-     "when": "2026-11-25T12:00:00-06:00",
-     "spots": 4,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
-     "when": "2026-11-25T12:10:00-06:00",
-     "spots": 4,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
      "when": "2026-11-27T10:40:00-06:00",
      "spots": 3,
      "price": 42.25,
@@ -2270,7 +2023,7 @@
     },
     {
      "when": "2026-11-27T11:50:00-06:00",
-     "spots": 4,
+     "spots": 2,
      "price": 42.25,
      "holes": 18
     },
@@ -2282,13 +2035,7 @@
     },
     {
      "when": "2026-11-27T12:10:00-06:00",
-     "spots": 4,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
-     "when": "2026-11-27T12:20:00-06:00",
-     "spots": 4,
+     "spots": 3,
      "price": 42.25,
      "holes": 18
     },
@@ -2401,24 +2148,6 @@
      "holes": 18
     },
     {
-     "when": "2026-12-01T10:00:00-06:00",
-     "spots": 4,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
-     "when": "2026-12-01T10:10:00-06:00",
-     "spots": 4,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
-     "when": "2026-12-01T10:20:00-06:00",
-     "spots": 4,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
      "when": "2026-12-01T10:30:00-06:00",
      "spots": 4,
      "price": 42.25,
@@ -2479,24 +2208,6 @@
      "holes": 18
     },
     {
-     "when": "2026-12-01T12:20:00-06:00",
-     "spots": 4,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
-     "when": "2026-12-02T10:10:00-06:00",
-     "spots": 4,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
-     "when": "2026-12-02T10:20:00-06:00",
-     "spots": 4,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
      "when": "2026-12-02T10:30:00-06:00",
      "spots": 4,
      "price": 42.25,
@@ -2533,25 +2244,13 @@
      "holes": 18
     },
     {
-     "when": "2026-12-02T11:30:00-06:00",
-     "spots": 4,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
-     "when": "2026-12-02T12:00:00-06:00",
+     "when": "2026-12-02T11:40:00-06:00",
      "spots": 4,
      "price": 42.25,
      "holes": 18
     },
     {
      "when": "2026-12-02T12:10:00-06:00",
-     "spots": 4,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
-     "when": "2026-12-02T12:20:00-06:00",
      "spots": 4,
      "price": 42.25,
      "holes": 18
@@ -2592,6 +2291,7 @@
    "link_only": false,
    "note": null,
    "errors": [
+    "CPS request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "CPS request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -2602,7 +2302,6 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "CPS request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -2626,12 +2325,6 @@
    "times": [
     {
      "when": "2026-11-27T09:42:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-27T09:51:00-06:00",
      "spots": 3,
      "price": null,
      "holes": null
@@ -2649,12 +2342,6 @@
      "holes": null
     },
     {
-     "when": "2026-11-27T10:27:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
      "when": "2026-11-27T10:36:00-06:00",
      "spots": 4,
      "price": null,
@@ -2667,7 +2354,7 @@
      "holes": null
     },
     {
-     "when": "2026-11-27T10:54:00-06:00",
+     "when": "2026-11-27T11:03:00-06:00",
      "spots": 4,
      "price": null,
      "holes": null
@@ -2715,12 +2402,6 @@
      "holes": null
     },
     {
-     "when": "2026-11-28T11:12:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
      "when": "2026-11-29T09:42:00-06:00",
      "spots": 4,
      "price": null,
@@ -2746,13 +2427,13 @@
     },
     {
      "when": "2026-11-29T10:18:00-06:00",
-     "spots": 4,
+     "spots": 2,
      "price": null,
      "holes": null
     },
     {
      "when": "2026-11-29T10:27:00-06:00",
-     "spots": 2,
+     "spots": 4,
      "price": null,
      "holes": null
     },
@@ -3399,12 +3080,6 @@
      "holes": null
     },
     {
-     "when": "2026-12-02T10:45:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
      "when": "2026-12-02T10:54:00-06:00",
      "spots": 4,
      "price": null,
@@ -3592,210 +3267,6 @@
    "errors": [],
    "times": [
     {
-     "when": "2026-11-25T09:52:00-06:00",
-     "spots": 2,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T10:07:00-06:00",
-     "spots": 3,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T10:15:00-06:00",
-     "spots": 4,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T10:22:00-06:00",
-     "spots": 4,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T10:30:00-06:00",
-     "spots": 2,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T10:37:00-06:00",
-     "spots": 3,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T10:45:00-06:00",
-     "spots": 4,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T10:52:00-06:00",
-     "spots": 2,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T11:15:00-06:00",
-     "spots": 2,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T11:22:00-06:00",
-     "spots": 4,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T11:30:00-06:00",
-     "spots": 2,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T11:37:00-06:00",
-     "spots": 2,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T11:45:00-06:00",
-     "spots": 3,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T11:52:00-06:00",
-     "spots": 2,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T12:15:00-06:00",
-     "spots": 2,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T12:22:00-06:00",
-     "spots": 4,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T12:30:00-06:00",
-     "spots": 3,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T12:45:00-06:00",
-     "spots": 4,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T12:52:00-06:00",
-     "spots": 4,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T13:00:00-06:00",
-     "spots": 4,
-     "price": 25,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T13:07:00-06:00",
-     "spots": 2,
-     "price": 25,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T13:22:00-06:00",
-     "spots": 4,
-     "price": 25,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T13:30:00-06:00",
-     "spots": 4,
-     "price": 25,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T13:37:00-06:00",
-     "spots": 4,
-     "price": 25,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T13:45:00-06:00",
-     "spots": 4,
-     "price": 25,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T13:52:00-06:00",
-     "spots": 4,
-     "price": 25,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T14:00:00-06:00",
-     "spots": 4,
-     "price": 25,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T14:07:00-06:00",
-     "spots": 4,
-     "price": 25,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T14:15:00-06:00",
-     "spots": 4,
-     "price": 25,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T14:22:00-06:00",
-     "spots": 4,
-     "price": 25,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T14:30:00-06:00",
-     "spots": 4,
-     "price": 25,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T14:37:00-06:00",
-     "spots": 4,
-     "price": 25,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T14:45:00-06:00",
-     "spots": 4,
-     "price": 25,
-     "holes": null
-    },
-    {
-     "when": "2026-11-25T14:52:00-06:00",
-     "spots": 4,
-     "price": 25,
-     "holes": null
-    },
-    {
      "when": "2026-11-25T15:00:00-06:00",
      "spots": 4,
      "price": 25,
@@ -3851,12 +3322,6 @@
     },
     {
      "when": "2026-11-27T09:37:00-06:00",
-     "spots": 4,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-11-27T09:45:00-06:00",
      "spots": 4,
      "price": 36,
      "holes": null
@@ -3928,12 +3393,6 @@
      "holes": null
     },
     {
-     "when": "2026-11-27T11:30:00-06:00",
-     "spots": 2,
-     "price": 36,
-     "holes": null
-    },
-    {
      "when": "2026-11-27T11:37:00-06:00",
      "spots": 4,
      "price": 36,
@@ -3952,14 +3411,14 @@
      "holes": null
     },
     {
-     "when": "2026-11-27T12:15:00-06:00",
+     "when": "2026-11-27T12:07:00-06:00",
      "spots": 4,
      "price": 36,
      "holes": null
     },
     {
      "when": "2026-11-27T12:30:00-06:00",
-     "spots": 4,
+     "spots": 2,
      "price": 36,
      "holes": null
     },
@@ -4121,7 +3580,7 @@
     },
     {
      "when": "2026-11-28T09:07:00-06:00",
-     "spots": 4,
+     "spots": 2,
      "price": 40,
      "holes": null
     },
@@ -4132,7 +3591,7 @@
      "holes": null
     },
     {
-     "when": "2026-11-28T09:22:00-06:00",
+     "when": "2026-11-28T09:45:00-06:00",
      "spots": 4,
      "price": 40,
      "holes": null
@@ -4144,27 +3603,9 @@
      "holes": null
     },
     {
-     "when": "2026-11-28T10:22:00-06:00",
+     "when": "2026-11-28T12:00:00-06:00",
      "spots": 2,
      "price": 40,
-     "holes": null
-    },
-    {
-     "when": "2026-11-28T13:07:00-06:00",
-     "spots": 4,
-     "price": 25,
-     "holes": null
-    },
-    {
-     "when": "2026-11-28T13:15:00-06:00",
-     "spots": 2,
-     "price": 25,
-     "holes": null
-    },
-    {
-     "when": "2026-11-28T13:22:00-06:00",
-     "spots": 4,
-     "price": 25,
      "holes": null
     },
     {
@@ -4468,6 +3909,18 @@
      "holes": null
     },
     {
+     "when": "2026-11-29T12:07:00-06:00",
+     "spots": 4,
+     "price": 40,
+     "holes": null
+    },
+    {
+     "when": "2026-11-29T12:15:00-06:00",
+     "spots": 4,
+     "price": 40,
+     "holes": null
+    },
+    {
      "when": "2026-11-29T12:22:00-06:00",
      "spots": 4,
      "price": 40,
@@ -4697,12 +4150,6 @@
     },
     {
      "when": "2026-11-30T09:45:00-06:00",
-     "spots": 4,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-11-30T09:52:00-06:00",
      "spots": 4,
      "price": 36,
      "holes": null
@@ -5063,12 +4510,6 @@
     },
     {
      "when": "2026-12-01T09:52:00-06:00",
-     "spots": 4,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-12-01T10:00:00-06:00",
      "spots": 4,
      "price": 36,
      "holes": null
