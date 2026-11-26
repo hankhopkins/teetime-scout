@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-11-26T05:56:07.729800-06:00",
- "generated_at_display": "Thursday, November 26 · 5:56 AM CST",
- "total_times": 1242,
+ "generated_at": "2026-11-26T08:51:30.965888-06:00",
+ "generated_at_display": "Thursday, November 26 · 8:51 AM CST",
+ "total_times": 1232,
  "courses": [
   {
    "name": "Inver Wood Championship",
@@ -10,54 +10,6 @@
    "note": null,
    "errors": [],
    "times": [
-    {
-     "when": "2026-11-26T07:30:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-26T07:40:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-26T07:50:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-26T08:00:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-26T08:10:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-26T08:20:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-26T08:30:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-26T08:40:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
     {
      "when": "2026-11-26T08:50:00-06:00",
      "spots": 4,
@@ -2575,6 +2527,7 @@
    "link_only": false,
    "note": null,
    "errors": [
+    "CPS request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "CPS request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -2595,6 +2548,7 @@
    "link_only": false,
    "note": null,
    "errors": [
+    "CPS request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "CPS request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -5307,18 +5261,6 @@
     },
     {
      "when": "2026-12-02T11:22:00-06:00",
-     "spots": 4,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-12-02T11:30:00-06:00",
-     "spots": 4,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-12-02T11:37:00-06:00",
      "spots": 4,
      "price": 36,
      "holes": null
