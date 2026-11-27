@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-11-26T17:29:48.408282-06:00",
- "generated_at_display": "Thursday, November 26 · 5:29 PM CST",
- "total_times": 1186,
+ "generated_at": "2026-11-26T20:11:45.371172-06:00",
+ "generated_at_display": "Thursday, November 26 · 8:11 PM CST",
+ "total_times": 1179,
  "courses": [
   {
    "name": "Inver Wood Championship",
@@ -1918,6 +1918,7 @@
    "link_only": false,
    "note": null,
    "errors": [
+    "CPS request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "CPS request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -1954,6 +1955,8 @@
    "link_only": false,
    "note": null,
    "errors": [
+    "CPS request failed: Failed to perform, curl: (28) Connection timed out after 30000 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
+    "CPS request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "CPS request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -1976,12 +1979,6 @@
     {
      "when": "2026-11-27T10:40:00-06:00",
      "spots": 3,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
-     "when": "2026-11-27T10:50:00-06:00",
-     "spots": 4,
      "price": 42.25,
      "holes": 18
     },
@@ -2010,20 +2007,8 @@
      "holes": 18
     },
     {
-     "when": "2026-11-27T12:00:00-06:00",
-     "spots": 2,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
-     "when": "2026-11-27T12:10:00-06:00",
-     "spots": 3,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
      "when": "2026-11-29T10:30:00-06:00",
-     "spots": 2,
+     "spots": 3,
      "price": 46.84,
      "holes": 18
     },
@@ -2178,12 +2163,6 @@
      "holes": 18
     },
     {
-     "when": "2026-12-01T12:00:00-06:00",
-     "spots": 4,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
      "when": "2026-12-01T12:10:00-06:00",
      "spots": 4,
      "price": 42.25,
@@ -2233,12 +2212,6 @@
     },
     {
      "when": "2026-12-02T12:10:00-06:00",
-     "spots": 4,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
-     "when": "2026-12-03T10:30:00-06:00",
      "spots": 4,
      "price": 42.25,
      "holes": 18
@@ -2337,6 +2310,7 @@
    "link_only": false,
    "note": null,
    "errors": [
+    "CPS request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "CPS request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -2366,7 +2340,7 @@
     },
     {
      "when": "2026-11-27T10:09:00-06:00",
-     "spots": 4,
+     "spots": 2,
      "price": null,
      "holes": null
     },
@@ -2403,12 +2377,6 @@
     {
      "when": "2026-11-27T11:30:00-06:00",
      "spots": 3,
-     "price": null,
-     "holes": null
-    },
-    {
-     "when": "2026-11-28T10:54:00-06:00",
-     "spots": 4,
      "price": null,
      "holes": null
     },
@@ -3127,12 +3095,6 @@
      "holes": null
     },
     {
-     "when": "2026-12-02T11:57:00-06:00",
-     "spots": 4,
-     "price": null,
-     "holes": null
-    },
-    {
      "when": "2026-12-02T12:15:00-06:00",
      "spots": 4,
      "price": null,
@@ -3542,6 +3504,12 @@
    "errors": [],
    "times": [
     {
+     "when": "2026-11-27T09:22:00-06:00",
+     "spots": 4,
+     "price": 36,
+     "holes": null
+    },
+    {
      "when": "2026-11-27T09:37:00-06:00",
      "spots": 4,
      "price": 36,
@@ -3555,7 +3523,7 @@
     },
     {
      "when": "2026-11-27T10:07:00-06:00",
-     "spots": 4,
+     "spots": 2,
      "price": 36,
      "holes": null
     },
@@ -4329,7 +4297,7 @@
     },
     {
      "when": "2026-11-30T10:30:00-06:00",
-     "spots": 4,
+     "spots": 2,
      "price": 36,
      "holes": null
     },
@@ -4683,12 +4651,6 @@
     },
     {
      "when": "2026-12-01T11:22:00-06:00",
-     "spots": 4,
-     "price": 36,
-     "holes": null
-    },
-    {
-     "when": "2026-12-01T11:30:00-06:00",
      "spots": 4,
      "price": 36,
      "holes": null
