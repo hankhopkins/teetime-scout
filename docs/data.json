@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-11-27T19:52:18.978212-06:00",
- "generated_at_display": "Friday, November 27 · 7:52 PM CST",
- "total_times": 1234,
+ "generated_at": "2026-11-27T22:33:24.527180-06:00",
+ "generated_at_display": "Friday, November 27 · 10:33 PM CST",
+ "total_times": 1232,
  "courses": [
   {
    "name": "Inver Wood Championship",
@@ -1948,7 +1948,6 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "CPS request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -2108,19 +2107,13 @@
     },
     {
      "when": "2026-12-01T11:40:00-06:00",
-     "spots": 4,
+     "spots": 2,
      "price": 42.25,
      "holes": 18
     },
     {
      "when": "2026-12-01T12:10:00-06:00",
      "spots": 4,
-     "price": 42.25,
-     "holes": 18
-    },
-    {
-     "when": "2026-12-02T10:30:00-06:00",
-     "spots": 2,
      "price": 42.25,
      "holes": 18
     },
@@ -2260,6 +2253,7 @@
    "link_only": false,
    "note": null,
    "errors": [
+    "WebTrac request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "WebTrac request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -2300,7 +2294,6 @@
    "link_only": false,
    "note": null,
    "errors": [
-    "CPS request failed: Failed to perform, curl: (28) Connection timed out after 30001 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
     "CPS request failed: Failed to perform, curl: (7) CONNECT tunnel failed, response 407. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
    ],
    "times": []
@@ -3910,14 +3903,8 @@
      "holes": null
     },
     {
-     "when": "2026-12-02T12:15:00-06:00",
-     "spots": 4,
-     "price": 36,
-     "holes": null
-    },
-    {
      "when": "2026-12-02T12:22:00-06:00",
-     "spots": 4,
+     "spots": 2,
      "price": 36,
      "holes": null
     },
